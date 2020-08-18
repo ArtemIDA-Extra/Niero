@@ -6,4 +6,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove=".gitignore" />
+    <None Remove="Gifs\Main.gif" />
+    <None Remove="Images\Main.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Gifs\Main.gif" />
+  </ItemGroup>
+
 </Project>

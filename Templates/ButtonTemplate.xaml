@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Niero">
+    
+    <ControlTemplate TargetType="Button" x:Key="DefaultButtonTemplate">
+        <Border CornerRadius="20"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="{TemplateBinding Background}"
+                    Height="{TemplateBinding Height}"
+                    Width="{TemplateBinding Width}">
+            <ContentControl Margin="{TemplateBinding Padding}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Content="{TemplateBinding Content}">
+            </ContentControl>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>
