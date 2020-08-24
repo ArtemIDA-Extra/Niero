@@ -7,9 +7,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/ButtonStyles.xaml"/>
-                <ResourceDictionary Source="Styles/WindowStyle.xaml"/>
-                <ResourceDictionary Source="Templates/ButtonTemplate.xaml"/>
-                <ResourceDictionary Source="Templates/WindowTemplate.xaml"/>
+                <ResourceDictionary Source="Styles/WindowStyles.xaml"/>
+                <ResourceDictionary Source="Templates/ButtonTemplates.xaml"/>
+                <ResourceDictionary Source="Templates/WindowTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
