@@ -8,10 +8,13 @@
         
         mc:Ignorable="d"
         
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Title="Niero:Startup"
         Height="350" Width="300"
         WindowStartupLocation="CenterScreen"
-        Topmost="True"
-        AllowsTransparency="True" WindowStyle="None" Background="Transparent">
+        Topmost="True">
 
     <Window.Resources>
         
@@ -22,12 +25,14 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
-        <Image x:Name="Start_gif" Height="230" Width="230" gif:ImageBehavior.AnimatedSource="../Gifs/Main.gif"/>
-        <Button x:Name="Start_Button" 
-                Template="{DynamicResource DefaultButtonTemplate}" 
-                Style="{DynamicResource StartButton}" 
-                Content="Start making magic..." 
-                Grid.Row="1"
-                VerticalAlignment="Center"/>
+        <Image x:Name="Start_gif" 
+               Height="230" 
+               Width="230" 
+               gif:ImageBehavior.AnimatedSource="../Gifs/Main.gif"
+               />
+        <TextBlock Style="{DynamicResource StartupTextBlock}" 
+                   Text="Loading magic for you..." 
+                   Grid.Row="1"
+                   />
     </Grid>
 </Window>

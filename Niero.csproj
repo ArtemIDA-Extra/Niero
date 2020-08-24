@@ -10,6 +10,7 @@
     <None Remove=".gitignore" />
     <None Remove="Gifs\Main.gif" />
     <None Remove="Images\Main.gif" />
+    <None Remove="SupportDictionaries\Fonts\MagicFont.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
 
   <ItemGroup>
     <Resource Include="Gifs\Main.gif" />
+    <Resource Include="SupportDictionaries\Fonts\MagicFont.ttf" />
   </ItemGroup>
 
 </Project>
