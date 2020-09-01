@@ -37,7 +37,7 @@ namespace Niero.Windows
 
         public async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Factory.StartNew(()=> { Thread.Sleep(5000);                     //Жопой чую, это МЕГА костылина, и есть куча других способов создать таймер 
+            await Task.Factory.StartNew(()=> { Thread.Sleep(3000);                     //Жопой чую, это МЕГА костылина, и есть куча других способов создать таймер 
             });                                                                        //кдасс таймер у меня не сконал (не смог поставить коллбеком Close()), а из других потоков не удается 
             loadingWindow.Close();                                                     //достучатся до загрузочного окна. В общем, пока так оставлю xDDDD
         }
@@ -45,6 +45,11 @@ namespace Niero.Windows
         public void LoadingWindow_Closed(object sender, EventArgs e)
         {
             this.WindowState = WindowState.Normal;
+        }
+
+        private void MouseIn(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("Hi!");
         }
     }
 }

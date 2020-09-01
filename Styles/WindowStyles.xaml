@@ -4,9 +4,9 @@
     <Style x:Key="MainWindow" TargetType="Window">
         <Style.Setters>
             <Setter Property="Title" Value="Niero"/>
-            <Setter Property="Height" Value="450"/>
-            <Setter Property="Width" Value="800"/>
-            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Height" Value="650"/>
+            <Setter Property="Width" Value="1000"/>
+            <Setter Property="Background" Value="{DynamicResource BaseBrush}"/>
             <Setter Property="WindowState" Value="Normal"/>
         </Style.Setters>
     </Style>
