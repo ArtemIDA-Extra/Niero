@@ -1,32 +1,13 @@
-﻿<Window x:Class="Niero.MainWindow" Template="{DynamicResource DefaultWindowTemplate}" 
+﻿<Window x:Class="Niero.Windows.MainWindow" Style="{DynamicResource MainWindow}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Niero"
-        xmlns:gif="http://wpfanimatedgif.codeplex.com"
-        
+        xmlns:local="clr-namespace:Niero.Windows"
         mc:Ignorable="d"
+                
+        WindowStartupLocation="CenterScreen">
+    <Grid>
         
-        Height="350" Width="300"
-        WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True" WindowStyle="None" Background="Transparent">
-
-    <Window.Resources>
-        
-    </Window.Resources>
-
-    <Grid x:Name="WelcomeWindowGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0.2*"/>
-        </Grid.RowDefinitions>
-        <Image x:Name="Start_gif" Height="230" Width="230" gif:ImageBehavior.AnimatedSource="../Gifs/Main.gif"/>
-        <Button x:Name="Start_Button" 
-                Template="{DynamicResource DefaultButtonTemplate}" 
-                Style="{DynamicResource StartButton}" 
-                Content="Start making magic..." 
-                Grid.Row="1"
-                VerticalAlignment="Center"/>
     </Grid>
 </Window>

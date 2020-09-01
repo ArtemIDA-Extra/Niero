@@ -6,7 +6,7 @@
             <Setter Property="Title" Value="Niero"/>
             <Setter Property="Height" Value="450"/>
             <Setter Property="Width" Value="800"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="Black"/>
             <Setter Property="WindowState" Value="Normal"/>
         </Style.Setters>
     </Style>
