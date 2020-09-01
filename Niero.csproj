@@ -22,12 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="NieroNetLib">
-      <HintPath>..\NieroNetLib\bin\Debug\netcoreapp3.1\NieroNetLib.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Gifs\Main.gif" />
     <Resource Include="SupportDictionaries\Fonts\MagicFont.ttf" />
   </ItemGroup>
