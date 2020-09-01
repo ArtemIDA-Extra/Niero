@@ -8,7 +8,6 @@
     "additionalProbingPaths": [
       "C:\\Users\\Artem\\.dotnet\\store\\|arch|\\|tfm|",
       "C:\\Users\\Artem\\.nuget\\packages",
-      "C:\\Microsoft\\Xamarin\\NuGet",
       "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ],
     "configProperties": {

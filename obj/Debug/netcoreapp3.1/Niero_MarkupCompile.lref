@@ -1,8 +1,13 @@
 ﻿
-FC:\Users\Artem\Desktop\Niero\App.xaml;;
-FC:\Users\Artem\Desktop\Niero\Styles\ButtonStyles.xaml;;
-FC:\Users\Artem\Desktop\Niero\Styles\WindowStyle.xaml;;
-FC:\Users\Artem\Desktop\Niero\Templates\ButtonTemplate.xaml;;
-FC:\Users\Artem\Desktop\Niero\Templates\WindowTemplate.xaml;;
-FC:\Users\Artem\Desktop\Niero\Windows\MainWindow.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\App.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Styles\ButtonStyles.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Styles\TextBlockStyles.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Styles\WindowStyles.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\SupportDictionaries\FontsNames.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\SupportDictionaries\Themes\DarkTheme.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Templates\ButtonTemplates.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Templates\WindowTemplates.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Windows\LoadingWindow.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Windows\MainWindow.xaml;;
+FD:\Desktop\Programming\C#\Projects\Developing\Niero\Niero\Windows\MainWindowPages\StartPage.xaml;;
 

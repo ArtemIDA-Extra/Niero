@@ -70,7 +70,7 @@ namespace Niero {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Niero;V1.0.0.0;component/windows/loadingwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Niero;component/windows/loadingwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Windows\LoadingWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
