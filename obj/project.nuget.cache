@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "QPrhFcYfR1jl4WJK/EqYVyzetdGaT+/jyD/bMET2Nvh1vPTEQPjI+JyrItPjBVB4Dt91nPJYuCPoKrdyPVkVmw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Artem\\Desktop\\Niero\\Niero.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Artem\\.nuget\\packages\\wpfanimatedgif\\2.0.0\\wpfanimatedgif.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
