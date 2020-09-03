@@ -3,17 +3,46 @@
                     xmlns:local="clr-namespace:Niero">
     
     <ControlTemplate TargetType="Button" x:Key="DefaultButtonTemplate">
-        <Border CornerRadius="20"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Background="{TemplateBinding Background}"
-                    Height="{TemplateBinding Height}"
-                    Width="{TemplateBinding Width}">
+        <Border x:Name="border"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}"
+                Height="{TemplateBinding Height}"
+                Width="{TemplateBinding Width}">
             <ContentControl Margin="{TemplateBinding Padding}"
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Content="{TemplateBinding Content}">
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}">
             </ContentControl>
         </Border>
+    </ControlTemplate>
+    
+    <ControlTemplate TargetType="Button" x:Key="DefaultRoundedButtonTemplate">
+        <Border x:Name="border"
+                CornerRadius="20"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}"
+                Height="{TemplateBinding Height}"
+                Width="{TemplateBinding Width}">
+            <ContentControl x:Name="contentControl"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            Foreground="{TemplateBinding Foreground}">
+            </ContentControl>
+        </Border>
+        
+        <ControlTemplate.Triggers>
+            <!--
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Setter TargetName="Chrome" Property="RenderDefaulted" Value="true" />
+            </Trigger> -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="contentControl" Property="ContentControl.Foreground" Value="{DynamicResource SurfaceBrush}"/>
+                <Setter TargetName="border" Property="Border.Background" Value="{DynamicResource OverflowBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 </ResourceDictionary>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Niero.View_model
 {
-    class MainWindowViewModel
+    class NetViewModel
     {
     }
 }

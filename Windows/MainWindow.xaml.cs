@@ -46,10 +46,5 @@ namespace Niero.Windows
         {
             this.WindowState = WindowState.Normal;
         }
-
-        private void MouseIn(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show("Hi!");
-        }
     }
 }
