@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Niero.Windows"
+        xmlns:controls="clr-namespace:Niero.Controls"
         mc:Ignorable="d"
                 
         WindowStartupLocation="CenterScreen">
@@ -13,35 +14,21 @@
     </Window.Resources>
 
     <Grid x:Name="MainGrid" >
-        <Grid Width="200" HorizontalAlignment="Left" Margin="0,0,0,0">
-            <StackPanel Background="{DynamicResource SurfaceBrush}">
-                <TextBlock Text="Niero "
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           Margin="20,15,0,0"
-                           FontSize="24"
-                           FontStretch="UltraExpanded"
-                           FontFamily="Freestyle Script">
-                </TextBlock>
-                <Separator  Background="{DynamicResource OverflowBrush}"
-                            BorderBrush="{DynamicResource OverflowBrush}">
-                </Separator>
-                <Grid Height="40" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Button Style="{DynamicResource RoundedSidebarButton}"
-                            Grid.Column="0"
-                            Content="Prev">
-                    </Button>
-                    <Button Style="{DynamicResource RoundedSidebarButton}"
-                            Grid.Column="1"
-                            Content="Next">
-                    </Button>
-                </Grid>
-            </StackPanel>
-        </Grid>
 
+        <controls:SideMenuControl Title="Niero"
+                                  Width="200">
+            <StackPanel>
+                <Button Content="Test" Style="{DynamicResource RoundedSidebarButton}" Height="30"/>
+                <Button Content="Test2" Style="{DynamicResource RoundedSidebarButton}" Height="30"/>
+            </StackPanel>
+        </controls:SideMenuControl>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
     </Grid>
 </Window>
+
