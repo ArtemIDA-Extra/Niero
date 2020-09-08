@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="Gifs\Main.gif" />
     <None Remove="Images\Main.gif" />
+    <None Remove="SupportDictionaries\Fonts\FontAwesome.otf" />
     <None Remove="SupportDictionaries\Fonts\MagicFont.ttf" />
   </ItemGroup>
 
@@ -23,7 +24,12 @@
 
   <ItemGroup>
     <Resource Include="Gifs\Main.gif" />
-    <Resource Include="SupportDictionaries\Fonts\MagicFont.ttf" />
+    <Resource Include="SupportDictionaries\Fonts\FontAwesome.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="SupportDictionaries\Fonts\MagicFont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

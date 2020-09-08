@@ -53,12 +53,12 @@
                         <Button x:Name="PrevButton"    
                             Style="{DynamicResource RoundedSidebarButton}"
                             Grid.Column="0"
-                            Content="Prev">
+                            Content="&#xF100;">
                         </Button>
                         <Button x:Name="NextButton"
                             Style="{DynamicResource RoundedSidebarButton}"
                             Grid.Column="1"
-                            Content="Next">
+                            Content="&#xF101;">
                         </Button>
                     </Grid>
                 </Grid>

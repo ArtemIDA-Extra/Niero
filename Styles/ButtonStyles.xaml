@@ -46,7 +46,7 @@
             <Setter Property="Template" Value="{DynamicResource DefaultButtonTemplate}"/>
             <Setter Property="Foreground" Value="{DynamicResource OverflowBrush}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource OverflowBrush}"/>
-            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
             <Setter Property="FontSize" Value="20"/>
         </Style.Setters>
     </Style>
@@ -55,8 +55,8 @@
         <Style.Setters>
             <Setter Property="Template" Value="{DynamicResource DefaultRoundedButtonTemplate}"/>
             <Setter Property="Foreground" Value="{DynamicResource OverflowBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource OverflowBrush}"/>
-            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
             <Setter Property="FontSize" Value="20"/>
         </Style.Setters>
     </Style>
