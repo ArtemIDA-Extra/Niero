@@ -1,48 +1,79 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Niero">
+
+    <!-- Templates -->
     
     <ControlTemplate TargetType="Button" x:Key="DefaultButtonTemplate">
-        <Border x:Name="border"
+        <Border x:Name="btn_border"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                Background="{TemplateBinding Background}"
                 Height="{TemplateBinding Height}"
                 Width="{TemplateBinding Width}">
-            <ContentControl Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Content}">
-            </ContentControl>
-        </Border>
-    </ControlTemplate>
-    
-    <ControlTemplate TargetType="Button" x:Key="DefaultRoundedButtonTemplate">
-        <Border x:Name="border"
-                CornerRadius="20"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                Background="{TemplateBinding Background}"
-                Height="{TemplateBinding Height}"
-                Width="{TemplateBinding Width}">
+            
+            <Border.Background>
+                <SolidColorBrush x:Name="BorderColor" Color="{StaticResource SurfaceColor}" Opacity="0"/>
+            </Border.Background>
+            
             <ContentControl x:Name="contentControl"
-                            Margin="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Content="{TemplateBinding Content}"
                             Foreground="{TemplateBinding Foreground}">
             </ContentControl>
+
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="1" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="Normal">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="0" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
         </Border>
-        
-        <ControlTemplate.Triggers>
-            <!--
-            <Trigger Property="IsKeyboardFocused" Value="true">
-                <Setter TargetName="Chrome" Property="RenderDefaulted" Value="true" />
-            </Trigger> -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="contentControl" Property="ContentControl.Foreground" Value="{DynamicResource SurfaceBrush}"/>
-                <Setter TargetName="border" Property="Border.Background" Value="{DynamicResource OverflowBrush}"/>
-            </Trigger>
-        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <ControlTemplate TargetType="Button" x:Key="DefaultRoundedButtonTemplate">
+        <Border x:Name="btn_border"
+                CornerRadius="20"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Height="{TemplateBinding Height}"
+                Width="{TemplateBinding Width}">
+
+            <Border.Background>
+                <SolidColorBrush x:Name="BorderColor" Color="{StaticResource SurfaceColor}" Opacity="0"/>
+            </Border.Background>
+
+            <ContentControl x:Name="contentControl"
+                            Margin="{TemplateBinding Margin}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            Foreground="{TemplateBinding Foreground}">
+            </ContentControl>
+            
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="1" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="Normal">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="0" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Border>
     </ControlTemplate>
 </ResourceDictionary>

@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="Niero.Controls.SideMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Niero.Controls"
+             mc:Ignorable="d">
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <!-- Background -->
+            <Border x:Name="border"
+                    Background="{TemplateBinding Background}" 
+                    Width="{TemplateBinding Width}" 
+                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                    Margin="{TemplateBinding Margin}">
+                <!-- Main Grid -->
+                <Grid x:Name="MainGrid" Opacity="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="5"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="5"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!-- Title Text Block -->
+                    <TextBlock Grid.Row="0" 
+                           Text="{Binding Title}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Margin="20,15,0,0"
+                           FontSize="24"
+                           FontStretch="UltraExpanded"
+                           FontFamily="Freestyle Script">
+                    </TextBlock>
+                    <!-- Separator -->
+                    <Separator  Grid.Row="1" VerticalAlignment="Top"
+                                Background="{DynamicResource OverflowBrush}"
+                                BorderBrush="{DynamicResource OverflowBrush}">
+                    </Separator>
+                    <!-- Additional Content -->
+                    <ContentPresenter Grid.Row="2"/>
+                    <!-- Separator -->
+                    <Separator  Grid.Row="3" VerticalAlignment="Bottom"
+                                Background="{DynamicResource OverflowBrush}"
+                                BorderBrush="{DynamicResource OverflowBrush}">
+                    </Separator>
+                    <!-- Default Buttons -->
+                    <Grid Grid.Row="4" Height="40" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PrevButton"    
+                            Style="{DynamicResource RoundedSidebarButton}"
+                            Grid.Column="0"
+                            Content="&#xF100;">
+                        </Button>
+                        <Button x:Name="NextButton"
+                            Style="{DynamicResource RoundedSidebarButton}"
+                            Grid.Column="1"
+                            Content="&#xF101;">
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- Triggers -->
+            <ControlTemplate.Triggers>
+                <!-- Animations -->
+                <EventTrigger RoutedEvent="UserControl.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                            Duration="0:0:1" 
+                                            To="{StaticResource OverlayLightColor}"/>
+                            <DoubleAnimation Storyboard.TargetName="MainGrid" 
+                                             Storyboard.TargetProperty="(Grid.Opacity)"
+                                             Duration="0:0:1"
+                                             To="1"/>
+                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                To="0,0,0,0"
+                                                Duration="0:0:1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="UserControl.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                            Duration="0:0:1" 
+                                            To="{StaticResource SurfaceColor}"/>
+                            <DoubleAnimation Storyboard.TargetName="MainGrid" 
+                                             Storyboard.TargetProperty="(Grid.Opacity)"
+                                             Duration="0:0:1"
+                                             To="0"/>
+                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                To="-72,0,0,0"
+                                                Duration="0:0:1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Template>
+    
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Setters>
+                <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+                <Setter Property="Margin" Value="-72,0,0,0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style.Setters>
+        </Style>
+    </UserControl.Style>
+</UserControl>
