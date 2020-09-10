@@ -10,37 +10,56 @@
             <!-- Background -->
             <Border x:Name="border"
                     Background="{TemplateBinding Background}" 
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
                     Width="{TemplateBinding Width}" 
                     HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
                     Margin="{TemplateBinding Margin}">
                 <!-- Main Grid -->
-                <Grid x:Name="MainGrid" Opacity="0">
+                <Grid ShowGridLines="False">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition Height="5"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="5"></RowDefinition>
-                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <!-- Title Text Block -->
-                    <TextBlock Grid.Row="0" 
-                           Text="{Binding Title}"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           Margin="20,15,0,0"
-                           FontSize="24"
-                           FontStretch="UltraExpanded"
-                           FontFamily="Freestyle Script">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Title Top Bar -->
+                        <!-- Title TextBlock -->
+                    <TextBlock Grid.Column="0" Grid.Row="0"
+                               Text="{Binding Title}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Margin="20,15,0,0"
+                               FontSize="24"
+                               FontStretch="UltraExpanded"
+                               FontFamily="Freestyle Script">
                     </TextBlock>
+                        <!-- Settings Icon -->
+                    <Label Grid.Column="1" Grid.Row="0"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Center"
+                               FontFamily="{StaticResource FontAwesome}"
+                               FontSize="20"
+                               Content="&#xF039;">
+                    </Label>
                     <!-- Separator -->
-                    <Separator  Grid.Row="1" VerticalAlignment="Top"
+                    <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                                VerticalAlignment="Top"
                                 Background="{DynamicResource OverflowBrush}"
                                 BorderBrush="{DynamicResource OverflowBrush}">
                     </Separator>
                     <!-- Additional Content -->
-                    <ContentPresenter Grid.Row="2"/>
+                    <ContentPresenter Grid.Row="2" Grid.Column="0"/>
                     <!-- Separator -->
-                    <Separator  Grid.Row="3" VerticalAlignment="Bottom"
+                    <Separator  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                VerticalAlignment="Bottom"
                                 Background="{DynamicResource OverflowBrush}"
                                 BorderBrush="{DynamicResource OverflowBrush}">
                     </Separator>
@@ -73,10 +92,10 @@
                             <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
                                             Duration="0:0:1" 
                                             To="{StaticResource OverlayLightColor}"/>
-                            <DoubleAnimation Storyboard.TargetName="MainGrid" 
-                                             Storyboard.TargetProperty="(Grid.Opacity)"
+                            <!--<DoubleAnimation Storyboard.TargetName="FirstGroup" 
+                                             Storyboard.TargetProperty="Opacity"
                                              Duration="0:0:1"
-                                             To="1"/>
+                                             To="1"/>-->
                             <ThicknessAnimation Storyboard.TargetProperty="Margin"
                                                 To="0,0,0,0"
                                                 Duration="0:0:1"/>
@@ -89,12 +108,12 @@
                             <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
                                             Duration="0:0:1" 
                                             To="{StaticResource SurfaceColor}"/>
-                            <DoubleAnimation Storyboard.TargetName="MainGrid" 
-                                             Storyboard.TargetProperty="(Grid.Opacity)"
+                            <!--<DoubleAnimation Storyboard.TargetName="FirstGroup" 
+                                             Storyboard.TargetProperty="Opacity"
                                              Duration="0:0:1"
-                                             To="0"/>
+                                             To="0"/>-->
                             <ThicknessAnimation Storyboard.TargetProperty="Margin"
-                                                To="-72,0,0,0"
+                                                To="-80,0,0,0"
                                                 Duration="0:0:1"/>
                         </Storyboard>
                     </BeginStoryboard>
@@ -107,7 +126,9 @@
         <Style TargetType="UserControl">
             <Style.Setters>
                 <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
-                <Setter Property="Margin" Value="-72,0,0,0"/>
+                <Setter Property="BorderBrush" Value="{StaticResource OverflowBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="-80,0,0,0"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style.Setters>
         </Style>
