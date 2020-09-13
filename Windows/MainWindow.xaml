@@ -15,8 +15,7 @@
 
     <Grid x:Name="MainGrid" >
 
-        <controls:SideMenuControl Title="Niero"
-                                  Width="200">
+        <controls:SideMenuControl x:Name="SideMenu" Title="Niero">
             <StackPanel>
                 <Button Content="Test" Style="{DynamicResource RoundedSidebarButton}" Height="30"/>
                 <Button Content="Test2" Style="{DynamicResource RoundedSidebarButton}" Height="30"/>

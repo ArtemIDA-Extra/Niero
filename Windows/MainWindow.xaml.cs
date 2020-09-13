@@ -27,12 +27,21 @@ namespace Niero.Windows
             InitializeComponent();
             this.WindowState = WindowState.Minimized;
 
+            //Create loading window 
             loadingWindow = new LoadingWindow();
             loadingWindow.Show();
 
+            //Window events binding
             this.Loaded += MainWindow_Loaded;
-
             loadingWindow.Closed += LoadingWindow_Closed;
+
+            Button homeButton = (Button)SideMenu.Template.FindName("HomeButton", SideMenu);
+            homeButton.Click += HomeButton_Click;
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            SideMenu.Hide = true;
         }
 
         public async void MainWindow_Loaded(object sender, RoutedEventArgs e)

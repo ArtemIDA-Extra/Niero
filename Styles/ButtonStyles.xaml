@@ -19,7 +19,7 @@
             <EventTrigger RoutedEvent="MouseEnter">
                 <BeginStoryboard>
                     <Storyboard>
-                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:1" To="GhostWhite" />
+                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:0.65" To="GhostWhite" />
                         <DoubleAnimation Storyboard.TargetProperty="FontSize" Duration="0:0:1" To="26" />
                         <DoubleAnimation Storyboard.TargetProperty="Height" Duration="0:0:1" To="40" />
                         <DoubleAnimation Storyboard.TargetProperty="Width" Duration="0:0:1" To="190" />
@@ -29,7 +29,7 @@
             <EventTrigger RoutedEvent="MouseLeave">
                 <BeginStoryboard>
                     <Storyboard>
-                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:1" To="Gray" />
+                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:0.65" To="Gray" />
                         <DoubleAnimation Storyboard.TargetProperty="FontSize" Duration="0:0:1" To="20" />
                         <DoubleAnimation Storyboard.TargetProperty="Height" Duration="0:0:1" To="25" />
                         <DoubleAnimation Storyboard.TargetProperty="Width" Duration="0:0:1" To="145" />
@@ -58,6 +58,17 @@
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
             <Setter Property="FontSize" Value="20"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="HomeButton" TargetType="{x:Type Button}">
+        <Style.Setters>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Template" Value="{DynamicResource HomeButtonTemplate}"></Setter>
+            <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
+            <Setter Property="FontSize" Value="18"/>
         </Style.Setters>
     </Style>
 </ResourceDictionary>

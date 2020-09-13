@@ -76,4 +76,60 @@
             </VisualStateManager.VisualStateGroups>
         </Border>
     </ControlTemplate>
+
+    <ControlTemplate TargetType="Button" x:Key="HomeButtonTemplate">
+        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Height="{TemplateBinding Height}"
+                Width="{TemplateBinding Width}">
+
+            <Border.Background>
+                <RadialGradientBrush x:Name="BorderColor"
+                                 GradientOrigin="0.5,0.5"
+                                 Opacity="0.65">
+                    <GradientStop Color="{DynamicResource BlueDarkColor}" Offset="0"/>
+                    <GradientStop Color="{DynamicResource BlueDarkColor}" Offset="1"/>
+                    <GradientStop Color="{DynamicResource BlueDarkColor}" Offset="2"/>
+                </RadialGradientBrush>
+            </Border.Background>
+
+            <ContentControl x:Name="contentControl"
+                            Margin="{TemplateBinding Margin}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            Foreground="{TemplateBinding Foreground}">
+            </ContentControl>
+
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="1"/>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="Normal">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="0.65"/>
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.75" To="{StaticResource BlueDarkColor}" />
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.75" To="{StaticResource BlueDarkColor}" />
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[2].(GradientStop.Color)" Duration="0:0:0.75" To="{StaticResource BlueDarkColor}" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="Pressed">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0" To="1"/>
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0" To="{StaticResource BlueDarkColor}" />
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0" To="{StaticResource BlueNormalColor}" />
+                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[2].(GradientStop.Color)" Duration="0:0:0" To="{StaticResource BlueLightColor}" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="Button" x:Key="AuxiliaryButtonsTemplate">
+        
+    </ControlTemplate>
 </ResourceDictionary>
