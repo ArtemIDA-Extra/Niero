@@ -17,8 +17,14 @@
 
         <controls:SideMenuControl x:Name="SideMenu" Title="Niero">
             <StackPanel>
-                <Button Content="Test" Style="{DynamicResource RoundedSidebarButton}" Height="30"/>
-                <Button Content="Test2" Style="{DynamicResource RoundedSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
             </StackPanel>
         </controls:SideMenuControl>
 
@@ -27,6 +33,10 @@
                 <ColumnDefinition Width="42"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+
+            <Button Style="{DynamicResource AuxiliaryButton}" Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Window>

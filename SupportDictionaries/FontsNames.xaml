@@ -4,5 +4,6 @@
 
     <FontFamily x:Key="FontAwesome">/SupportDictionaries/Fonts/#Font Awesome 5 Free Solid</FontFamily>
     <FontFamily x:Key="Magic">/SupportDictionaries/Fonts/#magic</FontFamily>
+    <FontFamily x:Key="NierAutomata">/SupportDictionaries/Fonts/#Benguiat</FontFamily>
     
 </ResourceDictionary>
