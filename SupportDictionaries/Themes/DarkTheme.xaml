@@ -18,6 +18,15 @@
     <Color x:Key="OverflowColor">#010101</Color>
     <SolidColorBrush x:Key="OverflowBrush" Color="{DynamicResource OverflowColor}"/>
 
+    <Color x:Key="LightWhiteColor">#edede6</Color>
+    <SolidColorBrush x:Key="LightWhiteBrush" Color="{DynamicResource LightWhiteColor}"/>
+    
+    <Color x:Key="BaseWhiteColor">#e0e0d7</Color>
+    <SolidColorBrush x:Key="BaseWhiteBrush" Color="{DynamicResource BaseWhiteColor}"/>
+
+    <Color x:Key="DarkWhiteColor">#c4c4bb</Color>
+    <SolidColorBrush x:Key="DarkWhiteBrush" Color="{DynamicResource DarkWhiteColor}"/>
+
     <!-- Addition Colors -->
     <Color x:Key="RedLightColor">#e82020</Color>
     <SolidColorBrush x:Key="RedLightBrush" Color="{DynamicResource RedLightColor}"/>

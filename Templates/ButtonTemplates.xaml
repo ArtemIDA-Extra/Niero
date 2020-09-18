@@ -11,11 +11,11 @@
                 Height="{TemplateBinding Height}"
                 Width="{TemplateBinding Width}"
                 Margin="2,2,2,2">
-            
+
             <Border.Background>
-                <SolidColorBrush x:Name="BorderColor" Color="{StaticResource OverlayDarkColor}" Opacity="0"/>
+                <SolidColorBrush x:Name="BorderColor" Color="{StaticResource SurfaceColor}"/>
             </Border.Background>
-            
+
             <ContentControl x:Name="contentControl"
                             Margin="{TemplateBinding Margin}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -28,22 +28,23 @@
                 <VisualStateGroup Name="CommonStates">
                     <VisualState Name="MouseOver">
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3" To="0.75" />
-                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" Duration="0:0:0.3" To="1"/>
+                            <ColorAnimation Duration="0:0:0.3" To="{StaticResource DarkWhiteColor}"
+                                            Storyboard.TargetName="BorderColor" 
+                                            Storyboard.TargetProperty="Color"/>
                             <ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.3" To="0,0,0,0"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState Name="Normal">
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3" To="0" />
-                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" Duration="0:0:0.3" To="0"/>
+                            <ColorAnimation Duration="0:0:0.3" To="{StaticResource SurfaceColor}"
+                                            Storyboard.TargetName="BorderColor" 
+                                            Storyboard.TargetProperty="Color"/>
                             <ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.3" To="2,2,2,2"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState Name="Pressed">
                         <Storyboard>
                             <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3" To="1" />
-                            <ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.3" To="0,0,0,0"/>
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
@@ -93,17 +94,9 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 Height="{TemplateBinding Height}"
                 Width="{TemplateBinding Width}">
-
             <Border.Background>
-                <RadialGradientBrush x:Name="BorderColor"
-                                 GradientOrigin="0.5,0.5"
-                                 Opacity="0.65">
-                    <GradientStop Color="{DynamicResource BlueDarkColor}" Offset="0"/>
-                    <GradientStop Color="{DynamicResource BlueDarkColor}" Offset="1"/>
-                    <GradientStop Color="{DynamicResource BlueDarkColor}" Offset="2"/>
-                </RadialGradientBrush>
+                <SolidColorBrush x:Name="BorderColor" Color="{StaticResource DarkWhiteColor}"/>
             </Border.Background>
-
             <ContentControl x:Name="contentControl"
                             Margin="{TemplateBinding Margin}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -116,23 +109,17 @@
                 <VisualStateGroup Name="CommonStates">
                     <VisualState Name="MouseOver">
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="1"/>
+                            <ColorAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Color" Duration="0:0:0.75" To="{StaticResource BaseWhiteColor}"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState Name="Normal">
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0.75" To="0.65"/>
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.75" To="{StaticResource BlueDarkColor}" />
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.75" To="{StaticResource BlueDarkColor}" />
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[2].(GradientStop.Color)" Duration="0:0:0.75" To="{StaticResource BlueDarkColor}" />
+                            <ColorAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Color" Duration="0:0:0.75" To="{StaticResource DarkWhiteColor}"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState Name="Pressed">
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Opacity" Duration="0:0:0" To="1"/>
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0" To="{StaticResource BlueDarkColor}" />
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0" To="{StaticResource BlueNormalColor}" />
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientStops)[2].(GradientStop.Color)" Duration="0:0:0" To="{StaticResource BlueLightColor}" />
+                            <ColorAnimation Storyboard.TargetName="BorderColor" Storyboard.TargetProperty="Color" Duration="0:0:0.75" To="{StaticResource LightWhiteColor}"/>
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
@@ -143,10 +130,10 @@
     <ControlTemplate TargetType="Button" x:Key="ArrowButtonTemplate">
         <Border Background="Transparent"
                 Height="40"
-                Width="70">
-            <Path
+                Width="75">
+            <Path x:Name="path"
               Stroke="{StaticResource OverflowBrush}"
-              Fill="{StaticResource SurfaceBrush}"
+              Fill="{TemplateBinding Foreground}"
               Opacity="1"
               StrokeThickness="1">
                 <Path.Data>
@@ -178,11 +165,19 @@
                         </PathFigure>
                     </PathGeometry>
                 </Path.Data>
+                <Path.Effect>
+                    <DropShadowEffect x:Name="ShadowEffect" BlurRadius="0" Opacity="1" ShadowDepth="0" Color="{StaticResource OverflowColor}"></DropShadowEffect>
+                </Path.Effect>
             </Path>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup Name="CommonStates">
                     <VisualState Name="MouseOver">
                         <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="5"
+                                             Storyboard.TargetName="ShadowEffect"
+                                             Storyboard.TargetProperty="BlurRadius"/>
+                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource BaseColor}"
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)"/>
                             <!-- ArrowHurt -->
                             <PointAnimation To="5,20" Duration="0:0:0.2"
                                             Storyboard.TargetName="ArrowHurt"
@@ -252,6 +247,11 @@
                     </VisualState>
                     <VisualState Name="Normal">
                         <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="0"
+                                             Storyboard.TargetName="ShadowEffect"
+                                             Storyboard.TargetProperty="BlurRadius"/>
+                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource SurfaceColor}"
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)"/>
                             <!-- ArrowHurt -->
                             <PointAnimation To="0,20" Duration="0:0:0.2"
                                             Storyboard.TargetName="ArrowHurt"
@@ -321,6 +321,11 @@
                     </VisualState>
                     <VisualState Name="Pressed">
                         <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="10"
+                                             Storyboard.TargetName="ShadowEffect"
+                                             Storyboard.TargetProperty="BlurRadius"/>
+                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource BaseColor}"
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)"/>
                             <!-- ArrowHurt -->
                             <PointAnimation To="10,20" Duration="0:0:0.2"
                                             Storyboard.TargetName="ArrowHurt"

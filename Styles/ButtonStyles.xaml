@@ -75,14 +75,15 @@
         </Style.Setters>
     </Style>
 
-    <RotateTransform x:Key="UpArrow" CenterX="35" CenterY="20" Angle="90"/>
-    <RotateTransform x:Key="RightArrow" CenterX="35" CenterY="20" Angle="180"/>
-    <RotateTransform x:Key="DownArrow" CenterX="35" CenterY="20" Angle="270"/>
-    <RotateTransform x:Key="LeftArrow" CenterX="35" CenterY="20" Angle="0"/>
+    <RotateTransform x:Key="UpArrow" CenterX="37.5" CenterY="20" Angle="90"/>
+    <RotateTransform x:Key="RightArrow" CenterX="37.5" CenterY="20" Angle="180"/>
+    <RotateTransform x:Key="DownArrow" CenterX="37.5" CenterY="20" Angle="270"/>
+    <RotateTransform x:Key="LeftArrow" CenterX="37.5" CenterY="20" Angle="0"/>
 
     <Style x:Key="ArrowButton" TargetType="{x:Type Button}">
         <Style.Setters>
             <Setter Property="Template" Value="{DynamicResource ArrowButtonTemplate}"/>
+            <Setter Property="Foreground" Value="{StaticResource SurfaceBrush}"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style.Setters>

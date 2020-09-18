@@ -35,25 +35,28 @@
                         </Grid.RowDefinitions>
 
                         <!-- Title TextBlock -->
-                        <TextBlock Grid.Row="0"
-                               Text="{Binding Title}"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Margin="15,15,0,0"
-                               FontSize="22"
-                               FontStretch="UltraExpanded"
-                               FontFamily="{StaticResource NierAutomata}">
+                        <TextBlock x:Name="TitleTextBlock"
+                                   Grid.Row="0"
+                                   Text="{Binding Title}"
+                                   Background="{StaticResource DarkWhiteBrush}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Height="40"
+                                   Width="160"
+                                   Padding="15,15,0,0"
+                                   FontSize="22"
+                                   FontStretch="UltraExpanded"
+                                   FontFamily="{StaticResource NierAutomata}">
                         </TextBlock>
                         <!-- Separator -->
                         <Separator Grid.Row="1"  
                                 VerticalAlignment="Center"
                                 Margin="0"
-                                Background="{DynamicResource OverflowBrush}"
-                                BorderBrush="{DynamicResource OverflowBrush}">
+                                Background="{DynamicResource OverflowBrush}">
                         </Separator>
                         <!-- Content Presenter -->
                         <Border Grid.Row="2" x:Name="ContentBackground"
-                                Background="{DynamicResource OverlayLightBrush}"
+                                Background="{DynamicResource SurfaceBrush}"
                                 Panel.ZIndex="0"/>
                         <ContentPresenter Grid.Row="2"
                                           Margin="0,0,0,0"
@@ -62,15 +65,20 @@
                         <Separator  Grid.Row="3"
                                 VerticalAlignment="Center"
                                 Margin="0"
-                                Background="{DynamicResource OverflowBrush}"
-                                BorderBrush="{DynamicResource OverflowBrush}">
+                                Background="{DynamicResource OverflowBrush}">
                         </Separator>
                         <!-- Default Buttons -->
-                        <Grid Grid.Row="4" Height="40" VerticalAlignment="Bottom">
+                        <Grid x:Name="DefaultButtons"
+                              Grid.Row="4" 
+                              Height="40" 
+                              VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <Grid.Background>
+                                <SolidColorBrush Color="{StaticResource DarkWhiteColor}"/>
+                            </Grid.Background>
                             <Button x:Name="PrevButton"    
                                     Style="{DynamicResource ArrowButton}"
                                     RenderTransform="{StaticResource LeftArrow}"
@@ -92,10 +100,15 @@
                             <RowDefinition Height="1"/>
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
-                        <Separator Style="{DynamicResource VerticalSeparatorStyle}"
-                                   Grid.Row="0"
-                                   Grid.RowSpan="5">
-                        </Separator>
+                        <Border Background="{StaticResource OverflowBrush}"
+                                Grid.Row="0"/>
+                        <Border x:Name="WhiteVSeparator"
+                                Background="{StaticResource DarkWhiteBrush}"
+                                Grid.Row="1"
+                                Grid.RowSpan="3">
+                        </Border>
+                        <Border Background="{StaticResource OverflowBrush}"
+                                Grid.Row="5"/>
                     </Grid>
                     <!-- Icon Grid -->
                     <Grid x:Name="IconGrid" Grid.Column="2">
@@ -110,12 +123,18 @@
                         <!-- Custom Mask -->
                         <Border x:Name="IconGridMask"
                                 Panel.ZIndex="0"
-                                Grid.RowSpan="4"
-                                Background="{Binding Background}">
+                                Grid.RowSpan="4">
+                            <Border.Background>
+                                <SolidColorBrush x:Name="IconGridBackground" Color="{StaticResource SurfaceColor}"/>
+                            </Border.Background>
                         </Border>
 
                         <!-- Settings Icon -->
-                        <Label Grid.Row="0"
+                        <Label x:Name="SettingsIcon"
+                               Grid.Row="0"
+                               Height="40"
+                               Width="40"
+                               Background="{StaticResource DarkWhiteBrush}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                VerticalContentAlignment="Center"
@@ -127,16 +146,14 @@
                         <Separator Grid.Row="1"  
                                 VerticalAlignment="Center"
                                 Margin="0"
-                                Background="{DynamicResource OverflowBrush}"
-                                BorderBrush="{DynamicResource OverflowBrush}">
+                                Background="{DynamicResource OverflowBrush}">
                         </Separator>
                         <Separator  Grid.Row="3"
                                 VerticalAlignment="Center"
                                 Margin="0"
-                                Background="{DynamicResource OverflowBrush}"
-                                BorderBrush="{DynamicResource OverflowBrush}">
+                                Background="{DynamicResource OverflowBrush}">
                         </Separator>
-                        <!-- Exit Button -->
+                        <!-- Close Button -->
                         <Button x:Name="HomeButton" Grid.Row="4"
                                 Panel.ZIndex="100"
                                 Style="{DynamicResource HomeButton}"
@@ -150,44 +167,29 @@
             <ControlTemplate.Triggers>
                 <!-- Animations -->
                 <EventTrigger SourceName="IconGridMask" RoutedEvent="MouseEnter">
-                    <BeginStoryboard x:Name="MenuOpenStoryboard">
-                        <Storyboard x:Name="MenuOpenAnimation">
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                            Duration="0:0:0.5" 
-                                            To="{StaticResource OverlayDarkColor}"/>
-                            <ColorAnimation Storyboard.TargetName="ContentBackground"
-                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            Duration="0:0:0.5"
-                                            To="{StaticResource SurfaceColor}"/>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="{StaticResource OverlayLightColor}" Duration="0:0:0.75"
+                                            Storyboard.TargetName="IconGridBackground"
+                                            Storyboard.TargetProperty="Color"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
                 <EventTrigger SourceName="BackBorder" RoutedEvent="MouseLeave">
-                    <BeginStoryboard x:Name="MenuCloseStoryboard">
-                        <Storyboard x:Name="MenuCloseAnimation">
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                            Duration="0:0:0.5" 
-                                            To="{StaticResource SurfaceColor}"/>
-                            <ColorAnimation Storyboard.TargetName="ContentBackground"
-                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            Duration="0:0:0.5"
-                                            To="{StaticResource OverlayDarkColor}"/>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="{StaticResource SurfaceColor}" Duration="0:0:0.75"
+                                            Storyboard.TargetName="IconGridBackground"
+                                            Storyboard.TargetProperty="Color"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="local:SideMenuControl.HideChangedToTrue">
-                    <BeginStoryboard x:Name="MenuHideStoryboard">
-                        <Storyboard x:Name="MenuHideAnimation">
+                    <BeginStoryboard>
+                        <Storyboard>
                             <DoubleAnimation Storyboard.TargetProperty="(Border.Opacity)"
                                              Duration="0:0:0.75"
                                              To="0"/>
-                            <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                            Duration="0:0:0.5" 
-                                            To="{StaticResource SurfaceColor}"/>
-                            <ColorAnimation Storyboard.TargetName="ContentBackground"
-                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                            Duration="0:0:0.5"
-                                            To="{StaticResource OverlayLightColor}"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
@@ -201,8 +203,8 @@
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Setters>
-                <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource OverflowBrush}"/>
+                <Setter Property="Background" Value="{StaticResource DarkWhiteBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource DarkWhiteBrush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="IsHitTestVisible" Value="True"/>
             </Style.Setters>
