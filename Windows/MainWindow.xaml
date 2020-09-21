@@ -18,10 +18,9 @@
         WindowStartupLocation="CenterScreen">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome
-                      CaptionHeight="20"
+        <WindowChrome CaptionHeight="{Binding CaptionHeightProperty, FallbackValue=24}"
                       CornerRadius="0"
-                      ResizeBorderThickness="16"
+                      ResizeBorderThickness="{Binding ResizeBorderThickness, FallbackValue=11}"
                       GlassFrameThickness="0">
         </WindowChrome>
     </WindowChrome.WindowChrome>
@@ -49,7 +48,7 @@
 
     <Window.Template>
         <ControlTemplate TargetType="Window">
-            <Border Padding="10">
+            <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
                 <!-- Main window outline -->
                 <Grid>
                     <!-- Window border and dropshadown -->
