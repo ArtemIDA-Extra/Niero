@@ -1,4 +1,4 @@
-﻿<Window x:Class="Niero.Windows.MainWindow" Style="{DynamicResource MainWindow}"
+﻿<Window x:Class="Niero.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,41 +6,139 @@
         xmlns:local="clr-namespace:Niero.Windows"
         xmlns:controls="clr-namespace:Niero.Controls"
         mc:Ignorable="d"
-                
+
+        Title="Niero"
+        Height="720"
+        Width="1024"
+        Background="{StaticResource BaseBrush}"
+
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowState="Normal"
         WindowStartupLocation="CenterScreen">
 
-    <Window.Resources>
-        <DropShadowEffect x:Key="glowEffect" BlurRadius="30" Opacity="1" ShadowDepth="0" Color="Red"></DropShadowEffect>
-    </Window.Resources>
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+                      CaptionHeight="20"
+                      CornerRadius="0"
+                      ResizeBorderThickness="16"
+                      GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
 
-    <Grid x:Name="MainGrid" >
-
-        <controls:SideMenuControl x:Name="SideMenu" Title="Niero">
+    <Grid x:Name="MainGrid">
+        <controls:SideMenuControl x:Name="SideMenu" Title="Niero" Grid.Column="0">
             <StackPanel>
                 <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30"/>
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
+                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" Height="30" />
             </StackPanel>
         </controls:SideMenuControl>
-
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="42"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="1"
-                     BorderBrush="Red"
-                     Panel.ZIndex="1"
-                     Height="40"
-                     Width="70"
-                     Effect="{StaticResource glowEffect}">
-            </TextBox>
         </Grid>
     </Grid>
-</Window>
 
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Border Padding="10">
+                <!-- Main window outline -->
+                <Grid>
+                    <!-- Window border and dropshadown -->
+                    <Border Background="{StaticResource BaseBrush}">
+                        <Border.Effect>
+                            <DropShadowEffect x:Name="WindowNeon" BlurRadius="12" Opacity="1" ShadowDepth="0" Color="{StaticResource OverflowColor}" />
+                        </Border.Effect>
+                    </Border>
+                    <!-- The main window content -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <!-- Title Bar -->
+                            <RowDefinition Height="25" />
+                            <!-- Drop shadow -->
+                            <RowDefinition Height="Auto" />
+                            <!-- Window Content -->
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <!-- Title Bar -->
+                        <Grid Grid.Column="0"
+                              Panel.ZIndex="1"
+                              Background="{StaticResource OverlayDarkBrush}">
+                            <Grid.ColumnDefinitions>
+                                <!-- Icon -->
+                                <ColumnDefinition Width="75" />
+                                <!-- Title -->
+                                <ColumnDefinition Width="*" />
+                                <!-- Windows Button -->
+                                <ColumnDefinition Width="75" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Title -->
+                            <Viewbox Grid.Column="1" Margin="0">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+                            </Viewbox>
+                            <!-- Window Buttons -->
+                            <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right">
+                                <Button x:Name="MaxSizeButton"
+                                        WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Template="{StaticResource TriangleButton}"
+                                        BorderBrush="{StaticResource OverflowBrush}"
+                                        Margin="0,0,-15.5,0"
+                                        RenderTransform="{StaticResource UpTriangle}" />
+                                <Button x:Name="MinSizeButton"
+                                        WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Template="{StaticResource TriangleButton}"
+                                        BorderBrush="{StaticResource OverflowBrush}"
+                                        Margin="0,0,-15,0"
+                                        RenderTransform="{StaticResource DownTriangle}" />
+                                <Button x:Name="CloseWindowButton"
+                                        WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Template="{StaticResource TriangleCloseButton}"
+                                        BorderBrush="{StaticResource OverflowBrush}"
+                                        Margin="0,0,0,0"
+                                        RenderTransform="{StaticResource UpTriangle}" />
+                            </StackPanel>
+                        </Grid>
+                        <!-- Page Content -->
+                        <Border Grid.Row="2">
+                            <AdornerDecorator>
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Border>
+                    </Grid>
+                    <Grid.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.5" To="{StaticResource DarkWhiteColor}"
+                                                    Storyboard.TargetName="WindowNeon"
+                                                    Storyboard.TargetProperty="Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation BeginTime="0:0:3"
+                                                    Duration="0:0:1" To="{StaticResource OverflowColor}"
+                                                    Storyboard.TargetName="WindowNeon"
+                                                    Storyboard.TargetProperty="Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Grid.Triggers>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </Window.Template>
+</Window>

@@ -28,11 +28,11 @@
         <Image x:Name="Start_gif" 
                Height="230" 
                Width="230" 
-               gif:ImageBehavior.AnimatedSource="../Gifs/Main.gif"
-               />
+               gif:ImageBehavior.AnimatedSource="../Gifs/Main.gif">
+        </Image>
         <TextBlock Style="{DynamicResource StartupTextBlock}" 
                    Text="Loading magic for you..." 
-                   Grid.Row="1"
-                   />
+                   Grid.Row="1">
+        </TextBlock>
     </Grid>
 </Window>

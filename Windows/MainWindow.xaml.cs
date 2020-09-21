@@ -21,33 +21,81 @@ namespace Niero.Windows
     public partial class MainWindow : Window
     {
         LoadingWindow loadingWindow;
+        Button maxSizeButton, minSizeButton, closeWindowButton;
 
         public MainWindow()
         {
             InitializeComponent();
             this.WindowState = WindowState.Minimized;
 
-            //Create loading window 
+            //Init loading window 
             loadingWindow = new LoadingWindow();
             loadingWindow.Show();
+
+            //Searching elements
+            ApplyTemplate();
+            maxSizeButton = (Button)GetTemplateChild("MaxSizeButton");
+            minSizeButton = (Button)GetTemplateChild("MinSizeButton");
+            closeWindowButton = (Button)GetTemplateChild("CloseWindowButton");
+
+            //Commands time!!!
+            CommandsInit();
 
             //Window events binding
             this.Loaded += MainWindow_Loaded;
             loadingWindow.Closed += LoadingWindow_Closed;
-
-            Button homeButton = (Button)SideMenu.Template.FindName("HomeButton", SideMenu);
-            homeButton.Click += HomeButton_Click;
         }
 
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        private void CommandsInit()
         {
-            SideMenu.Hide = true;
+            maxSizeButton.Command = SystemCommands.MaximizeWindowCommand;
+            minSizeButton.Command = SystemCommands.MinimizeWindowCommand;
+            closeWindowButton.Command = SystemCommands.CloseWindowCommand;
+
+            CommandBinding comBild;
+
+            comBild = new CommandBinding();
+            comBild.Command = SystemCommands.MaximizeWindowCommand;
+            comBild.Executed += maximizeCommand_Executed;
+            maxSizeButton.CommandBindings.Add(comBild);
+
+            comBild = new CommandBinding();
+            comBild.Command = SystemCommands.MinimizeWindowCommand;
+            comBild.Executed += minimizeCommand_Executed;
+            minSizeButton.CommandBindings.Add(comBild);
+
+            comBild = new CommandBinding();
+            comBild.Command = SystemCommands.CloseWindowCommand;
+            comBild.Executed += closeCommand_Executed;
+            closeWindowButton.CommandBindings.Add(comBild);
+        }
+
+        private void maximizeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Maximized;
+        }
+
+        private void minimizeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Minimized;
+            }
+        }
+
+        private void closeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
         }
 
         public async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //await Task.Factory.StartNew(()=> { Thread.Sleep(3000);                     //Жопой чую, это МЕГА костылина, и есть куча других способов создать таймер 
-            //});                                                                        //кдасс таймер у меня не сконал (не смог поставить коллбеком Close()), а из других потоков не удается 
+            await Task.Factory.StartNew(()=> { Thread.Sleep(3000);                     //Жопой чую, это МЕГА костылина, и есть куча других способов создать таймер 
+            });                                                                        //кдасс таймер у меня не сконал (не смог поставить коллбеком Close()), а из других потоков не удается 
             loadingWindow.Close();                                                     //достучатся до загрузочного окна. В общем, пока так оставлю xDDDD
         }
 
@@ -55,5 +103,6 @@ namespace Niero.Windows
         {
             this.WindowState = WindowState.Normal;
         }
+
     }
 }

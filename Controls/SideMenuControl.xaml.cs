@@ -1,11 +1,6 @@
-﻿using Niero.Windows;
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media.Animation;
 
 namespace Niero.Controls
@@ -13,15 +8,17 @@ namespace Niero.Controls
     /// <summary>
     /// Логика взаимодействия для SideMenuControl.xaml
     /// </summary>
-    public partial class SideMenuControl :  UserControl
+    public partial class SideMenuControl : UserControl
     {
         // Required elements from ControlTemplate
-        Button homeBtn;
-        Border iconGridMask, backBorder;
+        private Button homeButton;
+
+        private Border iconGridMask, backBorder;
 
         //Animations parts
-        ThicknessAnimation OpenMoveAnim, CloseMoveAnim, HideMoveAnim;
-        bool AnimationPermission;
+        private DoubleAnimation OpenStretchingAnim, CloseStretchingAnim, HideStretchingAnim;
+
+        private bool AnimationPermission;
 
         public SideMenuControl()
         {
@@ -30,15 +27,15 @@ namespace Niero.Controls
 
             ApplyTemplate();                //О ЧЮДООО! Теперь поиск елемента не возвращает null!!! -час, проверяй...
 
-            homeBtn = (Button)GetTemplateChild("HomeButton");
+            homeButton = (Button)GetTemplateChild("HomeButton");
             backBorder = (Border)GetTemplateChild("BackBorder");
             iconGridMask = (Border)GetTemplateChild("IconGridMask");
 
-            OpenMoveAnim = new ThicknessAnimation(new Thickness(160d, 0d, 0d, 0d), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
-            CloseMoveAnim = new ThicknessAnimation(new Thickness(0d, 0d, 0d, 0d), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
-            HideMoveAnim = new ThicknessAnimation(new Thickness(-40d, 0d, 0d, 0d), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            OpenStretchingAnim = new DoubleAnimation(200, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            CloseStretchingAnim = new DoubleAnimation(40, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            HideStretchingAnim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
 
-            HideMoveAnim.Completed += HideMoveAnim_Completed;
+            HideStretchingAnim.Completed += HideStretchingAnim_Completed;
 
             AnimationPermission = true;
 
@@ -46,12 +43,12 @@ namespace Niero.Controls
             this.HideChangedToFalse += SideMenuControl_HideChangedToFalse;
             iconGridMask.MouseEnter += IconGridMask_MouseEnter;
             backBorder.MouseLeave += BackBorder_MouseLeave;
-            homeBtn.Click += HomeBtn_Click;
+            homeButton.Click += HomeBtn_Click;
         }
 
         private void SideMenuControl_HideChangedToTrue(object sender, RoutedEventArgs e)
         {
-            BeginAnimation(MarginProperty, HideMoveAnim);
+            BeginAnimation(WidthProperty, HideStretchingAnim);
             AnimationPermission = false;
         }
 
@@ -59,7 +56,7 @@ namespace Niero.Controls
         {
             if (AnimationPermission)
             {
-                BeginAnimation(MarginProperty, CloseMoveAnim);
+                BeginAnimation(WidthProperty, CloseStretchingAnim);
             }
         }
 
@@ -67,7 +64,7 @@ namespace Niero.Controls
         {
             if (AnimationPermission)
             {
-                BeginAnimation(MarginProperty, CloseMoveAnim);
+                BeginAnimation(WidthProperty, CloseStretchingAnim);
             }
         }
 
@@ -75,7 +72,7 @@ namespace Niero.Controls
         {
             if (AnimationPermission)
             {
-                BeginAnimation(MarginProperty, OpenMoveAnim);
+                BeginAnimation(WidthProperty, OpenStretchingAnim);
             }
         }
 
@@ -84,12 +81,12 @@ namespace Niero.Controls
             Hide = true;
         }
 
-        private void HideMoveAnim_Completed(object sender, EventArgs e)
+        private void HideStretchingAnim_Completed(object sender, EventArgs e)
         {
             AnimationPermission = true;
         }
 
-        //Dependency Properties 
+        //Dependency Properties
 
         public static readonly DependencyProperty TitleProperty =
         DependencyProperty.Register(
@@ -108,7 +105,7 @@ namespace Niero.Controls
         DependencyProperty.Register(
         "Hide", typeof(bool),
         typeof(SideMenuControl),
-        new PropertyMetadata(false)
+        new PropertyMetadata(false)  
         );
 
         public bool Hide
@@ -127,7 +124,8 @@ namespace Niero.Controls
         public static readonly RoutedEvent HideTrueEvent = EventManager.RegisterRoutedEvent("HideChangedToTrue", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(SideMenuControl));
         public static readonly RoutedEvent HideFalseEvent = EventManager.RegisterRoutedEvent("HideChangedToFalse", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(SideMenuControl));
 
-        public event RoutedEventHandler HideChangedToTrue {
+        public event RoutedEventHandler HideChangedToTrue
+        {
             add
             {
                 AddHandler(HideTrueEvent, value);
@@ -137,7 +135,9 @@ namespace Niero.Controls
                 RemoveHandler(HideFalseEvent, value);
             }
         }
-        public event RoutedEventHandler HideChangedToFalse {
+
+        public event RoutedEventHandler HideChangedToFalse
+        {
             add
             {
                 AddHandler(HideFalseEvent, value);
@@ -153,6 +153,7 @@ namespace Niero.Controls
             RoutedEventArgs args = new RoutedEventArgs(SideMenuControl.HideTrueEvent);
             RaiseEvent(args);
         }
+
         protected virtual void RaiseHideFalseEvent()
         {
             RoutedEventArgs args = new RoutedEventArgs(SideMenuControl.HideFalseEvent);

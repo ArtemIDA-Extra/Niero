@@ -88,4 +88,10 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style.Setters>
     </Style>
+
+    <RotateTransform x:Key="UpTriangle" CenterX="15" CenterY="12.5" Angle="0"/>
+    <RotateTransform x:Key="RightTriangle" CenterX="15" CenterY="12.5" Angle="90"/>
+    <RotateTransform x:Key="DownTriangle" CenterX="15" CenterY="12.5" Angle="180"/>
+    <RotateTransform x:Key="LeftTriangle" CenterX="15" CenterY="12.5" Angle="270"/>
+    
 </ResourceDictionary>
