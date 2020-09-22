@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Niero.View_model
+namespace Niero.ViewModels
 {
     class NetViewModel
     {

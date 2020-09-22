@@ -43,6 +43,9 @@
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Frame x:Name="PagesViewer" 
+                   Grid.Column="1">
+            </Frame>
         </Grid>
     </Grid>
 
