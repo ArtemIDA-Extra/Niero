@@ -41,9 +41,9 @@
 
     <!-- Styles -->
 
-    
-    
-    <Style x:Key="DefaultSidebarButton" TargetType="{x:Type Button}">
+
+
+    <Style x:Key="DefaultTextSidebarButton" TargetType="{x:Type Button}">
         <Style.Setters>
             <Setter Property="Template" Value="{DynamicResource DefaultTextButtonTemplate}"/>
             <Setter Property="Foreground" Value="{DynamicResource OverflowBrush}"/>

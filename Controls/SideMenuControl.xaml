@@ -56,9 +56,15 @@
                         <Border Grid.Row="2" x:Name="ContentBackground"
                                 Background="{DynamicResource SurfaceBrush}"
                                 Panel.ZIndex="0"/>
-                        <ContentPresenter Grid.Row="2"
+                        <ContentControl Content="{TemplateBinding Content}"
+                                        Grid.Row="2"
+                                        Margin="0,0,0,0"
+                                        Panel.ZIndex="1">
+                        </ContentControl>
+                        <!--<ContentPresenter Grid.Row="2"
                                           Margin="0,0,0,0"
-                                          Panel.ZIndex="1"/>
+                                          Panel.ZIndex="1">
+                        </ContentPresenter>-->
                         <!-- Separator -->
                         <Separator  Grid.Row="3"
                                 VerticalAlignment="Center"

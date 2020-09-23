@@ -18,11 +18,9 @@
         WindowStartupLocation="CenterScreen">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="{Binding Path=CaptionHeightProperty, FallbackValue=24,
-                                      RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+        <WindowChrome CaptionHeight="{Binding CaptionHeightProperty, FallbackValue=24}"
                       CornerRadius="0"
-                      ResizeBorderThickness="{Binding Path=ResizeBorderThickness, FallbackValue=11,
-                                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                      ResizeBorderThickness="{Binding ResizeBorderThickness, FallbackValue=11}"
                       GlassFrameThickness="0">
         </WindowChrome>
     </WindowChrome.WindowChrome>
@@ -30,11 +28,17 @@
     <Grid x:Name="MainGrid">
         <controls:SideMenuControl x:Name="SideMenu" Title="Niero" Grid.Column="0" Panel.ZIndex="2">
             <StackPanel>
-                <Button  
-                        Style="{DynamicResource DefaultSidebarButton}"
-                        Click="MenuSelectionController"
+                <!-- При изменении контента кнопок - меняй кейсы в обработчике
+                     cобытия Click -->
+                <Button Style="{DynamicResource DefaultTextSidebarButton}"
+                        Click="MenuButton_Click"
                         Content="Network Info"/>
-                <Button Content="Test" Style="{DynamicResource DefaultSidebarButton}" />
+                <Button Style="{DynamicResource DefaultTextSidebarButton}" 
+                        Click="MenuButton_Click"
+                        Content="Network Scan"/>
+                <Button Style="{DynamicResource DefaultTextSidebarButton}" 
+                        Click="MenuButton_Click"
+                        Content="Default(Test)"/>
             </StackPanel>
         </controls:SideMenuControl>
         <Grid>
@@ -52,8 +56,7 @@
 
     <Window.Template>
         <ControlTemplate TargetType="Window">
-            <Border Padding="{Binding Path=OuterMarginSizeThickness, FallbackValue=10,
-                              RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}">
+            <Border Padding="{Binding Path=OuterMarginSizeThickness, FallbackValue=10}">
                 <!-- Main window outline -->
                 <Grid>
                     <!-- Window border and dropshadown -->
