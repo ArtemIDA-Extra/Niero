@@ -45,11 +45,11 @@
     
     <Style x:Key="DefaultSidebarButton" TargetType="{x:Type Button}">
         <Style.Setters>
-            <Setter Property="Template" Value="{DynamicResource DefaultButtonTemplate}"/>
+            <Setter Property="Template" Value="{DynamicResource DefaultTextButtonTemplate}"/>
             <Setter Property="Foreground" Value="{DynamicResource OverflowBrush}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource OverflowBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
+            <Setter Property="FontFamily" Value="{StaticResource NierAutomata}"/>
             <Setter Property="FontSize" Value="20"/>
         </Style.Setters>
     </Style>

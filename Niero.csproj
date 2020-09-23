@@ -15,6 +15,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Release\**" />
+    <EmbeddedResource Remove="Release\**" />
+    <None Remove="Release\**" />
+    <Page Remove="Release\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Gifs\Main.gif" />
     <None Remove="Images\Main.gif" />
     <None Remove="SupportDictionaries\Fonts\FontAwesome.otf" />
@@ -28,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Images\" />
-    <Folder Include="Pages\" />
   </ItemGroup>
 
   <ItemGroup>

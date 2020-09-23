@@ -4,13 +4,14 @@
 
     <!-- Templates -->
 
-    <ControlTemplate TargetType="Button" x:Key="DefaultButtonTemplate">
+    <ControlTemplate TargetType="Button" x:Key="DefaultTextButtonTemplate">
         <Border x:Name="btn_border"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 Height="{TemplateBinding Height}"
                 Width="{TemplateBinding Width}"
-                Margin="2,2,2,2">
+                Margin="2,2,2,2"
+                Padding="2,0,2,0">
 
             <Border.Background>
                 <SolidColorBrush x:Name="BorderColor" Color="{StaticResource SurfaceColor}" />
@@ -20,8 +21,10 @@
                             Margin="{TemplateBinding Margin}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Content}"
                             Foreground="{TemplateBinding Foreground}">
+                <TextBlock Text="{TemplateBinding Content}"
+                           TextAlignment="Center"
+                           TextWrapping="WrapWithOverflow"/>
             </ContentControl>
 
             <VisualStateManager.VisualStateGroups>
@@ -172,7 +175,7 @@
                 <VisualStateGroup Name="CommonStates">
                     <VisualState Name="MouseOver">
                         <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.2" To="5"
+                            <DoubleAnimation Duration="0:0:0.2" To="2"
                                              Storyboard.TargetName="ShadowEffect"
                                              Storyboard.TargetProperty="BlurRadius" />
                             <ColorAnimation Duration="0:0:0.2" To="{StaticResource BaseColor}"
@@ -320,7 +323,7 @@
                     </VisualState>
                     <VisualState Name="Pressed">
                         <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.2" To="10"
+                            <DoubleAnimation Duration="0:0:0.2" To="5"
                                              Storyboard.TargetName="ShadowEffect"
                                              Storyboard.TargetProperty="BlurRadius" />
                             <ColorAnimation Duration="0:0:0.2" To="{StaticResource BaseColor}"
@@ -388,6 +391,80 @@
                                             Storyboard.TargetName="P8"
                                             Storyboard.TargetProperty="Point" />
                             <PointAnimation To="55,30" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P9"
+                                            Storyboard.TargetProperty="Point" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="Disabled">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="10"
+                                             Storyboard.TargetName="ShadowEffect"
+                                             Storyboard.TargetProperty="BlurRadius" />
+                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource DarkWhiteColor}"
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" />
+                            <!-- ArrowHurt -->
+                            <PointAnimation To="0,20" Duration="0:0:0.2"
+                                            Storyboard.TargetName="ArrowHurt"
+                                            Storyboard.TargetProperty="StartPoint" />
+                            <PointAnimation To="30,30" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P1"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="40,20" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P2"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="30,10" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P3"
+                                            Storyboard.TargetProperty="Point" />
+                            <!-- CenterPart -->
+                            <PointAnimation To="45,20" Duration="0:0:0.2"
+                                            Storyboard.TargetName="CenterPart"
+                                            Storyboard.TargetProperty="StartPoint" />
+                            <PointAnimation To="50,25" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P4"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="55,20" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P5"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="50,15" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P6"
+                                            Storyboard.TargetProperty="Point" />
+                            <!-- UpPart -->
+                            <PointAnimation To="50,10" Duration="0:0:0.2"
+                                            Storyboard.TargetName="UpPart"
+                                            Storyboard.TargetProperty="StartPoint" />
+                            <PointAnimation To="55,5" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P13"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="50,0" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P14"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="45,5" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P15"
+                                            Storyboard.TargetProperty="Point" />
+                            <!-- RightPart -->
+                            <PointAnimation To="60,20" Duration="0:0:0.2"
+                                            Storyboard.TargetName="RightPart"
+                                            Storyboard.TargetProperty="StartPoint" />
+                            <PointAnimation To="65,25" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P10"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="70,20" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P11"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="65,15" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P12"
+                                            Storyboard.TargetProperty="Point" />
+                            <!-- DownPart -->
+                            <PointAnimation To="50,30" Duration="0:0:0.2"
+                                            Storyboard.TargetName="DownPart"
+                                            Storyboard.TargetProperty="StartPoint" />
+                            <PointAnimation To="45,35" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P7"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="50,40" Duration="0:0:0.2"
+                                            Storyboard.TargetName="P8"
+                                            Storyboard.TargetProperty="Point" />
+                            <PointAnimation To="55,35" Duration="0:0:0.2"
                                             Storyboard.TargetName="P9"
                                             Storyboard.TargetProperty="Point" />
                         </Storyboard>

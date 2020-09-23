@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Niero.Pages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,6 +25,7 @@ namespace Niero.Windows
     {
         LoadingWindow loadingWindow;
         Button maxSizeButton, minSizeButton, closeWindowButton;
+        Button nextPageButton, prevPageButton;
 
         private int OuterWindowMargin = 10;
         private int ResizeBorderSize = 11;
@@ -50,7 +53,6 @@ namespace Niero.Windows
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
             this.WindowState = WindowState.Minimized;
 
             //Init loading window 
@@ -62,6 +64,17 @@ namespace Niero.Windows
             maxSizeButton = (Button)GetTemplateChild("MaxSizeButton");
             minSizeButton = (Button)GetTemplateChild("MinSizeButton");
             closeWindowButton = (Button)GetTemplateChild("CloseWindowButton");
+            nextPageButton = (Button)SideMenu.Template.FindName("NextButton", SideMenu);
+            prevPageButton = (Button)SideMenu.Template.FindName("PrevButton", SideMenu);
+
+            //Navigate buttons init
+            nextPageButton.IsEnabled = false;
+            prevPageButton.IsEnabled = false;
+
+            //PagesViewer init
+            PagesViewer.JournalOwnership = JournalOwnership.OwnsJournal;
+            PagesViewer.Content = new DefaultPage();
+            PagesViewer.Navigated += PagesViewer_Navigated;
 
             //Commands time!
             CommandsInit();
@@ -70,6 +83,15 @@ namespace Niero.Windows
             this.StateChanged += MainWindow_StateChanged;
             this.Loaded += MainWindow_Loaded;
             loadingWindow.Closed += LoadingWindow_Closed;
+        }
+
+        private void PagesViewer_Navigated(object sender, NavigationEventArgs e)
+        {
+            if (PagesViewer.CanGoBack) prevPageButton.IsEnabled = true;
+            else                       prevPageButton.IsEnabled = false;
+
+            if (PagesViewer.CanGoForward) nextPageButton.IsEnabled = true;
+            else                          nextPageButton.IsEnabled = false;
         }
 
         private void MainWindow_StateChanged(object sender, EventArgs e)
@@ -110,22 +132,61 @@ namespace Niero.Windows
             minSizeButton.Command = SystemCommands.MinimizeWindowCommand;
             closeWindowButton.Command = SystemCommands.CloseWindowCommand;
 
-            CommandBinding comBild;
+            nextPageButton.Command = NavigationCommands.NextPage;
+            prevPageButton.Command = NavigationCommands.PreviousPage;
 
-            comBild = new CommandBinding();
-            comBild.Command = SystemCommands.MaximizeWindowCommand;
-            comBild.Executed += maximizeCommand_Executed;
-            maxSizeButton.CommandBindings.Add(comBild);
+            CommandBinding comBind;
 
-            comBild = new CommandBinding();
-            comBild.Command = SystemCommands.MinimizeWindowCommand;
-            comBild.Executed += minimizeCommand_Executed;
-            minSizeButton.CommandBindings.Add(comBild);
+            comBind = new CommandBinding();
+            comBind.Command = SystemCommands.MaximizeWindowCommand;
+            comBind.Executed += maximizeCommand_Executed;
+            maxSizeButton.CommandBindings.Add(comBind);
 
-            comBild = new CommandBinding();
-            comBild.Command = SystemCommands.CloseWindowCommand;
-            comBild.Executed += closeCommand_Executed;
-            closeWindowButton.CommandBindings.Add(comBild);
+            comBind = new CommandBinding();
+            comBind.Command = SystemCommands.MinimizeWindowCommand;
+            comBind.Executed += minimizeCommand_Executed;
+            minSizeButton.CommandBindings.Add(comBind);
+
+            comBind = new CommandBinding();
+            comBind.Command = SystemCommands.CloseWindowCommand;
+            comBind.Executed += closeCommand_Executed;
+            closeWindowButton.CommandBindings.Add(comBind);
+
+            CommandBinding SMcomBind;
+
+            SMcomBind = new CommandBinding();
+            SMcomBind.Command = NavigationCommands.NextPage;
+            SMcomBind.Executed += nextPageCommand_Executed;
+            nextPageButton.CommandBindings.Add(SMcomBind);
+
+            SMcomBind = new CommandBinding();
+            SMcomBind.Command = NavigationCommands.PreviousPage;
+            SMcomBind.Executed += prevPageCommand_Executed;
+            prevPageButton.CommandBindings.Add(SMcomBind);
+        }
+
+        private void prevPageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (PagesViewer.CanGoBack)
+            {
+                PagesViewer.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("Cant go back!");
+            }
+        }
+
+        private void nextPageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (PagesViewer.CanGoForward)
+            {
+                PagesViewer.GoForward();
+            }
+            else
+            {
+                MessageBox.Show("Cant go forward!");
+            }
         }
 
         private void maximizeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -155,6 +216,11 @@ namespace Niero.Windows
             await Task.Factory.StartNew(()=> { Thread.Sleep(3000);                     //Жопой чую, это МЕГА костылина, и есть куча других способов создать таймер 
             });                                                                        //кдасс таймер у меня не сконал (не смог поставить коллбеком Close()), а из других потоков не удается 
             loadingWindow.Close();                                                     //достучатся до загрузочного окна. В общем, пока так оставлю xDDDD
+        }
+
+        private void MenuSelectionController(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show((sender as Button).Content.ToString());
         }
 
         private void LoadingWindow_Closed(object sender, EventArgs e)
