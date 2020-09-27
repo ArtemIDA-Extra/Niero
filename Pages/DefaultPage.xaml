@@ -4,14 +4,28 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Niero.Pages"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DefaultPage">
 
     <Grid Margin="0,0,40,0">
-        <TextBlock Text="Default page is EMPTY!!!"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Height="200" 
+               Width="200" 
+               Grid.Row="1"
+               gif:ImageBehavior.AnimatedSource="../Gifs/NierRobot.gif">
+        </Image>
+        <TextBlock Text="It's so empty and lonely here..."
+                   Grid.Row="2"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   FontSize="40"/>
+                   FontFamily="{StaticResource NierAutomata}"
+                   FontSize="20"/>
     </Grid>
 </Page>

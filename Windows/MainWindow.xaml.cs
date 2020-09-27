@@ -19,7 +19,7 @@ namespace Niero.Windows
         }
 
         //Временно-постоянное решение
-        //Как будет время запили кастом команду (и ДВЕРЬ МНЕ ЗАПИЛИ!!!) 
+        //Как будет время запили кастом команду (и ДВЕРЬ МНЕ ЗАПИЛИ!!! =) ) 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             mainWindowVM.ChangeMenuSelection((sender as Button).Content.ToString());

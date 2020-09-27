@@ -6,8 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="SupportDictionaries/Themes/DarkTheme.xaml"/>
-                <ResourceDictionary Source="SupportDictionaries/FontsNames.xaml"/>
+                <ResourceDictionary Source="DesignDictionaries/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="DesignDictionaries/FontsNames.xaml"/>
                 
                 <ResourceDictionary Source="Styles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="Styles/OtherStyles.xaml"/>

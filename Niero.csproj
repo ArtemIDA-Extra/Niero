@@ -22,11 +22,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="DesignDictionaries\Cursors\Alternate Select.ani" />
+    <None Remove="DesignDictionaries\Cursors\Busy.ani" />
+    <None Remove="DesignDictionaries\Cursors\Diagonal Resize 1.ani" />
+    <None Remove="DesignDictionaries\Cursors\Diagonal Resize 2.ani" />
+    <None Remove="DesignDictionaries\Cursors\Handwriting.ani" />
+    <None Remove="DesignDictionaries\Cursors\Help Select.ani" />
+    <None Remove="DesignDictionaries\Cursors\Horizontal Resize.ani" />
+    <None Remove="DesignDictionaries\Cursors\Link Select.ani" />
+    <None Remove="DesignDictionaries\Cursors\Location Select.ani" />
+    <None Remove="DesignDictionaries\Cursors\Normal Select.ani" />
+    <None Remove="DesignDictionaries\Cursors\Person Select.ani" />
+    <None Remove="DesignDictionaries\Cursors\Precision.ani" />
+    <None Remove="DesignDictionaries\Cursors\Text Select.ani" />
+    <None Remove="DesignDictionaries\Cursors\Unavailable.ani" />
+    <None Remove="DesignDictionaries\Cursors\Vertical Resize.ani" />
+    <None Remove="DesignDictionaries\Cursors\Working in Background.ani" />
     <None Remove="Gifs\Main.gif" />
-    <None Remove="Images\Main.gif" />
-    <None Remove="SupportDictionaries\Fonts\FontAwesome.otf" />
-    <None Remove="SupportDictionaries\Fonts\MagicFont.ttf" />
-    <None Remove="SupportDictionaries\Fonts\NierAutomataFont.ttf" />
+    <None Remove="Gifs\NierRobot.gif" />
+    <None Remove="DesignDictionaries\Fonts\FontAwesome.otf" />
+    <None Remove="DesignDictionaries\Fonts\MagicFont.ttf" />
+    <None Remove="DesignDictionaries\Fonts\NierAutomataFont.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,16 +54,41 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="NieroNetLib">
+      <HintPath>..\..\NieroNetLib\bin\Release\netcoreapp3.1\NieroNetLib.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Gifs\Main.gif" />
-    <Resource Include="SupportDictionaries\Fonts\FontAwesome.otf">
+    <Resource Include="Gifs\NierRobot.gif" />
+    <Resource Include="DesignDictionaries\Fonts\FontAwesome.otf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="SupportDictionaries\Fonts\MagicFont.ttf">
+    <Resource Include="DesignDictionaries\Fonts\MagicFont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="SupportDictionaries\Fonts\NierAutomataFont.ttf">
+    <Resource Include="DesignDictionaries\Fonts\NierAutomataFont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Alternate Select.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Busy.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Diagonal Resize 1.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Diagonal Resize 2.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Handwriting.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Help Select.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Horizontal Resize.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Link Select.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Location Select.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Move.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Normal Select.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Person Select.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Precision.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Text Select.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Unavailable.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Vertical Resize.ani" />
+    <EmbeddedResource Include="DesignDictionaries\Cursors\Working in Background.ani" />
   </ItemGroup>
 
 </Project>

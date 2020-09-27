@@ -2,6 +2,57 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Niero">
 
+    <Style x:Key="RoundedInfoBorder" TargetType="Border">
+        <Style.Setters>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OverlayDarkBrush}"/>
+            <Setter Property="Background" Value="{StaticResource BaseBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="GotMouseCapture">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource DarkWhiteColor}"
+                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="LostMouseCapture">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource BaseColor}"
+                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayLightColor}"
+                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource BaseColor}"
+                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MainCanvasBorder" TargetType="Border">
+        <Style.Setters>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BaseBrush}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style.Setters>
+    </Style>
+    
     <Style x:Key="VerticalSeparatorStyle" 
            TargetType="{x:Type Separator}"
            BasedOn="{StaticResource {x:Type Separator}}">

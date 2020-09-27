@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Input;
 using Niero.Controls;
+using Niero.SupportClasses;
 using Niero.Pages;
 
 namespace Niero.ViewModels
@@ -47,6 +48,7 @@ namespace Niero.ViewModels
             mainWindow = window;
 
             mainWindow.WindowState = WindowState.Minimized;
+            mainWindow.Cursor = CustomCursors.Normal_Select;
 
             //Init loading window 
             loadingWindow = new LoadingWindow();
