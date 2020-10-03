@@ -65,6 +65,12 @@ namespace Niero.ViewModels
             nextPageButton = (Button)sideMenu.Template.FindName("NextButton", sideMenu);
             prevPageButton = (Button)sideMenu.Template.FindName("PrevButton", sideMenu);
 
+            //Menu buttons click events connect
+            foreach (Button menuButton in (sideMenu.Content as StackPanel).Children) 
+            {
+                menuButton.Click += ChangeMenuSelection;
+            }
+
             //Navigate buttons init
             nextPageButton.IsEnabled = false;
             prevPageButton.IsEnabled = false;
@@ -176,9 +182,9 @@ namespace Niero.ViewModels
         }
 
         //Menu changes handler
-        public void ChangeMenuSelection(string select)
+        public void ChangeMenuSelection(object sender, RoutedEventArgs e)
         {
-            switch (select)
+            switch ((sender as Button).Content.ToString())
             {
                 case "Network Info": pagesViewer.Content = new NetworkInfoPage(); break;
                 case "Network Scan": pagesViewer.Content = new NetScanningMainPage(); break;
@@ -220,10 +226,8 @@ namespace Niero.ViewModels
         }
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Factory.StartNew(() => {
-                Thread.Sleep(3000);                     //Жопой чую, это МЕГА костылина, и есть куча других способов создать таймер 
-            });                                                                        //кдасс таймер у меня не сконал (не смог поставить коллбеком Close()), а из других потоков не удается 
-            loadingWindow.Close();                                                     //достучатся до загрузочного окна. В общем, пока так оставлю xDDDD
+            await Task.Delay(3000);
+            loadingWindow.Close();
         }
         private void LoadingWindow_Closed(object sender, EventArgs e)
         {

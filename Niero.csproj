@@ -38,6 +38,7 @@
     <None Remove="DesignDictionaries\Cursors\Unavailable.ani" />
     <None Remove="DesignDictionaries\Cursors\Vertical Resize.ani" />
     <None Remove="DesignDictionaries\Cursors\Working in Background.ani" />
+    <None Remove="DesignDictionaries\Fonts\RodinFont.ttf" />
     <None Remove="Gifs\Main.gif" />
     <None Remove="Gifs\NierRobot.gif" />
     <None Remove="DesignDictionaries\Fonts\FontAwesome.otf" />
@@ -61,6 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="DesignDictionaries\Fonts\RodinFont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Gifs\Main.gif" />
     <Resource Include="Gifs\NierRobot.gif" />
     <Resource Include="DesignDictionaries\Fonts\FontAwesome.otf">

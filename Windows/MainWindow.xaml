@@ -10,6 +10,8 @@
         Title="Niero"
         Height="720"
         Width="1024"
+        MinHeight="720"
+        MinWidth="1024"
         Background="{StaticResource BaseBrush}"
 
         WindowStyle="None"
@@ -31,13 +33,10 @@
                 <!-- При изменении контента кнопок - меняй кейсы в обработчике
                      cобытия Click -->
                 <Button Style="{DynamicResource DefaultTextSidebarButton}"
-                        Click="MenuButton_Click"
                         Content="Network Info"/>
                 <Button Style="{DynamicResource DefaultTextSidebarButton}" 
-                        Click="MenuButton_Click"
                         Content="Network Scan"/>
                 <Button Style="{DynamicResource DefaultTextSidebarButton}" 
-                        Click="MenuButton_Click"
                         Content="Default(Test)"/>
             </StackPanel>
         </controls:SideMenuControl>

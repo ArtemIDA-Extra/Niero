@@ -8,7 +8,12 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NetworkInfoPage">
 
-    <Grid >
+    <Page.Resources>
+        <TranslateTransform x:Key="BasicInfoPos" X="0" Y="0"/>
+        <TranslateTransform x:Key="AdaptersInfoPos" X="260" Y="0"/>
+    </Page.Resources>
+    
+    <Grid>
         <!-- Анимации перехода между страницами попробуй реализовать через события страницы (загружено, выгружено) и свойство Opacity -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -23,20 +28,22 @@
                    Text="Network Information">
         </TextBlock>
         <Border x:Name="MainBorder" 
+                CornerRadius="10"
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Style="{StaticResource MainCanvasBorder}">
+            <Border.BorderBrush>
+                <SolidColorBrush x:Name="MainBorderBrush" Color="{StaticResource BaseColor}"/>
+            </Border.BorderBrush>
             <Canvas x:Name="MainCanvas">
-                <Border Canvas.Top="10"
-                    Canvas.Left="10"
-                    Width="200"
-                    Height="100"
-                    Style="{StaticResource RoundedInfoBorder}"
-                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
-                    MouseLeftButtonUp="Border_MouseLeftButtonUp"
-                    MouseMove="Border_MouseMove">
-                    <Grid x:Name="DeviceInfo">
+                <!-- Basic info -->
+                <Border x:Name="DeviceInfo"
+                        Width="250"
+                        Height="100"
+                        RenderTransform="{StaticResource BasicInfoPos}"
+                        Style="{StaticResource RoundedInfoBorder}">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="3*"/>
@@ -53,19 +60,28 @@
                            Grid.Row="0"
                            Grid.Column="1"
                            Style="{StaticResource BasicTextBlock}"
-                           Foreground="Green"/>
+                           Foreground="White"/>
                         <TextBlock Text="Active local IPv4:"
                            Grid.Row="1"
                            Grid.Column="0"
                            Style="{StaticResource BasicTextBlock}"
                            VerticalAlignment="Top"/>
-                        <TextBlock x:Name="IPv4Output"
+                        <TextBlock 
+                           x:Name="IPv4Output"
                            Grid.Row="1"
                            Grid.Column="1"
                            Style="{StaticResource BasicTextBlock}"
                            Foreground="Green"
                            VerticalAlignment="Top"/>
                     </Grid>
+                </Border>
+
+                <Border x:Name="AdaptersInfo"
+                        Width="200"
+                        Height="200"
+                        RenderTransform="{StaticResource AdaptersInfoPos}"
+                        Style="{StaticResource RoundedInfoBorder}">
+    
                 </Border>
             </Canvas>
         </Border>
