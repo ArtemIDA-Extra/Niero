@@ -1,0 +1,91 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Niero.DesignDictionaries.Themes">
+
+    <!-- Base Colors -->
+    
+    <Color x:Key="OverlayLightColor">#b5b19b</Color>
+    <SolidColorBrush x:Key="OverlayLightBrush" Color="{DynamicResource OverlayLightColor}"/>
+
+    <Color x:Key="OverlayDarkColor">#686457</Color>
+    <SolidColorBrush x:Key="OverlayDarkBrush" Color="{DynamicResource OverlayDarkColor}"/>
+
+    <Color x:Key="SurfaceColor">#dbd5bc</Color>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{DynamicResource SurfaceColor}"/>
+
+    <Color x:Key="BaseColor">#cec9b2</Color>
+    <SolidColorBrush x:Key="BaseBrush" Color="{DynamicResource BaseColor}"/>
+
+    <Color x:Key="OverflowColor">#36342c</Color>
+    <SolidColorBrush x:Key="OverflowBrush" Color="{DynamicResource OverflowColor}"/>
+
+    <Color x:Key="DarkTextColor">#565349</Color>
+    <SolidColorBrush x:Key="DarkTextBrush" Color="{DynamicResource DarkTextColor}"/>
+
+    <Color x:Key="ShadowOnLight">#8f897b</Color>
+    <SolidColorBrush x:Key="ShadowOnLightBrush" Color="{DynamicResource ShadowOnLight}"/>
+
+    <Color x:Key="DisabledColor">#66655c</Color>
+    <SolidColorBrush x:Key="DisabledBrush" Color="{DynamicResource DisabledColor}"/>
+
+    <!-- Addition Colors -->
+
+    <Color x:Key="BrownColor">#877a62</Color>
+    <SolidColorBrush x:Key="BrownBrush" Color="{DynamicResource BrownColor}"/>
+
+    <Color x:Key="RedColor">#ce664c</Color>
+    <SolidColorBrush x:Key="RedBrush" Color="{DynamicResource RedColor}"/>
+
+    <Color x:Key="YellowColor">#e7deb0</Color>
+    <SolidColorBrush x:Key="YellowBrush" Color="{DynamicResource YellowColor}"/>
+
+    <Color x:Key="WhiteColor">#eae5d1</Color>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource WhiteColor}"/>
+
+    <!-- Colors for special UIElements -->
+
+    <!-- Window close button -->
+
+    <Color x:Key="RedLightColor">#e82020</Color>
+    <SolidColorBrush x:Key="RedLightBrush" Color="{DynamicResource RedLightColor}"/>
+
+    <Color x:Key="RedNormalColor">#e82e2e</Color>
+    <SolidColorBrush x:Key="RedNormalBrush" Color="{DynamicResource RedNormalColor}"/>
+
+    <Color x:Key="RedDarkColor">#b31b1b</Color>
+    <SolidColorBrush x:Key="RedDarkBrush" Color="{DynamicResource RedDarkColor}"/>
+
+    <!-- Effects -->
+
+    <DropShadowEffect x:Key="BigTextShadow" Opacity="0.5" Direction="315" BlurRadius="0" ShadowDepth="5" Color="{StaticResource ShadowOnLight}"/>
+    <DropShadowEffect x:Key="SurfaceBlockShadow" Opacity="0.5" Direction="315" BlurRadius="0" ShadowDepth="5" Color="{StaticResource ShadowOnLight}"/>
+    
+    <!-- Animation -->
+
+    <Storyboard x:Key="ColorsInversionToActive">
+        <ColorAnimation Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+        <ColorAnimation Duration="0:0:0.3" To="{StaticResource BaseColor}"
+                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+    </Storyboard>
+    
+    <Storyboard x:Key="ColorsInversionToInactive">
+        <ColorAnimation Duration="0:0:0.3" To="{StaticResource BaseColor}"
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+        <ColorAnimation  Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
+                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <ColorAnimation x:Key="ForegroundColorToInactive" 
+                    Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
+                    Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+
+    <ColorAnimation x:Key="ForegroundColorToActive" 
+                    Duration="0:0:0.3" To="{StaticResource BaseColor}"
+                    Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+
+    <!-- Background -->
+
+    <ImageBrush x:Key="BackgroundImage" ImageSource="../../Images/MainBackground_16x9.png"/>
+
+</ResourceDictionary>

@@ -4,33 +4,18 @@
 
     <Style x:Key="RoundedInfoBorder" TargetType="Border">
         <Style.Setters>
-            <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="BorderBrush" Value="{StaticResource OverlayDarkBrush}"/>
-            <Setter Property="Background" Value="{StaticResource BaseBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <!--<Setter Property="Opacity" Value="0"/>-->
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OverflowBrush}"/>
+            <Setter Property="Background" Value="{StaticResource OverlayLightBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Effect" Value="{StaticResource SurfaceBlockShadow}"/>
+            <Setter Property="Opacity" Value="0"/>
         </Style.Setters>
         <Style.Triggers>
-            <EventTrigger RoutedEvent="GotMouseCapture">
+            <!--<EventTrigger RoutedEvent="MouseEnter">
                 <BeginStoryboard>
                     <Storyboard>
-                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource DarkWhiteColor}"
-                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-            <EventTrigger RoutedEvent="LostMouseCapture">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource BaseColor}"
-                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-            <EventTrigger RoutedEvent="MouseEnter">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayLightColor}"
+                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayDarkColor}"
                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
                     </Storyboard>
                 </BeginStoryboard>
@@ -38,11 +23,29 @@
             <EventTrigger RoutedEvent="MouseLeave">
                 <BeginStoryboard>
                     <Storyboard>
-                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource BaseColor}"
+                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayLightColor}"
                                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
                     </Storyboard>
                 </BeginStoryboard>
-            </EventTrigger>
+            </EventTrigger>-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayDarkColor}"
+                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayLightColor}"
+                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -53,24 +56,23 @@
             <Setter Property="BorderThickness" Value="2"/>
         </Style.Setters>
     </Style>
-    
-    <Style x:Key="VerticalSeparatorStyle" 
-           TargetType="{x:Type Separator}"
-           BasedOn="{StaticResource {x:Type Separator}}">
-        <Setter Property="Margin" Value="0,0,0,0"/>
-        <Setter Property="Background" Value="{DynamicResource OverflowBrush}"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="LayoutTransform">
-            <Setter.Value>
-                <TransformGroup>
-                    <TransformGroup.Children>
-                        <TransformCollection>
-                            <RotateTransform Angle="90"/>
-                        </TransformCollection>
-                    </TransformGroup.Children>
-                </TransformGroup>
-            </Setter.Value>
-        </Setter>
+
+    <Style x:Key="MoveTextBox" TargetType="TextBox">
+        <Style.Setters>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Template" Value="{DynamicResource TextBoxForMoveBorder}"/>
+        </Style.Setters>
     </Style>
 
 </ResourceDictionary>

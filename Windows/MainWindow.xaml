@@ -8,16 +8,13 @@
         mc:Ignorable="d"
 
         Title="Niero"
-        Height="720"
-        Width="1024"
-        MinHeight="720"
-        MinWidth="1024"
-        Background="{StaticResource BaseBrush}"
+        Height="961"
+        Width="1664"
+        MinHeight="961"
+        MinWidth="1664"
 
         WindowStyle="None"
-        AllowsTransparency="True"
-        WindowState="Normal"
-        WindowStartupLocation="CenterScreen">
+        AllowsTransparency="True">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{Binding CaptionHeightProperty, FallbackValue=24}"
@@ -27,7 +24,7 @@
         </WindowChrome>
     </WindowChrome.WindowChrome>
 
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" Background="{StaticResource BackgroundImage}">
         <controls:SideMenuControl x:Name="SideMenu" Title="Niero" Grid.Column="0" Panel.ZIndex="2">
             <StackPanel>
                 <!-- При изменении контента кнопок - меняй кейсы в обработчике
@@ -48,7 +45,7 @@
             <Frame x:Name="PagesViewer" 
                    Grid.Column="1"
                    Panel.ZIndex="1"
-                   NavigationUIVisibility="Hidden">
+                   NavigationUIVisibility="Hidden" Content="">
             </Frame>
         </Grid>
     </Grid>
@@ -59,9 +56,9 @@
                 <!-- Main window outline -->
                 <Grid>
                     <!-- Window border and dropshadown -->
-                    <Border Background="{StaticResource BaseBrush}">
+                    <Border Background="{TemplateBinding Background}">
                         <Border.Effect>
-                            <DropShadowEffect x:Name="WindowNeon" BlurRadius="12" Opacity="1" ShadowDepth="0" Color="{StaticResource OverflowColor}" />
+                            <DropShadowEffect x:Name="WindowNeon" BlurRadius="12" Opacity="1" ShadowDepth="0" Color="{StaticResource BaseColor}" />
                         </Border.Effect>
                     </Border>
                     <!-- The main window content -->
@@ -77,7 +74,7 @@
                         <!-- Title Bar -->
                         <Grid Grid.Column="0"
                               Panel.ZIndex="1"
-                              Background="{StaticResource OverlayDarkBrush}">
+                              Background="{StaticResource SurfaceBrush}">
                             <Grid.ColumnDefinitions>
                                 <!-- Icon -->
                                 <ColumnDefinition Width="75" />
@@ -126,7 +123,7 @@
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.5" To="{StaticResource DarkWhiteColor}"
+                                    <ColorAnimation Duration="0:0:0.5" To="{StaticResource BaseColor}"
                                                     Storyboard.TargetName="WindowNeon"
                                                     Storyboard.TargetProperty="Color"/>
                                 </Storyboard>

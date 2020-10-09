@@ -39,8 +39,6 @@
             <Canvas x:Name="MainCanvas">
                 <!-- Basic info -->
                 <Border x:Name="DeviceInfo"
-                        Width="250"
-                        Height="100"
                         RenderTransform="{StaticResource BasicInfoPos}"
                         Style="{StaticResource RoundedInfoBorder}">
                     <Grid>
@@ -56,32 +54,78 @@
                            Grid.Row="0"
                            Grid.Column="0"
                            Style="{StaticResource BasicTextBlock}"/>
-                        <TextBlock x:Name="DeviceNameOutput"
+                        <TextBox x:Name="DeviceNameOutput"
                            Grid.Row="0"
                            Grid.Column="1"
-                           Style="{StaticResource BasicTextBlock}"
-                           Foreground="White"/>
+                           Style="{StaticResource MoveTextBox}"/>
                         <TextBlock Text="Active local IPv4:"
                            Grid.Row="1"
                            Grid.Column="0"
                            Style="{StaticResource BasicTextBlock}"
                            VerticalAlignment="Top"/>
-                        <TextBlock 
-                           x:Name="IPv4Output"
+                        <StackPanel x:Name="IPv4Output"
                            Grid.Row="1"
-                           Grid.Column="1"
-                           Style="{StaticResource BasicTextBlock}"
-                           Foreground="Green"
-                           VerticalAlignment="Top"/>
+                           Grid.Column="1">
+                        </StackPanel>
                     </Grid>
                 </Border>
-
-                <Border x:Name="AdaptersInfo"
-                        Width="200"
-                        Height="200"
+                <!-- Working Adapters Info -->
+                <Border x:Name="WorkingAdaptersInfo"
                         RenderTransform="{StaticResource AdaptersInfoPos}"
                         Style="{StaticResource RoundedInfoBorder}">
-    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Adapters Names"
+                                   Grid.Column="0"
+                                   Grid.Row="0"
+                                   Style="{StaticResource BasicTextBlock}">
+                        </TextBlock>
+                        <Border Background="Black"
+                                Grid.Column="1"
+                                Grid.RowSpan="2">
+                        </Border>
+                        <TextBlock Text="Ip Adresses"
+                                   Grid.Column="2"
+                                   Grid.Row="0"
+                                   Style="{StaticResource BasicTextBlock}">
+                        </TextBlock>
+                        <Border Background="Black"
+                                Grid.Column="3"
+                                Grid.RowSpan="2">
+                        </Border>
+                        <TextBlock Text="MAC Adresses"
+                                   Grid.Column="4"
+                                   Grid.Row="0"
+                                   Style="{StaticResource BasicTextBlock}">
+                        </TextBlock>
+                        <!-- Content -->
+                        <StackPanel x:Name="AdaptersNamesOutput"
+                                    Grid.Row="1"
+                                    Grid.Column="0">
+                        </StackPanel>
+                        <StackPanel x:Name="IpAdressesOutput"
+                                    Grid.Row="1"
+                                    Grid.Column="2">
+                        </StackPanel>
+                        <StackPanel x:Name="MacAdressesOutput"
+                                    Grid.Row="1"
+                                    Grid.Column="4">
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <!-- Speed Info -->
+                <Border x:Name="SpeedInfo">
+                    
                 </Border>
             </Canvas>
         </Border>

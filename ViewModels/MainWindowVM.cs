@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Niero.Controls;
 using Niero.SupportClasses;
 using Niero.Pages;
+using System.Windows.Media.Animation;
 
 namespace Niero.ViewModels
 {
@@ -47,7 +48,10 @@ namespace Niero.ViewModels
         {
             mainWindow = window;
 
-            mainWindow.WindowState = WindowState.Minimized;
+            mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            mainWindow.WindowState = WindowState.Normal;
+            mainWindow.Opacity = 0;
+
             mainWindow.Cursor = CustomCursors.Normal_Select;
 
             //Init loading window 
@@ -176,8 +180,11 @@ namespace Niero.ViewModels
                 mainWindow.WindowState = WindowState.Minimized;
             }
         }
-        private void closeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        private async void closeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            DoubleAnimation anim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            mainWindow.BeginAnimation(Window.OpacityProperty, anim);
+            await Task.Delay(750);
             mainWindow.Close();
         }
 
@@ -226,12 +233,15 @@ namespace Niero.ViewModels
         }
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(3000);
+            await Task.Delay(3200);
             loadingWindow.Close();
         }
+
         private void LoadingWindow_Closed(object sender, EventArgs e)
         {
-            mainWindow.WindowState = WindowState.Normal;
+            mainWindow.Activate();
+            DoubleAnimation anim = new DoubleAnimation(1, new Duration(new TimeSpan(0, 0, 0, 0, 1000)));
+            mainWindow.BeginAnimation(Window.OpacityProperty, anim);
         }
     }
 }

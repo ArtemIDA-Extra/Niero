@@ -6,13 +6,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="DesignDictionaries/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="DesignDictionaries/Themes/NierAutomataTheme.xaml"/>
                 <ResourceDictionary Source="DesignDictionaries/FontsNames.xaml"/>
-                
+
                 <ResourceDictionary Source="Styles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="Styles/OtherStyles.xaml"/>
                 <ResourceDictionary Source="Styles/TextBlockStyles.xaml"/>
                 <ResourceDictionary Source="Templates/ButtonTemplates.xaml"/>
+                <ResourceDictionary Source="Templates/TextBoxTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

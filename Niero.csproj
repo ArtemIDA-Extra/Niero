@@ -4,6 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>YoRHa.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -44,21 +46,11 @@
     <None Remove="DesignDictionaries\Fonts\FontAwesome.otf" />
     <None Remove="DesignDictionaries\Fonts\MagicFont.ttf" />
     <None Remove="DesignDictionaries\Fonts\NierAutomataFont.ttf" />
+    <None Remove="Images\MainBackground_16x9.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="WpfAnimatedGif" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="NieroNetLib">
-      <HintPath>..\..\NieroNetLib\bin\Release\netcoreapp3.1\NieroNetLib.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +68,7 @@
     <Resource Include="DesignDictionaries\Fonts\NierAutomataFont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\MainBackground_16x9.png" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Alternate Select.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Busy.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Diagonal Resize 1.ani" />
@@ -93,6 +86,12 @@
     <EmbeddedResource Include="DesignDictionaries\Cursors\Unavailable.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Vertical Resize.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Working in Background.ani" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NieroNetLib">
+      <HintPath>NieroNetLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

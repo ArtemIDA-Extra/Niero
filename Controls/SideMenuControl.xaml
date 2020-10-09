@@ -33,18 +33,13 @@
                         </Grid.RowDefinitions>
 
                         <!-- Title TextBlock -->
+                        <Border Grid.Row="0" x:Name="TitleBackground"
+                                Background="{DynamicResource BaseBrush}"
+                                Panel.ZIndex="0"/>
                         <TextBlock x:Name="TitleTextBlock"
                                    Grid.Row="0"
                                    Text="{Binding Title}"
-                                   Background="{StaticResource DarkWhiteBrush}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   Height="40"
-                                   Width="160"
-                                   Padding="15,15,0,0"
-                                   FontSize="22"
-                                   FontStretch="UltraExpanded"
-                                   FontFamily="{StaticResource NierAutomata}">
+                                   Style="{StaticResource SideMenuTitleTextBlock}">
                         </TextBlock>
                         <!-- Separator -->
                         <Separator Grid.Row="1"  
@@ -54,7 +49,7 @@
                         </Separator>
                         <!-- Content Presenter -->
                         <Border Grid.Row="2" x:Name="ContentBackground"
-                                Background="{DynamicResource SurfaceBrush}"
+                                Background="{DynamicResource BaseBrush}"
                                 Panel.ZIndex="0"/>
                         <ContentControl Content="{TemplateBinding Content}"
                                         Grid.Row="2"
@@ -81,16 +76,14 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid.Background>
-                                <SolidColorBrush Color="{StaticResource DarkWhiteColor}"/>
+                                <SolidColorBrush Color="{StaticResource BaseColor}"/>
                             </Grid.Background>
                             <Button x:Name="PrevButton"    
-                                    Style="{DynamicResource ArrowButton}"
-                                    RenderTransform="{StaticResource LeftArrow}"
+                                    Style="{DynamicResource LeftArrowButton}"
                                     Grid.Column="0">
                             </Button>
                             <Button x:Name="NextButton"
-                                    Style="{DynamicResource ArrowButton}"
-                                    RenderTransform="{StaticResource RightArrow}"
+                                    Style="{DynamicResource RightArrowButton}"
                                     Grid.Column="1">
                             </Button>
                         </Grid>
@@ -106,8 +99,7 @@
                         </Grid.RowDefinitions>
                         <Border Background="{StaticResource OverflowBrush}"
                                 Grid.Row="0"/>
-                        <Border x:Name="WhiteVSeparator"
-                                Background="{StaticResource DarkWhiteBrush}"
+                        <Border Background="{StaticResource OverflowBrush}"
                                 Grid.Row="1"
                                 Grid.RowSpan="3">
                         </Border>
@@ -138,7 +130,7 @@
                                Grid.Row="0"
                                Height="40"
                                Width="40"
-                               Background="{StaticResource DarkWhiteBrush}"
+                               Background="{StaticResource WhiteBrush}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                VerticalContentAlignment="Center"
@@ -173,7 +165,7 @@
                 <EventTrigger SourceName="IconGridMask" RoutedEvent="MouseEnter">
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation To="{StaticResource OverlayLightColor}" Duration="0:0:0.75"
+                            <ColorAnimation To="{StaticResource SurfaceColor}" Duration="0:0:0.75"
                                             Storyboard.TargetName="IconGridBackground"
                                             Storyboard.TargetProperty="Color"/>
                         </Storyboard>

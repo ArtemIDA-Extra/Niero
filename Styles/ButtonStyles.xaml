@@ -2,51 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Niero">
     
-    <Style x:Key="AnimatedTransparentButton" TargetType="Button">
-        <Style.Setters>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="Gray"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="FontFamily" Value="Freestyle Script"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontStyle" Value="Normal"/>
-        </Style.Setters>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="FontFamily" Value="Freestyle Script"/>
-            </Trigger>
-            <EventTrigger RoutedEvent="MouseEnter">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:0.65" To="GhostWhite" />
-                        <DoubleAnimation Storyboard.TargetProperty="FontSize" Duration="0:0:1" To="26" />
-                        <DoubleAnimation Storyboard.TargetProperty="Height" Duration="0:0:1" To="40" />
-                        <DoubleAnimation Storyboard.TargetProperty="Width" Duration="0:0:1" To="190" />
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-            <EventTrigger RoutedEvent="MouseLeave">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:0.65" To="Gray" />
-                        <DoubleAnimation Storyboard.TargetProperty="FontSize" Duration="0:0:1" To="20" />
-                        <DoubleAnimation Storyboard.TargetProperty="Height" Duration="0:0:1" To="25" />
-                        <DoubleAnimation Storyboard.TargetProperty="Width" Duration="0:0:1" To="145" />
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </Style.Triggers>
-    </Style>
-
     <!-- Styles -->
-
-
 
     <Style x:Key="DefaultTextSidebarButton" TargetType="{x:Type Button}">
         <Style.Setters>
             <Setter Property="Template" Value="{DynamicResource DefaultTextButtonTemplate}"/>
-            <Setter Property="Foreground" Value="{DynamicResource OverflowBrush}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource OverflowBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
@@ -69,7 +29,7 @@
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0"/>
-            <Setter Property="Template" Value="{DynamicResource HomeButtonTemplate}"></Setter>
+            <Setter Property="Template" Value="{DynamicResource HomeButtonTemplate}"/>
             <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
             <Setter Property="FontSize" Value="18"/>
         </Style.Setters>
@@ -80,12 +40,20 @@
     <RotateTransform x:Key="DownArrow" CenterX="37.5" CenterY="20" Angle="270"/>
     <RotateTransform x:Key="LeftArrow" CenterX="37.5" CenterY="20" Angle="0"/>
 
-    <Style x:Key="ArrowButton" TargetType="{x:Type Button}">
+    <Style x:Key="LeftArrowButton" TargetType="{x:Type Button}">
         <Style.Setters>
             <Setter Property="Template" Value="{DynamicResource ArrowButtonTemplate}"/>
-            <Setter Property="Foreground" Value="{StaticResource SurfaceBrush}"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="RightArrowButton" TargetType="{x:Type Button}">
+        <Style.Setters>
+            <Setter Property="Template" Value="{DynamicResource MirroredShadowArrowButtonTemplate}"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="RenderTransform" Value="{StaticResource RightArrow}"/>
         </Style.Setters>
     </Style>
 
