@@ -10,8 +10,8 @@
         Title="Niero"
         Height="961"
         Width="1664"
-        MinHeight="961"
-        MinWidth="1664"
+        MinHeight="529"
+        MinWidth="896"
 
         WindowStyle="None"
         AllowsTransparency="True">
@@ -25,7 +25,11 @@
     </WindowChrome.WindowChrome>
 
     <Grid x:Name="MainGrid" Background="{StaticResource BackgroundImage}">
-        <controls:SideMenuControl x:Name="SideMenu" Title="Niero" Grid.Column="0" Panel.ZIndex="2">
+        <controls:SideMenuControl x:Name="SideMenu" 
+                                  Grid.Column="0" 
+                                  Title="Niero" 
+                                  Panel.ZIndex="2"
+                                  Hide="True">
             <StackPanel>
                 <!-- При изменении контента кнопок - меняй кейсы в обработчике
                      cобытия Click -->
@@ -38,10 +42,6 @@
             </StackPanel>
         </controls:SideMenuControl>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <Frame x:Name="PagesViewer" 
                    Grid.Column="1"
                    Panel.ZIndex="1"
@@ -54,25 +54,25 @@
         <ControlTemplate TargetType="Window">
             <Border Padding="{Binding Path=OuterMarginSizeThickness, FallbackValue=10}">
                 <!-- Main window outline -->
-                <Grid>
+                <Grid x:Name="WindowTemplateGrid">
                     <!-- Window border and dropshadown -->
                     <Border Background="{TemplateBinding Background}">
                         <Border.Effect>
-                            <DropShadowEffect x:Name="WindowNeon" BlurRadius="12" Opacity="1" ShadowDepth="0" Color="{StaticResource BaseColor}" />
+                            <DropShadowEffect x:Name="WindowNeon" BlurRadius="14" Opacity="1" ShadowDepth="0" Color="{StaticResource OverflowColor}" />
                         </Border.Effect>
                     </Border>
                     <!-- The main window content -->
-                    <Grid>
+                    <Grid x:Name="WindowTitleLine">
                         <Grid.RowDefinitions>
                             <!-- Title Bar -->
-                            <RowDefinition Height="25" />
-                            <!-- Drop shadow -->
                             <RowDefinition Height="Auto" />
                             <!-- Window Content -->
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <!-- Title Bar -->
-                        <Grid Grid.Column="0"
+                        <Grid x:Name="TitleLine"
+                              Grid.Row="0"
+                              Height="0"
                               Panel.ZIndex="1"
                               Background="{StaticResource SurfaceBrush}">
                             <Grid.ColumnDefinitions>
@@ -113,33 +113,12 @@
                             </StackPanel>
                         </Grid>
                         <!-- Page Content -->
-                        <Border Grid.Row="2">
+                        <Border Grid.Row="1">
                             <AdornerDecorator>
                                 <ContentPresenter />
                             </AdornerDecorator>
                         </Border>
                     </Grid>
-                    <Grid.Triggers>
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.5" To="{StaticResource BaseColor}"
-                                                    Storyboard.TargetName="WindowNeon"
-                                                    Storyboard.TargetProperty="Color"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation BeginTime="0:0:3"
-                                                    Duration="0:0:1" To="{StaticResource OverflowColor}"
-                                                    Storyboard.TargetName="WindowNeon"
-                                                    Storyboard.TargetProperty="Color"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Grid.Triggers>
                 </Grid>
             </Border>
         </ControlTemplate>

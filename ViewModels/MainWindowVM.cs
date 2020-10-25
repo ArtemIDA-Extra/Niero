@@ -9,6 +9,10 @@ using Niero.Controls;
 using Niero.SupportClasses;
 using Niero.Pages;
 using System.Windows.Media.Animation;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Niero.ViewModels
 {
@@ -16,10 +20,17 @@ namespace Niero.ViewModels
     {
         Window loadingWindow, mainWindow;
 
+        Grid titleLine;
         Button maxSizeButton, minSizeButton, closeWindowButton, 
-               nextPageButton, prevPageButton;
+               nextPageButton, prevPageButton, homeButton;
         Frame pagesViewer;
         SideMenuControl sideMenu;
+        DropShadowEffect windowNeon;
+
+        WelcomePage welcomePage;
+
+        private bool WelcomePageON;
+        private bool RemoveLastPageInHistory = true;
 
         private int OuterWindowMargin = 10;
         private int ResizeBorderSize = 11;
@@ -38,12 +49,13 @@ namespace Niero.ViewModels
                 return new Thickness(ResizeBorderSize);
             }
         }
-        public int CaptionHeightProperty
+        public double CaptionHeightProperty
         {
             get;
             private set;
         } = 24;
 
+        //CONSTRUCTOR!!!
         public MainWindowVM(Window window)
         {
             mainWindow = window;
@@ -51,7 +63,7 @@ namespace Niero.ViewModels
             mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             mainWindow.WindowState = WindowState.Normal;
             mainWindow.Opacity = 0;
-
+            
             mainWindow.Cursor = CustomCursors.Normal_Select;
 
             //Init loading window 
@@ -61,6 +73,8 @@ namespace Niero.ViewModels
 
             //Searching elements
             mainWindow.ApplyTemplate();
+            titleLine = (Grid)mainWindow.Template.FindName("TitleLine", mainWindow);
+            windowNeon = (DropShadowEffect)mainWindow.Template.FindName("WindowNeon", mainWindow);
             maxSizeButton = (Button)mainWindow.Template.FindName("MaxSizeButton", mainWindow);
             minSizeButton = (Button)mainWindow.Template.FindName("MinSizeButton", mainWindow);
             closeWindowButton = (Button)mainWindow.Template.FindName("CloseWindowButton", mainWindow);
@@ -68,6 +82,7 @@ namespace Niero.ViewModels
             sideMenu = (SideMenuControl)mainWindow.FindName("SideMenu");
             nextPageButton = (Button)sideMenu.Template.FindName("NextButton", sideMenu);
             prevPageButton = (Button)sideMenu.Template.FindName("PrevButton", sideMenu);
+            homeButton = (Button)sideMenu.Template.FindName("HomeButton", sideMenu);
 
             //Menu buttons click events connect
             foreach (Button menuButton in (sideMenu.Content as StackPanel).Children) 
@@ -83,13 +98,37 @@ namespace Niero.ViewModels
             CommandsInit();
 
             //PagesViewer init
+            DoubleAnimation OpenAnim = new DoubleAnimation(1, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+
+            welcomePage = new WelcomePage();
+            welcomePage.MouseDown += WelcomePage_MouseDown;
+
             pagesViewer.JournalOwnership = JournalOwnership.OwnsJournal;
-            pagesViewer.Content = new DefaultPage();
+            pagesViewer.Content = welcomePage;
             pagesViewer.Navigated += PagesViewer_Navigated;
+            welcomePage.BeginAnimation(Page.OpacityProperty, OpenAnim);
+            WelcomePageON = true;
 
             //Window events binding
             mainWindow.StateChanged += MainWindow_StateChanged;
             mainWindow.Loaded += MainWindow_Loaded;
+            mainWindow.MouseEnter += MainWindow_MouseEnter;
+            mainWindow.MouseLeave += MainWindow_MouseLeave;
+        }
+
+        private void WelcomePage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            sideMenu.Hide = false;
+            RemoveLastPageInHistory = true;
+            SwapPageTo(new DefaultPage());
+            ColorAnimation titleRecolorAnim = new ColorAnimation((Color)mainWindow.TryFindResource("SurfaceColor"), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            DoubleAnimation titleResizeAnim = new DoubleAnimation(25, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            (titleLine.Background as SolidColorBrush).BeginAnimation(SolidColorBrush.ColorProperty, titleRecolorAnim);
+            titleLine.BeginAnimation(Grid.HeightProperty, titleResizeAnim);
+            WelcomePageON = false;
+            MouseEventArgs args = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            args.RoutedEvent = Mouse.MouseEnterEvent;
+            mainWindow.RaiseEvent(args);
         }
 
         //Additional func
@@ -101,6 +140,7 @@ namespace Niero.ViewModels
 
             nextPageButton.Command = NavigationCommands.NextPage;
             prevPageButton.Command = NavigationCommands.PreviousPage;
+            homeButton.Command = NavigationCommands.BrowseHome;
 
             CommandBinding comBind;
 
@@ -130,11 +170,22 @@ namespace Niero.ViewModels
             SMcomBind.Command = NavigationCommands.PreviousPage;
             SMcomBind.Executed += prevPageCommand_Executed;
             prevPageButton.CommandBindings.Add(SMcomBind);
+
+            SMcomBind = new CommandBinding();
+            SMcomBind.Command = NavigationCommands.BrowseHome;
+            SMcomBind.Executed += homePageCommand_Executed;
+            homeButton.CommandBindings.Add(SMcomBind);
         }
 
         //Navigate handler
         private void PagesViewer_Navigated(object sender, NavigationEventArgs e)
         {
+            if (RemoveLastPageInHistory)
+            {
+                pagesViewer.RemoveBackEntry();
+                RemoveLastPageInHistory = false;
+            }
+
             if (pagesViewer.CanGoBack) prevPageButton.IsEnabled = true;
             else prevPageButton.IsEnabled = false;
 
@@ -147,23 +198,32 @@ namespace Niero.ViewModels
         {
             if (pagesViewer.CanGoBack)
             {
-                pagesViewer.GoBack();
-            }
-            else
-            {
-                MessageBox.Show("Cant go back!");
+                DoubleAnimation CloseAnim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+                CloseAnim.Completed += PrevCommandAnim_Completed;
+                (pagesViewer.Content as Page).BeginAnimation(Page.OpacityProperty, CloseAnim);
             }
         }
         private void nextPageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (pagesViewer.CanGoForward)
             {
-                pagesViewer.GoForward();
+                DoubleAnimation CloseAnim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+                CloseAnim.Completed += NextCommandAnim_Completed;
+                (pagesViewer.Content as Page).BeginAnimation(Page.OpacityProperty, CloseAnim);
             }
-            else
-            {
-                MessageBox.Show("Cant go forward!");
-            }
+        }
+        private void homePageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            sideMenu.Hide = true;
+            pagesViewer.Content = welcomePage;
+            MouseEventArgs args = new MouseEventArgs(Mouse.PrimaryDevice, 0);
+            args.RoutedEvent = Mouse.MouseLeaveEvent;
+            mainWindow.RaiseEvent(args);
+            ColorAnimation titleRecolorAnim = new ColorAnimation((Color)mainWindow.TryFindResource("OverflowColor"), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            DoubleAnimation titleResizeAnim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            (titleLine.Background as SolidColorBrush).BeginAnimation(SolidColorBrush.ColorProperty, titleRecolorAnim);
+            titleLine.BeginAnimation(Grid.HeightProperty, titleResizeAnim);
+            WelcomePageON = true;
         }
         private void maximizeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -188,15 +248,36 @@ namespace Niero.ViewModels
             mainWindow.Close();
         }
 
+        private void PrevCommandAnim_Completed(object sender, EventArgs e)
+        {
+            pagesViewer.GoBack();
+        } 
+        private void NextCommandAnim_Completed(object sender, EventArgs e)
+        {
+            pagesViewer.GoForward();
+        }
+
         //Menu changes handler
-        public void ChangeMenuSelection(object sender, RoutedEventArgs e)
+        private Page swapPage;
+        private void ChangeMenuSelection(object sender, RoutedEventArgs e)
         {
             switch ((sender as Button).Content.ToString())
             {
-                case "Network Info": pagesViewer.Content = new NetworkInfoPage(); break;
-                case "Network Scan": pagesViewer.Content = new NetScanningMainPage(); break;
-                case "Default(Test)": pagesViewer.Content = new DefaultPage(); break;
+                case "Network Info": SwapPageTo(new NetworkInfoPage()); WelcomePageON = false; break;
+                case "Network Scan": SwapPageTo(new NetScanningMainPage()); WelcomePageON = false; break;
+                case "Default(Test)": SwapPageTo(new DefaultPage()); WelcomePageON = false; break;
             }
+        }
+        private void SwapPageTo(Page page)
+        {
+            swapPage = page;
+            DoubleAnimation CloseAnim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            CloseAnim.Completed += SwapCloseAnim_Completed;
+            (pagesViewer.Content as Page).BeginAnimation(Page.OpacityProperty, CloseAnim);
+        }
+        private void SwapCloseAnim_Completed(object sender, EventArgs e)
+        {
+            pagesViewer.Content = swapPage;
         }
 
         //Windows handlers
@@ -235,6 +316,22 @@ namespace Niero.ViewModels
         {
             await Task.Delay(3200);
             loadingWindow.Close();
+        }
+        private void MainWindow_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!WelcomePageON)
+            {
+                ColorAnimation anim = new ColorAnimation((Color)mainWindow.TryFindResource("OverflowColor"), new Duration(new TimeSpan(0, 0, 0, 0, 500)));
+                windowNeon.BeginAnimation(DropShadowEffect.ColorProperty, anim);
+            }
+        }
+        private void MainWindow_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!WelcomePageON)
+            {
+                ColorAnimation anim = new ColorAnimation((Color)mainWindow.TryFindResource("BaseColor"), new Duration(new TimeSpan(0, 0, 0, 0, 500)));
+                windowNeon.BeginAnimation(DropShadowEffect.ColorProperty, anim);
+            }
         }
 
         private void LoadingWindow_Closed(object sender, EventArgs e)

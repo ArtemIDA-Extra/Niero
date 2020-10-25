@@ -23,9 +23,9 @@ namespace Niero.Controls
         public SideMenuControl()
         {
             InitializeComponent();
-            DataContext = this;             //не работал биндинг из-за отсуствия DataContex. Может все таки почитаешь об этом?
+            DataContext = this;
 
-            ApplyTemplate();                //О ЧЮДООО! Теперь поиск елемента не возвращает null!!! -час, проверяй...
+            ApplyTemplate();
 
             homeButton = (Button)GetTemplateChild("HomeButton");
             backBorder = (Border)GetTemplateChild("BackBorder");
@@ -41,6 +41,7 @@ namespace Niero.Controls
 
             this.HideChangedToTrue += SideMenuControl_HideChangedToTrue;
             this.HideChangedToFalse += SideMenuControl_HideChangedToFalse;
+            this.Loaded += SideMenuControl_Loaded;
             iconGridMask.MouseEnter += IconGridMask_MouseEnter;
             backBorder.MouseLeave += BackBorder_MouseLeave;
             homeButton.Click += HomeBtn_Click;
@@ -51,13 +52,26 @@ namespace Niero.Controls
             BeginAnimation(WidthProperty, HideStretchingAnim);
             AnimationPermission = false;
         }
-
         private void SideMenuControl_HideChangedToFalse(object sender, RoutedEventArgs e)
         {
             if (AnimationPermission)
             {
                 BeginAnimation(WidthProperty, CloseStretchingAnim);
             }
+        }
+        private void SideMenuControl_Loaded(object sender, EventArgs e)
+        {
+            if (Hide == true)
+            {
+                Opacity = 0;
+                Width = 0;
+            }
+            else if (Hide == false)
+            {
+                Opacity = 1;
+                Width = 40; 
+            }
+
         }
 
         private void BackBorder_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -67,7 +81,6 @@ namespace Niero.Controls
                 BeginAnimation(WidthProperty, CloseStretchingAnim);
             }
         }
-
         private void IconGridMask_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (AnimationPermission)

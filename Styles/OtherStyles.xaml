@@ -2,46 +2,42 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Niero">
 
-    <Style x:Key="RoundedInfoBorder" TargetType="Border">
+    <Style x:Key="InfoBorder" TargetType="Border">
         <Style.Setters>
             <Setter Property="CornerRadius" Value="0"/>
             <Setter Property="BorderBrush" Value="{StaticResource OverflowBrush}"/>
-            <Setter Property="Background" Value="{StaticResource OverlayLightBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Effect" Value="{StaticResource SurfaceBlockShadow}"/>
             <Setter Property="Opacity" Value="0"/>
+            <Setter Property="Effect" Value="{StaticResource PressedSurfaceBlockShadow}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="ElementsGridPart" TargetType="Grid">
+        <Style.Setters>
+            <Setter Property="Margin" Value="0,7,0,7"/>
+            <Setter Property="Background" Value="{StaticResource OverlayLightBrush}"/>
+            <Setter Property="Effect" Value="{StaticResource SurfaceBlockShadow}"/>
         </Style.Setters>
         <Style.Triggers>
-            <!--<EventTrigger RoutedEvent="MouseEnter">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayDarkColor}"
-                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-            <EventTrigger RoutedEvent="MouseLeave">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayLightColor}"
-                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>-->
             <Trigger Property="IsMouseOver" Value="True">
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayDarkColor}"
-                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                            <ColorAnimation Duration="0:0:0.2" To="Transparent"
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                            <DoubleAnimation Duration="0:0:0.2" To="0"
+                                             Storyboard.TargetProperty="(Effect).(DropShadowEffect.ShadowDepth)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
                 <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Duration="0:0:0.5" To="{StaticResource OverlayLightColor}"
-                                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource OverlayLightColor}"
+                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"/>
+                            <DoubleAnimation Duration="0:0:0.2" To="5"
+                                             Storyboard.TargetProperty="(Effect).(DropShadowEffect.ShadowDepth)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -68,7 +64,7 @@
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="Template" Value="{DynamicResource TextBoxForMoveBorder}"/>

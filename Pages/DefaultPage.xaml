@@ -7,9 +7,10 @@
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DefaultPage">
+      Title="DefaultPage"
+      Opacity="0">
 
-    <Grid Margin="0,0,40,0">
+    <Grid Margin="40,0,40,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="200"/>

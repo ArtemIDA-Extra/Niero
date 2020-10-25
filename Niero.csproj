@@ -41,6 +41,7 @@
     <None Remove="DesignDictionaries\Cursors\Vertical Resize.ani" />
     <None Remove="DesignDictionaries\Cursors\Working in Background.ani" />
     <None Remove="DesignDictionaries\Fonts\RodinFont.ttf" />
+    <None Remove="Gifs\LoadingScreenFullHD.mp4" />
     <None Remove="Gifs\Main.gif" />
     <None Remove="Gifs\NierRobot.gif" />
     <None Remove="DesignDictionaries\Fonts\FontAwesome.otf" />
@@ -68,6 +69,9 @@
     <Resource Include="DesignDictionaries\Fonts\NierAutomataFont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <EmbeddedResource Include="Gifs\LoadingScreenFullHD.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Images\MainBackground_16x9.png" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Alternate Select.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Busy.ani" />

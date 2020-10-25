@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace Niero.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для Page1.xaml
-    /// </summary>
     public partial class DefaultPage : Page
     {
         public DefaultPage()
         {
             InitializeComponent();
+            this.Loaded += DefaultPage_Loaded;
+        }
+
+        private void DefaultPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation OpenAnim = new DoubleAnimation(1, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            this.BeginAnimation(Page.OpacityProperty, OpenAnim);
         }
     }
 }

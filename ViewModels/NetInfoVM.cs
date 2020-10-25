@@ -14,6 +14,9 @@ using System.Windows.Input;
 using System.Windows.Media.Effects;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
+using System.Windows.Markup.Localizer;
+using System.Windows.Controls.Primitives;
+using System.Windows.Navigation;
 
 namespace Niero.ViewModels
 {
@@ -68,8 +71,15 @@ namespace Niero.ViewModels
             {
                 DataOwner = borderOwner;
 
-                AdditionalShiftX = (borderOwner.RenderTransform as TranslateTransform).X; //Canvas.GetLeft(borderOwner);
-                AdditionalShiftY = (borderOwner.RenderTransform as TranslateTransform).Y; //Canvas.GetTop(borderOwner);
+                AdditionalShiftX = AdditionalShiftY = 0;
+
+                if ((borderOwner.RenderTransform as TranslateTransform) != null)
+                {
+                    AdditionalShiftX = (borderOwner.RenderTransform as TranslateTransform).X; //Canvas.GetLeft(borderOwner);
+                    AdditionalShiftY = (borderOwner.RenderTransform as TranslateTransform).Y; //Canvas.GetTop(borderOwner);
+                }
+                if (!double.IsNaN(Canvas.GetLeft(borderOwner))) AdditionalShiftX = Canvas.GetLeft(borderOwner);
+                if (!double.IsNaN(Canvas.GetTop(borderOwner))) AdditionalShiftY = Canvas.GetTop(borderOwner);
             }
 
             private void CalculatePosition()
@@ -97,12 +107,7 @@ namespace Niero.ViewModels
         Storyboard FlashingTextSB;
 
         //Net data
-        List<(NetworkInterfaceType intType, string intName)> AviableToSelectInterfaces = new List<(NetworkInterfaceType, string)>
-        {
-            (NetworkInterfaceType.Ethernet, "Ethernet"),
-            (NetworkInterfaceType.Wireless80211, "Wi-Fi"),
-        };
-        List<NetworkInterfaceType> DefaulNetworksInterfacesTypes = new List<NetworkInterfaceType>
+        List<NetworkInterfaceType> DefaultNetworksInterfacesTypes = new List<NetworkInterfaceType>
         {
             NetworkInterfaceType.Ethernet,
             NetworkInterfaceType.Wireless80211
@@ -110,7 +115,29 @@ namespace Niero.ViewModels
 
         List<IPAddress> AviableIPv4;
         List<NetworkInterface> AviableNetworkInterfaces;
+        List<NetworkInterface> NonAviableNetworkInterfaces;
 
+        List<DGAdapterInfo> DisabledAdapters;
+        List<DGAdapterInfo> EnabledAdapters;
+
+        private class DGAdapterInfo
+        {
+            public DGAdapterInfo(BasicInterfaceInfo interfaceInfo)
+            {
+                AdapterName = interfaceInfo.Name;
+                IPAddress = interfaceInfo.IPv4.ToString();
+                AdapterType = interfaceInfo.Type.ToString();
+                MacAddress = interfaceInfo.MacAddress.ToString();
+                OperationalStatus = interfaceInfo.Interface.OperationalStatus.ToString();
+            }
+            public string AdapterName { get; set; }
+            public string IPAddress { get; set; }
+            public string AdapterType { get; set; }
+            public string MacAddress { get; set; }
+            public string OperationalStatus { get; set; }
+        }
+
+        //CONSTRUCTOR!!!
         public NetInfoVM(Page page)
         {
             m_Page = page;
@@ -120,10 +147,12 @@ namespace Niero.ViewModels
 
             CanvasBorders.Add(new BorderWithPositionInfo((Border)m_Page.FindName("DeviceInfo")));
             CanvasBorders.Add(new BorderWithPositionInfo((Border)m_Page.FindName("WorkingAdaptersInfo")));
+            CanvasBorders.Add(new BorderWithPositionInfo((Border)m_Page.FindName("DisabledAdaptersInfo")));
 
             StoryboardsInit();
 
-            SubscribeBordersToEvents(CanvasBorders[0].DataOwner, CanvasBorders[1].DataOwner);
+            SubscribeBordersToEvents(CanvasBorders[0].DataOwner);
+            SubscribeDGBordersToEvents(CanvasBorders[1].DataOwner, CanvasBorders[2].DataOwner);
 
             UpdateNetModel();
 
@@ -132,24 +161,101 @@ namespace Niero.ViewModels
 
         private void StoryboardsInit()
         {
-           
-            ColorToDark = new ColorAnimation((Color)m_Page.FindResource("OverlayDarkColor"), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            ColorToDark = new ColorAnimation((Color)m_Page.FindResource("BaseColor"), (Color)m_Page.FindResource("OverlayDarkColor"), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
             ColorToBase = new ColorAnimation((Color)m_Page.FindResource("BaseColor"), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+
+            FlashingTextSB = new Storyboard();
+            PropertyPath PropPath = new PropertyPath("(TextBox.Foreground).(SolidColorBrush.Color)");
+            Storyboard.SetTargetProperty(ColorToDark, PropPath);
+            FlashingTextSB.Children.Add(ColorToDark);
+            FlashingTextSB.AutoReverse = true;
+            FlashingTextSB.RepeatBehavior = RepeatBehavior.Forever;
         }
 
         private void SubscribeBordersToEvents(params Border[] borders)
         {
             foreach (Border border in borders)
             {
-                border.MouseLeftButtonDown += Border_MouseLeftButtonDown;
-                border.MouseLeftButtonUp += Border_MouseLeftButtonUp;
-                border.MouseMove += Border_MouseMove;
+                border.MouseLeftButtonDown += AnyBorder_MouseLeftButtonDown;
+                border.MouseLeftButtonUp += AnyBorder_MouseLeftButtonUp;
+                border.MouseMove += AnyBorder_MouseMove;
                 border.MouseEnter += Border_MouseEnter;
                 border.MouseLeave += Border_MouseLeave;
             }
         }
+        private void SubscribeDGBordersToEvents(params Border[] borders)
+        {
+            foreach (Border border in borders)
+            {
+                border.MouseLeftButtonDown += AnyBorder_MouseLeftButtonDown;
+                border.MouseLeftButtonUp += AnyBorder_MouseLeftButtonUp;
+                border.MouseMove += AnyBorder_MouseMove;
+                border.MouseEnter += DGBorder_MouseEnter;
+                border.MouseLeave += DGBorder_MouseLeave;
 
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+                DataGrid BorderDG = (((border.Child as Grid).Children[1] as Grid).Children[1] as DataGrid);
+                BorderDG.SelectedCellsChanged += DataGrid_SelectedCellsChanged;
+            }
+        }
+        private void SubscribeDGCellsToEvents(DataGrid dataGrid)
+        {
+            List<DependencyObject> DGCells = VisualTreeSearch.SearchChildren(dataGrid, typeof(DataGridCell));
+
+            if (DGCells != null)
+            {
+                foreach (DataGridCell cell in DGCells)
+                {
+                    cell.MouseEnter += DGCell_MouseEnter;
+                    cell.MouseLeave += DGCell_MouseLeave;
+                    cell.MouseDoubleClick += DGCell_MouseDoubleClick;
+                }
+            }
+        }
+        private void SubscribeBTextBlocksToEvents(Border infoBorder)
+        {
+            List<DependencyObject> BorderTBs = VisualTreeSearch.SearchChildren(infoBorder, typeof(TextBox));
+
+            if(BorderTBs != null)
+            {
+                foreach(TextBox tb in BorderTBs)
+                {
+                    tb.MouseDoubleClick += TextBox_MouseDoubleClick;
+                }
+            }
+        }
+
+        private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Clipboard.SetText((sender as TextBox).Text);
+            //(sender as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToInactiveFlashST"));
+        }
+
+        private void DGCell_MouseEnter(object sender, MouseEventArgs e)
+        {
+            (sender as DataGridCell).Background = new SolidColorBrush(((sender as DataGridCell).Background as SolidColorBrush).Color);
+            ((sender as DataGridCell).Background as SolidColorBrush).BeginAnimation(SolidColorBrush.ColorProperty, (ColorAnimation)m_Page.TryFindResource("SolidColorBrushColorToActiveAN"));
+            ((sender as DataGridCell).Content as TextBlock).Foreground = (SolidColorBrush)m_Page.TryFindResource("OverlayDarkBrush");
+        }
+        private void DGCell_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //(sender as DataGridCell).Background = Brushes.Transparent;
+            (sender as DataGridCell).Background = new SolidColorBrush(((sender as DataGridCell).Background as SolidColorBrush).Color);
+            ((sender as DataGridCell).Background as SolidColorBrush).BeginAnimation(SolidColorBrush.ColorProperty, (ColorAnimation)m_Page.TryFindResource("SolidColorBrushColorToTransparentAN"));
+            ((sender as DataGridCell).Content as TextBlock).Foreground = (SolidColorBrush)m_Page.TryFindResource("BaseBrush");
+        }
+        private void DGCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Clipboard.SetText(((sender as DataGridCell).Content as TextBlock).Text);
+            (sender as DataGridCell).Background = new SolidColorBrush(((sender as DataGridCell).Background as SolidColorBrush).Color);
+            (sender as DataGridCell).BeginStoryboard((Storyboard)m_Page.TryFindResource("BackgroundColorToInactiveFlashST"));
+        }
+
+        private void DataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            (sender as DataGrid).UnselectAll();  //DISABLE Fu*** ROW SELECT!
+        }
+
+        private void AnyBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             m_Page.Cursor = CustomCursors.Move;
 
@@ -175,9 +281,10 @@ namespace Niero.ViewModels
             DraggableBorder.CursPosRelativeToParent = e.GetPosition(MainCanvas);
             DraggableBorder.CursPosRelativeToBorder = e.GetPosition(DraggableBorder.DataOwner);
 
-            DraggableBorder.DataOwner.CaptureMouse();
+            //DraggableBorder.DataOwner.CaptureMouse();
+            ((DraggableBorder.DataOwner.Child as Grid).Children[1] as Grid).CaptureMouse();
         }
-        private void Border_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void AnyBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         { 
             m_Page.Cursor = CustomCursors.Normal_Select;
 
@@ -236,13 +343,14 @@ namespace Niero.ViewModels
             if (addX != -1) DraggableBorder.AdditionalShiftX = addX;
             if (addY != -1) DraggableBorder.AdditionalShiftY = addY;
 
-            DraggableBorder.DataOwner.ReleaseMouseCapture();
+            //DraggableBorder.DataOwner.ReleaseMouseCapture();
+            ((DraggableBorder.DataOwner.Child as Grid).Children[1] as Grid).ReleaseMouseCapture();
             DraggableBorder = null;
 
             ColorAnimation animColor = new ColorAnimation((Color)m_Page.FindResource("BaseColor"), new Duration(new TimeSpan(0, 0, 0, 0, 500)));
             MainBorder.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, animColor);
         }
-        private void Border_MouseMove(object sender, MouseEventArgs e)
+        private void AnyBorder_MouseMove(object sender, MouseEventArgs e)
         {
             if (DraggingActive)
             {
@@ -297,31 +405,65 @@ namespace Niero.ViewModels
         private void Border_MouseEnter(object sender, MouseEventArgs e)
         {
             Border SenderBorder = sender as Border;
-            Grid ChildsGrid = SenderBorder.Child as Grid;
+            Grid BorderGrid = SenderBorder.Child as Grid;
 
-            foreach (UIElement GridChild in ChildsGrid.Children)
+            foreach (UIElement ChildGridChildren in (BorderGrid.Children[1] as Grid).Children)
             {
-                if (GridChild.GetType() == typeof(StackPanel))
+                if (ChildGridChildren.GetType() == typeof(TextBlock))
                 {
-                    foreach (UIElement StackPanelChild in (GridChild as StackPanel).Children)
+                    (ChildGridChildren as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToActiveST"));
+                }
+                else if (ChildGridChildren.GetType() == typeof(TextBox))
+                {
+                    if ((ChildGridChildren as TextBox).Tag == null)
+                        (ChildGridChildren as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToActiveST"));
+                }
+                else if (ChildGridChildren.GetType() == typeof(StackPanel))
+                {
+                    foreach (UIElement StackPanelChild in (ChildGridChildren as StackPanel).Children)
                     {
                         if (StackPanelChild.GetType() == typeof(TextBox))
                         {
                             if ((StackPanelChild as TextBox).Tag == null)
-                                (StackPanelChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToActive"));
+                                (StackPanelChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToActiveST"));
                         }
                     }
                 }
-                else if (GridChild.GetType() == typeof(TextBox))
-                {
-                    if ((GridChild as TextBox).Tag == null)
-                        (GridChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToActive"));
-                }
             }
+            DoubleAnimation FillAnim = new DoubleAnimation(BorderGrid.ActualWidth, new Duration(new TimeSpan(0, 0, 0, 0, 200)));
+            (BorderGrid.Children[0] as Grid).BeginAnimation(Grid.WidthProperty, FillAnim);
         }
         private void Border_MouseLeave(object sender, MouseEventArgs e)
         {
             Border SenderBorder = sender as Border;
+            Grid BorderGrid = SenderBorder.Child as Grid;
+
+            foreach (UIElement ChildGridChildren in (BorderGrid.Children[1] as Grid).Children)
+            {
+                if (ChildGridChildren.GetType() == typeof(TextBlock))
+                {
+                    (ChildGridChildren as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToBlackST"));
+                }
+                else if (ChildGridChildren.GetType() == typeof(TextBox))
+                {
+                    (ChildGridChildren as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToInactiveST"));
+                    (ChildGridChildren as TextBox).Tag = null;
+                }
+                else if (ChildGridChildren.GetType() == typeof(StackPanel))
+                {
+                    foreach (UIElement StackPanelChild in (ChildGridChildren as StackPanel).Children)
+                    {
+                        if (StackPanelChild.GetType() == typeof(TextBox))
+                        {
+                            (StackPanelChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToInactiveST"));
+                            (StackPanelChild as TextBox).Tag = null;
+                        }
+                    }
+                }
+            }
+            DoubleAnimation FillAnim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 200)));
+            (BorderGrid.Children[0] as Grid).BeginAnimation(Grid.WidthProperty, FillAnim);
+            /*Border SenderBorder = sender as Border;
             Grid ChildsGrid = SenderBorder.Child as Grid;
 
             foreach (UIElement GridChild in ChildsGrid.Children)
@@ -332,31 +474,61 @@ namespace Niero.ViewModels
                     {
                         if (StackPanelChild.GetType() == typeof(TextBox))
                         {
-                            if ((StackPanelChild as TextBox).Tag == null) 
-                            {
-                                (StackPanelChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToInactive"));
-                            }
-                            else 
-                            {
-                                (StackPanelChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToInactive"));
-                                (StackPanelChild as TextBox).Tag = null;                        //another animation unlocked
-                            }
+                            (StackPanelChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToInactive"));
+                            (StackPanelChild as TextBox).Tag = null;
                         }
                     }
                 }
                 else if (GridChild.GetType() == typeof(TextBox))
                 {
-                    if ((GridChild as TextBox).Tag == null) 
-                    {
-                        (GridChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToInactive"));
-                    }
-                    else
-                    {
-                        (GridChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToInactive"));
-                        (GridChild as TextBox).Tag = null;                                       //another animation unlocked
-                    }
+                    (GridChild as TextBox).BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToInactive"));
+                    (GridChild as TextBox).Tag = null;
                 }
+            }*/
+        }
+        private void DGBorder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Border SenderBorder = sender as Border;
+            Grid BorderGrid = SenderBorder.Child as Grid;
+
+            ((BorderGrid.Children[1] as Grid).Children[0] as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToActiveST"));
+
+            List<DependencyObject> DGtb = VisualTreeSearch.SearchChildren((BorderGrid.Children[1] as Grid).Children[1] as DataGrid, typeof(TextBlock));
+            for (int i = 0; i < ((BorderGrid.Children[1] as Grid).Children[1] as DataGrid).Columns.Count; i++)
+            {
+                (DGtb[i] as TextBlock).Foreground = new SolidColorBrush(((DGtb[i] as TextBlock).Foreground as SolidColorBrush).Color);
+                (DGtb[i] as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToActiveST"));
             }
+            for (int i = ((BorderGrid.Children[1] as Grid).Children[1] as DataGrid).Columns.Count; i < DGtb.Count; i++)
+            {
+                (DGtb[i] as TextBlock).Foreground = new SolidColorBrush(((DGtb[i] as TextBlock).Foreground as SolidColorBrush).Color);
+                (DGtb[i] as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToActiveST"));
+            }
+
+            DoubleAnimation FillAnim = new DoubleAnimation(BorderGrid.ActualWidth, new Duration(new TimeSpan(0, 0, 0, 0, 200)));
+            (BorderGrid.Children[0] as Grid).BeginAnimation(Grid.WidthProperty, FillAnim);
+        }
+        private void DGBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Border SenderBorder = sender as Border;
+            Grid BorderGrid = SenderBorder.Child as Grid;
+
+            ((BorderGrid.Children[1] as Grid).Children[0] as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToBlackST"));
+
+            List<DependencyObject> DGtb = VisualTreeSearch.SearchChildren((BorderGrid.Children[1] as Grid).Children[1] as DataGrid, typeof(TextBlock));
+            for(int i = 0; i < ((BorderGrid.Children[1] as Grid).Children[1] as DataGrid).Columns.Count; i++)
+            {
+                (DGtb[i] as TextBlock).Foreground = new SolidColorBrush(((DGtb[i] as TextBlock).Foreground as SolidColorBrush).Color);
+                (DGtb[i] as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToBlackST"));
+            }
+            for (int i = ((BorderGrid.Children[1] as Grid).Children[1] as DataGrid).Columns.Count; i < DGtb.Count; i++)
+            {
+                (DGtb[i] as TextBlock).Foreground = new SolidColorBrush(((DGtb[i] as TextBlock).Foreground as SolidColorBrush).Color);
+                (DGtb[i] as TextBlock).BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToInactiveST"));
+            }
+
+            DoubleAnimation FillAnim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 200)));
+            (BorderGrid.Children[0] as Grid).BeginAnimation(Grid.WidthProperty, FillAnim);
         }
 
         private async Task DataUpdateLoop()
@@ -365,6 +537,7 @@ namespace Niero.ViewModels
                 UpdateNetModel();
                 if (DraggableBorder?.DataOwner.Name != "DeviceInfo" && CanvasBorders[0].DataOwner.IsMouseOver != true) await UpdateDeviceInfoBorder();
                 if (DraggableBorder?.DataOwner.Name != "WorkingAdaptersInfo" && CanvasBorders[1].DataOwner.IsMouseOver != true) await UpdateWorkingAdaptersInfoBorder();
+                if (DraggableBorder?.DataOwner.Name != "DisabledAdaptersInfo" && CanvasBorders[2].DataOwner.IsMouseOver != true) await UpdateDisabledAdaptersInfoBorder();
                 await Task.Delay(10000);
             }
         }
@@ -383,6 +556,7 @@ namespace Niero.ViewModels
             TextBox DeviceNameOutput = (TextBox)DeviceInfo.FindName(nameof(DeviceNameOutput));
             StackPanel IPv4Output = (StackPanel)DeviceInfo.FindName(nameof(IPv4Output));
 
+            DeviceNameOutput.Cursor = CustomCursors.Text_Select;
             DeviceNameOutput.Foreground = new SolidColorBrush((Color)m_Page.TryFindResource("DarkTextColor"));
 
             DeviceNameOutput.MouseEnter += TextBox_MouseEnter;
@@ -396,6 +570,7 @@ namespace Niero.ViewModels
             {
                 TextBox IpAdressTB = new TextBox();
 
+                IpAdressTB.Cursor = CustomCursors.Text_Select;
                 IpAdressTB.Style = (Style)m_Page.TryFindResource("MoveTextBox");
 
                 IpAdressTB.Text = ip.ToString();
@@ -407,6 +582,8 @@ namespace Niero.ViewModels
             }
 
             await AnimateBorderUpdate_Finish(DeviceInfo);
+
+            SubscribeBTextBlocksToEvents(DeviceInfo);
         }
         private async Task UpdateWorkingAdaptersInfoBorder()
         {
@@ -417,76 +594,49 @@ namespace Niero.ViewModels
                     WorkingAdaptersInfo = itBorderInfo.DataOwner;
             }
 
-            WorkingAdaptersInfo.Height = WorkingAdaptersInfo.ActualHeight;
-            WorkingAdaptersInfo.Width = WorkingAdaptersInfo.ActualWidth;
-
             await AnimateBorderUpdate_Start(WorkingAdaptersInfo);
 
-            StackPanel AdaptersNamesOutput = (StackPanel)WorkingAdaptersInfo.FindName(nameof(AdaptersNamesOutput));
-            StackPanel IpAdressesOutput = (StackPanel)WorkingAdaptersInfo.FindName(nameof(IpAdressesOutput));
-            StackPanel MacAdressesOutput = (StackPanel)WorkingAdaptersInfo.FindName(nameof(MacAdressesOutput));
+            DataGrid WorkingAdaptersDG = (DataGrid)m_Page.FindName(nameof(WorkingAdaptersDG));
 
-            AdaptersNamesOutput.Children.Clear();
-            IpAdressesOutput.Children.Clear();
-            MacAdressesOutput.Children.Clear();
-
+            EnabledAdapters = new List<DGAdapterInfo>();
             foreach (NetworkInterface inter in AviableNetworkInterfaces)
             {
-                Separator sp1 = new Separator();
-                Separator sp2 = new Separator();
-                Separator sp3 = new Separator();
-                TextBox AdaptersNamesTB = new TextBox();
-                TextBox IpAdressTB = new TextBox();
-                TextBox MACAdressTB = new TextBox();
-
-                sp1.Background = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-                sp2.Background = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-                sp3.Background = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-                AdaptersNamesTB.Style = (Style)m_Page.TryFindResource("MoveTextBox");
-                IpAdressTB.Style = (Style)m_Page.TryFindResource("MoveTextBox");
-                MACAdressTB.Style = (Style)m_Page.TryFindResource("MoveTextBox");
-
-                AdaptersNamesTB.MouseEnter += TextBox_MouseEnter;
-                AdaptersNamesTB.MouseLeave += TextBox_MouseLeave;
-                IpAdressTB.MouseEnter += TextBox_MouseEnter;
-                IpAdressTB.MouseLeave += TextBox_MouseLeave;
-                MACAdressTB.MouseEnter += TextBox_MouseEnter;
-                MACAdressTB.MouseLeave += TextBox_MouseLeave;
-
-                BasicInterfaceInfo interfaceInfo = new BasicInterfaceInfo(inter);
-                AdaptersNamesTB.Text += interfaceInfo.Name;
-                IpAdressTB.Text += interfaceInfo.IPv4;
-                MACAdressTB.Text += interfaceInfo.MacAddress;
-
-                AdaptersNamesOutput.Children.Add(sp1);
-                IpAdressesOutput.Children.Add(sp2);
-                MacAdressesOutput.Children.Add(sp3);
-                AdaptersNamesOutput.Children.Add(AdaptersNamesTB);
-                IpAdressesOutput.Children.Add(IpAdressTB);
-                MacAdressesOutput.Children.Add(MACAdressTB);
-
-                WorkingAdaptersInfo.Height = IpAdressesOutput.Height;
-                WorkingAdaptersInfo.Width = AdaptersNamesOutput.Width + IpAdressesOutput.Width + MacAdressesOutput.Width;
+                EnabledAdapters.Add(new DGAdapterInfo(new BasicInterfaceInfo(inter)));
             }
+            WorkingAdaptersDG.ItemsSource = EnabledAdapters;
 
             await AnimateBorderUpdate_Finish(WorkingAdaptersInfo);
+
+            SubscribeDGCellsToEvents(WorkingAdaptersDG);
+        }
+        private async Task UpdateDisabledAdaptersInfoBorder()
+        {
+            Border DisabledAdaptersInfo = null;
+            foreach (BorderWithPositionInfo itBorderInfo in CanvasBorders)
+            {
+                if (itBorderInfo.DataOwner.Name == nameof(DisabledAdaptersInfo))
+                    DisabledAdaptersInfo = itBorderInfo.DataOwner;
+            }
+
+            await AnimateBorderUpdate_Start(DisabledAdaptersInfo);
+
+            DataGrid DisabledAdaptersDG = (DataGrid)m_Page.FindName(nameof(DisabledAdaptersDG));
+
+            DisabledAdapters = new List<DGAdapterInfo>();
+            foreach (NetworkInterface inter in NonAviableNetworkInterfaces)
+            {
+                DisabledAdapters.Add(new DGAdapterInfo(new BasicInterfaceInfo(inter)));
+            }
+            DisabledAdaptersDG.ItemsSource = DisabledAdapters;
+
+            await AnimateBorderUpdate_Finish(DisabledAdaptersInfo);
+
+            SubscribeDGCellsToEvents(DisabledAdaptersDG);
         }
 
         private void TextBox_MouseEnter(object sender, MouseEventArgs e)
         {
             TextBox SenderTB = sender as TextBox;
-
-            FlashingTextSB = new Storyboard();
-            PropertyPath PropPath = new PropertyPath("(TextBox.Foreground).(SolidColorBrush.Color)");
-            Storyboard.SetTargetProperty(ColorToDark, PropPath);
-            FlashingTextSB.Children.Add(ColorToDark);
-            FlashingTextSB.AutoReverse = true;
-            FlashingTextSB.RepeatBehavior = RepeatBehavior.Forever;
-
-            if ((SenderTB.Foreground as SolidColorBrush).Color != (Color)m_Page.FindResource("BaseColor"))
-            {
-                SenderTB.Foreground = new SolidColorBrush((Color)m_Page.FindResource("BaseColor"));
-            }
 
             SenderTB.Tag = false;                                                                  //another animation locked
             FlashingTextSB.Begin(SenderTB, true);
@@ -496,9 +646,8 @@ namespace Niero.ViewModels
             TextBox SenderTB = sender as TextBox;
 
             FlashingTextSB.Stop(SenderTB);
-            SenderTB.BeginStoryboard((Storyboard)m_Page.TryFindResource("ColorsInversionToActive"));
+            SenderTB.BeginStoryboard((Storyboard)m_Page.TryFindResource("ForegroundColorToActiveST"));
         }              //     !!!the execution sequence may fail!!!
-
         async Task AnimateBorderUpdate_Start(Border border)
         {
             DoubleAnimation anim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 200)));
@@ -521,8 +670,9 @@ namespace Niero.ViewModels
 
         private void UpdateNetModel()
         {
-            AviableNetworkInterfaces = NetworkTools.GetNetworkInterfaces(OperationalStatus.Up, DefaulNetworksInterfacesTypes.ToArray());
-            AviableIPv4 = NetworkTools.GetLocalIPv4(OperationalStatus.Up, DefaulNetworksInterfacesTypes.ToArray());
+            AviableIPv4 = NetworkTools.GetLocalIPv4(OperationalStatus.Up, DefaultNetworksInterfacesTypes.ToArray());
+            AviableNetworkInterfaces = NetworkTools.GetNetworkInterfaces(OperationalStatus.Up, DefaultNetworksInterfacesTypes.ToArray());
+            NonAviableNetworkInterfaces = NetworkTools.GetNetworkInterfaces(OperationalStatus.Down);
         }
     }
 }

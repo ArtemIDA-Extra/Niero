@@ -183,13 +183,21 @@
                 <EventTrigger RoutedEvent="local:SideMenuControl.HideChangedToTrue">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="(Border.Opacity)"
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                              Duration="0:0:0.75"
                                              To="0"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-                <EventTrigger RoutedEvent="local:SideMenuControl.HideChangedToFalse"/>
+                <EventTrigger RoutedEvent="local:SideMenuControl.HideChangedToFalse">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             Duration="0:0:0.75"
+                                             To="1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </UserControl.Template>
@@ -202,7 +210,6 @@
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Margin" Value="0,-1,0,-1"/>
-                <Setter Property="Width" Value="40"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="IsHitTestVisible" Value="True"/>

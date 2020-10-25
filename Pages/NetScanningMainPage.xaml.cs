@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace Niero.Pages
 {
@@ -25,6 +18,13 @@ namespace Niero.Pages
             CommandBinding CB = new CommandBinding(NavigationCommands.NextPage);
             CB.Executed += nextPageCommand_Executed;
             this.CommandBindings.Add(CB);
+            this.Loaded += NetScanningMainPage_Loaded;
+        }
+
+        private void NetScanningMainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation OpenAnim = new DoubleAnimation(1, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
+            this.BeginAnimation(Page.OpacityProperty, OpenAnim);
         }
 
         private void nextPageCommand_Executed(object sender, ExecutedRoutedEventArgs e)

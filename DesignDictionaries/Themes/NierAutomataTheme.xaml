@@ -59,33 +59,85 @@
 
     <DropShadowEffect x:Key="BigTextShadow" Opacity="0.5" Direction="315" BlurRadius="0" ShadowDepth="5" Color="{StaticResource ShadowOnLight}"/>
     <DropShadowEffect x:Key="SurfaceBlockShadow" Opacity="0.5" Direction="315" BlurRadius="0" ShadowDepth="5" Color="{StaticResource ShadowOnLight}"/>
+    <DropShadowEffect x:Key="PressedSurfaceBlockShadow" Opacity="0.5" Direction="315" BlurRadius="0" ShadowDepth="3" Color="{StaticResource ShadowOnLight}"/>
     
-    <!-- Animation -->
-
-    <Storyboard x:Key="ColorsInversionToActive">
-        <ColorAnimation Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
-                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+    <!-- Storyboards -->
+    
+    <Storyboard x:Key="ForegroundColorToActiveST">
         <ColorAnimation Duration="0:0:0.3" To="{StaticResource BaseColor}"
-                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                        Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
     </Storyboard>
-    
-    <Storyboard x:Key="ColorsInversionToInactive">
-        <ColorAnimation Duration="0:0:0.3" To="{StaticResource BaseColor}"
-                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+
+    <Storyboard x:Key="ForegroundColorToInactiveST">
         <ColorAnimation  Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
-                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                         Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
     </Storyboard>
 
-    <ColorAnimation x:Key="ForegroundColorToInactive" 
+    <Storyboard x:Key="ForegroundColorToBlackST">
+        <ColorAnimation  Duration="0:0:0.3" To="Black"
+                         Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <Storyboard x:Key="BackgroundColorToActiveST">
+        <ColorAnimation Duration="0:0:0.3" To="{StaticResource BaseColor}"
+                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <Storyboard x:Key="BackgroundColorToInactiveST">
+        <ColorAnimation  Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
+                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <Storyboard x:Key="ForegroundColorToActiveFlashST">
+        <ColorAnimation Duration="0:0:0.2" To="{StaticResource BaseColor}"
+                        AutoReverse="True"
+                        Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <Storyboard x:Key="ForegroundColorToInactiveFlashST">
+        <ColorAnimation  Duration="0:0:0.2" To="{StaticResource OverlayDarkColor}"
+                         AutoReverse="True"
+                         Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+    </Storyboard>
+    
+    <Storyboard x:Key="BackgroundColorToActiveFlashST">
+        <ColorAnimation Duration="0:0:0.2" To="{StaticResource BaseColor}"
+                        AutoReverse="True"
+                        Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <Storyboard x:Key="BackgroundColorToInactiveFlashST">
+        <ColorAnimation  Duration="0:0:0.2" To="{StaticResource OverlayDarkColor}"
+                         AutoReverse="True"
+                         Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <!-- Animations -->
+
+    <ColorAnimation x:Key="SolidColorBrushColorToInactiveAN" 
+                    Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
+                    Storyboard.TargetProperty="Color" />
+
+    <ColorAnimation x:Key="SolidColorBrushColorToActiveAN" 
+                    Duration="0:0:0.3" To="{StaticResource BaseColor}"
+                    Storyboard.TargetProperty="Color" />
+
+    <ColorAnimation x:Key="SolidColorBrushColorToTransparentAN" 
+                    Duration="0:0:0.3" To="Transparent"
+                    Storyboard.TargetProperty="Color" />
+
+    <ColorAnimation x:Key="ForegroundColorToInactiveAN" 
                     Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
                     Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
 
-    <ColorAnimation x:Key="ForegroundColorToActive" 
+    <ColorAnimation x:Key="ForegroundColorToActiveAN" 
                     Duration="0:0:0.3" To="{StaticResource BaseColor}"
                     Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
 
     <!-- Background -->
 
-    <ImageBrush x:Key="BackgroundImage" ImageSource="../../Images/MainBackground_16x9.png"/>
+    <ImageBrush x:Key="BackgroundImage" 
+                ImageSource="../../Images/MainBackground_16x9.png"
+                Stretch="Fill"/>
 
 </ResourceDictionary>
