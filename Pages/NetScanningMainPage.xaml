@@ -7,9 +7,50 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NetScanningMainPage"
-      Opacity="0">
+      Opacity="1">
 
-    <Grid Margin="40,0,40,0">
-        <Frame x:Name="AdditionalPagesViewer" NavigationUIVisibility="Hidden"/>
+    <Grid Margin="40,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Local Network Scanning" Grid.Row="0"
+                   Style="{StaticResource TitleTextBlock}"/>
+        <Border x:Name="ScanInitSettings" Grid.Row="1"
+                Style="{StaticResource ClassicBorder}"
+                UseLayoutRounding="True"
+                MaxWidth="300"
+                MinWidth="200"
+                MaxHeight="300"
+                Margin="0,70,0,70"
+                HorizontalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Gateway" Grid.Row="0"
+                           Style="{StaticResource BasicTextBlock}"
+                           Margin="0,20,0,0"/>
+                <ComboBox x:Name="GatewayCB" Grid.Row="1"
+                          Margin="15,0,15,0"/>
+                <TextBlock Text="Timeout" Grid.Row="2"
+                           Style="{StaticResource BasicTextBlock}"
+                           Margin="0,20,0,0"/>
+                <TextBox x:Name="TimeoutTB" Grid.Row="3"
+                         Text="100"
+                         Margin="15,0,15,0"/>
+                <Button x:Name="RunButton" Grid.Row="4"
+                    VerticalAlignment="Bottom"
+                    FontFamily="{StaticResource Rodin}"
+                    Content="Run!"
+                    Height="20"
+                    Width="80"
+                    Margin="0,0,0,20"/>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

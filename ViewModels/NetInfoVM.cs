@@ -7,16 +7,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Windows.Input;
 using NieroNetLib;
 using NieroNetLib.Types;
 using Niero.SupportClasses;
-using System.Windows.Input;
-using System.Windows.Media.Effects;
-using System.Text.RegularExpressions;
-using System.ComponentModel;
-using System.Windows.Markup.Localizer;
-using System.Windows.Controls.Primitives;
-using System.Windows.Navigation;
+using Niero.Models;
+
 
 namespace Niero.ViewModels
 {
@@ -97,7 +93,6 @@ namespace Niero.ViewModels
         BorderWithPositionInfo DraggableBorder = null;
 
         //UI elements
-        Page m_Page;
         Canvas MainCanvas;
         Border MainBorder;
 
@@ -107,18 +102,7 @@ namespace Niero.ViewModels
         Storyboard FlashingTextSB;
 
         //Net data
-        List<NetworkInterfaceType> DefaultNetworksInterfacesTypes = new List<NetworkInterfaceType>
-        {
-            NetworkInterfaceType.Ethernet,
-            NetworkInterfaceType.Wireless80211
-        };
-
-        List<IPAddress> AviableIPv4;
-        List<NetworkInterface> AviableNetworkInterfaces;
-        List<NetworkInterface> NonAviableNetworkInterfaces;
-
-        List<DGAdapterInfo> DisabledAdapters;
-        List<DGAdapterInfo> EnabledAdapters;
+        NetInterfaceDataHub DataHub;
 
         private class DGAdapterInfo
         {
@@ -138,9 +122,9 @@ namespace Niero.ViewModels
         }
 
         //CONSTRUCTOR!!!
-        public NetInfoVM(Page page)
+        public NetInfoVM(Page page, NetInterfaceDataHub dataHub) : base(page)
         {
-            m_Page = page;
+            DataHub = dataHub;
 
             MainCanvas = (Canvas)m_Page.FindName(nameof(MainCanvas));
             MainBorder = (Border)m_Page.FindName(nameof(MainBorder));
@@ -149,14 +133,34 @@ namespace Niero.ViewModels
             CanvasBorders.Add(new BorderWithPositionInfo((Border)m_Page.FindName("WorkingAdaptersInfo")));
             CanvasBorders.Add(new BorderWithPositionInfo((Border)m_Page.FindName("DisabledAdaptersInfo")));
 
+            DeviceInfoBorderInit();
+
             StoryboardsInit();
 
             SubscribeBordersToEvents(CanvasBorders[0].DataOwner);
             SubscribeDGBordersToEvents(CanvasBorders[1].DataOwner, CanvasBorders[2].DataOwner);
 
-            UpdateNetModel();
-
             DataUpdateLoop();
+        }
+
+        //Elements init functions
+        private void DeviceInfoBorderInit()
+        {
+            Border DeviceInfo = null;
+            foreach (BorderWithPositionInfo itBorderInfo in CanvasBorders)
+            {
+                if (itBorderInfo.DataOwner.Name == nameof(DeviceInfo))
+                    DeviceInfo = itBorderInfo.DataOwner;
+            }
+
+            TextBox DeviceNameOutput = (TextBox)DeviceInfo.FindName(nameof(DeviceNameOutput));
+            StackPanel IPv4Output = (StackPanel)DeviceInfo.FindName(nameof(IPv4Output));
+
+            DeviceNameOutput.Cursor = CustomCursors.Text_Select;
+            DeviceNameOutput.Foreground = new SolidColorBrush((Color)m_Page.TryFindResource("DarkTextColor"));
+
+            DeviceNameOutput.MouseEnter += TextBox_MouseEnter;
+            DeviceNameOutput.MouseLeave += TextBox_MouseLeave;
         }
 
         private void StoryboardsInit()
@@ -172,6 +176,7 @@ namespace Niero.ViewModels
             FlashingTextSB.RepeatBehavior = RepeatBehavior.Forever;
         }
 
+        //Subscribe elements to events
         private void SubscribeBordersToEvents(params Border[] borders)
         {
             foreach (Border border in borders)
@@ -224,6 +229,7 @@ namespace Niero.ViewModels
             }
         }
 
+        //Events handlers
         private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Clipboard.SetText((sender as TextBox).Text);
@@ -534,14 +540,14 @@ namespace Niero.ViewModels
         private async Task DataUpdateLoop()
         {
             while (true){
-                UpdateNetModel();
                 if (DraggableBorder?.DataOwner.Name != "DeviceInfo" && CanvasBorders[0].DataOwner.IsMouseOver != true) await UpdateDeviceInfoBorder();
                 if (DraggableBorder?.DataOwner.Name != "WorkingAdaptersInfo" && CanvasBorders[1].DataOwner.IsMouseOver != true) await UpdateWorkingAdaptersInfoBorder();
                 if (DraggableBorder?.DataOwner.Name != "DisabledAdaptersInfo" && CanvasBorders[2].DataOwner.IsMouseOver != true) await UpdateDisabledAdaptersInfoBorder();
-                await Task.Delay(10000);
+                await Task.Delay(5000);
             }
         }
 
+        //Update info on borders (Based on DataHub)
         private async Task UpdateDeviceInfoBorder()
         {
             Border DeviceInfo = null;
@@ -556,17 +562,11 @@ namespace Niero.ViewModels
             TextBox DeviceNameOutput = (TextBox)DeviceInfo.FindName(nameof(DeviceNameOutput));
             StackPanel IPv4Output = (StackPanel)DeviceInfo.FindName(nameof(IPv4Output));
 
-            DeviceNameOutput.Cursor = CustomCursors.Text_Select;
-            DeviceNameOutput.Foreground = new SolidColorBrush((Color)m_Page.TryFindResource("DarkTextColor"));
-
-            DeviceNameOutput.MouseEnter += TextBox_MouseEnter;
-            DeviceNameOutput.MouseLeave += TextBox_MouseLeave;
-
-            DeviceNameOutput.Text = NetworkTools.GetMyDeviceName();
+            DeviceNameOutput.Text = DataHub.DeviceName;
 
             IPv4Output.Children.Clear();
 
-            foreach (IPAddress ip in AviableIPv4)
+            foreach (IPAddress ip in DataHub.AviableIPv4)
             {
                 TextBox IpAdressTB = new TextBox();
 
@@ -598,12 +598,7 @@ namespace Niero.ViewModels
 
             DataGrid WorkingAdaptersDG = (DataGrid)m_Page.FindName(nameof(WorkingAdaptersDG));
 
-            EnabledAdapters = new List<DGAdapterInfo>();
-            foreach (NetworkInterface inter in AviableNetworkInterfaces)
-            {
-                EnabledAdapters.Add(new DGAdapterInfo(new BasicInterfaceInfo(inter)));
-            }
-            WorkingAdaptersDG.ItemsSource = EnabledAdapters;
+            WorkingAdaptersDG.ItemsSource = DataHub.EnabledAdapters;
 
             await AnimateBorderUpdate_Finish(WorkingAdaptersInfo);
 
@@ -622,12 +617,7 @@ namespace Niero.ViewModels
 
             DataGrid DisabledAdaptersDG = (DataGrid)m_Page.FindName(nameof(DisabledAdaptersDG));
 
-            DisabledAdapters = new List<DGAdapterInfo>();
-            foreach (NetworkInterface inter in NonAviableNetworkInterfaces)
-            {
-                DisabledAdapters.Add(new DGAdapterInfo(new BasicInterfaceInfo(inter)));
-            }
-            DisabledAdaptersDG.ItemsSource = DisabledAdapters;
+            DisabledAdaptersDG.ItemsSource = DataHub.DisabledAdapters;
 
             await AnimateBorderUpdate_Finish(DisabledAdaptersInfo);
 
@@ -640,7 +630,7 @@ namespace Niero.ViewModels
 
             SenderTB.Tag = false;                                                                  //another animation locked
             FlashingTextSB.Begin(SenderTB, true);
-        }              //     !!!you have bound a lot of objects to these two methods!!!
+        }              //     !!!you have bound a lot of objects to these two handlers!!!
         private void TextBox_MouseLeave(object sender, MouseEventArgs e)
         {
             TextBox SenderTB = sender as TextBox;
@@ -666,13 +656,6 @@ namespace Niero.ViewModels
                 args.RoutedEvent = Border.MouseEnterEvent;
                 border.RaiseEvent(args);
             }
-        }
-
-        private void UpdateNetModel()
-        {
-            AviableIPv4 = NetworkTools.GetLocalIPv4(OperationalStatus.Up, DefaultNetworksInterfacesTypes.ToArray());
-            AviableNetworkInterfaces = NetworkTools.GetNetworkInterfaces(OperationalStatus.Up, DefaultNetworksInterfacesTypes.ToArray());
-            NonAviableNetworkInterfaces = NetworkTools.GetNetworkInterfaces(OperationalStatus.Down);
         }
     }
 }

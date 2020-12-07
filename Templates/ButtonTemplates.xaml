@@ -10,7 +10,7 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 Height="{TemplateBinding Height}"
                 Width="{TemplateBinding Width}"
-                Margin="2,2,2,2"
+                Margin="0,0,0,0"
                 Padding="2,0,2,0">
 
             <Border.Background>
@@ -39,7 +39,7 @@
                             <ColorAnimation Duration="0:0:0.3" To="{StaticResource BaseColor}"
                                             Storyboard.TargetName="ContentColor"
                                             Storyboard.TargetProperty="Color" />
-                            <ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.3" To="0,0,0,0" />
+                            <!--<ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.3" To="0,0,0,0" />-->
                         </Storyboard>
                     </VisualState>
                     <VisualState Name="Normal">
@@ -50,7 +50,7 @@
                             <ColorAnimation Duration="0:0:0.3" To="{StaticResource DarkTextColor}"
                                             Storyboard.TargetName="ContentColor"
                                             Storyboard.TargetProperty="Color" />
-                            <ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.3" To="2,2,2,2" />
+                            <!--<ThicknessAnimation Storyboard.TargetProperty="Margin" Duration="0:0:0.3" To="2,2,2,2" />-->
                         </Storyboard>
                     </VisualState>
                     <VisualState Name="Pressed">

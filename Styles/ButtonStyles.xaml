@@ -12,6 +12,13 @@
             <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
             <Setter Property="FontSize" Value="16"/>
         </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                </EventTrigger.Actions>                
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="RoundedSidebarButton" TargetType="{x:Type Button}">
@@ -33,6 +40,13 @@
             <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
             <Setter Property="FontSize" Value="18"/>
         </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
 
     <RotateTransform x:Key="UpArrow" CenterX="37.5" CenterY="20" Angle="90"/>
@@ -46,6 +60,13 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="RightArrowButton" TargetType="{x:Type Button}">
@@ -55,6 +76,13 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="RenderTransform" Value="{StaticResource RightArrow}"/>
         </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </Style.Triggers>
     </Style>
 
     <RotateTransform x:Key="UpTriangle" CenterX="15" CenterY="12.5" Angle="0"/>

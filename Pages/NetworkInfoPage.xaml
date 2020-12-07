@@ -16,12 +16,11 @@
     </Page.Resources>
 
     <Grid Margin="40,0,0,0">
-        <!-- Анимации перехода между страницами попробуй реализовать через события страницы (загружено, выгружено) и свойство Opacity -->
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="TitleTextBlock" Grid.Row="0"
+        <TextBlock x:Name="TitleTextBlock" Grid.Row="0" Margin="0,0,40,0"
                    Style="{StaticResource TitleTextBlock}"
                    Text="Network Information">
         </TextBlock>
@@ -36,7 +35,7 @@
                 <!-- Basic info -->
                 <Border x:Name="DeviceInfo"
                         RenderTransform="{StaticResource BasicInfoPos}"
-                        Style="{StaticResource InfoBorder}">
+                        Style="{StaticResource MovableBorder}">
                     <Grid>
                         <Grid HorizontalAlignment="Left"
                               Width="0">
@@ -105,7 +104,7 @@
                 <!-- Working Adapters Info -->
                 <Border x:Name="WorkingAdaptersInfo"
                         RenderTransform="{StaticResource WAdaptersInfoPos}"
-                        Style="{StaticResource InfoBorder}">
+                        Style="{StaticResource MovableBorder}">
                     <Grid>
                         <Grid HorizontalAlignment="Left"
                               Width="0">
@@ -174,7 +173,7 @@
                 <!-- Disabled Adapters Info -->
                 <Border x:Name="DisabledAdaptersInfo"
                         RenderTransform="{StaticResource DAdaptersInfoPos}"
-                        Style="{StaticResource InfoBorder}">
+                        Style="{StaticResource MovableBorder}">
                     <Grid>
                         <Grid HorizontalAlignment="Left"
                               Width="0">

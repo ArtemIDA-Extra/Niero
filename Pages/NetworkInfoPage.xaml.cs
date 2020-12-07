@@ -3,15 +3,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using Niero.ViewModels;
+using Niero.Models;
 
 namespace Niero.Pages
 {
     public partial class NetworkInfoPage : Page
     {
-        public NetworkInfoPage()
+        public NetworkInfoPage(NetInterfaceDataHub dataHub)
         {
             InitializeComponent();
-            DataContext = new NetInfoVM(this);
+            DataContext = new NetInfoVM(this, dataHub);
             this.Loaded += NetworkInfoPage_Loaded;
         }
 

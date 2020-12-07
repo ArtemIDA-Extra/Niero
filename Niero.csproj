@@ -48,6 +48,7 @@
     <None Remove="DesignDictionaries\Fonts\MagicFont.ttf" />
     <None Remove="DesignDictionaries\Fonts\NierAutomataFont.ttf" />
     <None Remove="Images\MainBackground_16x9.png" />
+    <None Remove="Sounds\EnterAction.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +74,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Resource Include="Images\MainBackground_16x9.png" />
+    <Resource Include="Sounds\EnterAction.wav" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Alternate Select.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Busy.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Diagonal Resize 1.ani" />

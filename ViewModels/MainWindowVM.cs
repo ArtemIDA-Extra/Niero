@@ -12,12 +12,24 @@ using System.Windows.Media.Animation;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Linq;
+using Niero.Models;
 
 namespace Niero.ViewModels
 {
     class MainWindowVM : BaseViewModel
     {
+        //Models storage area
+        List<NetworkInterfaceType> BasicInterfaceTypes = new List<NetworkInterfaceType>
+        {
+            NetworkInterfaceType.Ethernet,
+            NetworkInterfaceType.Wireless80211
+        };
+        NetInterfaceDataHub BasicNetInterfaceDataHub;
+        //--------------------
+
         Window loadingWindow, mainWindow;
 
         Grid titleLine;
@@ -70,6 +82,9 @@ namespace Niero.ViewModels
             loadingWindow = new LoadingWindow();
             loadingWindow.Show();
             loadingWindow.Closed += LoadingWindow_Closed;
+
+            //Models init
+            BasicNetInterfaceDataHub = new NetInterfaceDataHub(BasicInterfaceTypes.ToArray());
 
             //Searching elements
             mainWindow.ApplyTemplate();
@@ -263,8 +278,8 @@ namespace Niero.ViewModels
         {
             switch ((sender as Button).Content.ToString())
             {
-                case "Network Info": SwapPageTo(new NetworkInfoPage()); WelcomePageON = false; break;
-                case "Network Scan": SwapPageTo(new NetScanningMainPage()); WelcomePageON = false; break;
+                case "Network Info": SwapPageTo(new NetworkInfoPage(BasicNetInterfaceDataHub)); WelcomePageON = false; break;
+                case "Network Scan": SwapPageTo(new NetScanningMainPage(BasicNetInterfaceDataHub)); WelcomePageON = false; break;
                 case "Default(Test)": SwapPageTo(new DefaultPage()); WelcomePageON = false; break;
             }
         }
