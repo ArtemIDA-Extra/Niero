@@ -34,7 +34,7 @@
                 <!-- При изменении контента кнопок - меняй кейсы в обработчике
                      cобытия Click -->
                 <Button Style="{DynamicResource DefaultTextSidebarButton}"
-                        Content="Network Info"/>
+                        Content="Info"/>
                 <Button Style="{DynamicResource DefaultTextSidebarButton}" 
                         Content="Network Scan"/>
                 <Button Style="{DynamicResource DefaultTextSidebarButton}" 

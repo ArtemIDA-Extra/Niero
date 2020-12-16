@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Niero">
 
+    <!-- Empty TextBox template -->
     <ControlTemplate x:Key="TextBoxForMoveBorder" TargetType="TextBox">
         <Grid>
             <VisualStateManager.VisualStateGroups>
@@ -24,4 +25,51 @@
         </Grid>
         <!-- MouseOver State not work, because state is ReadOnly ever -->
     </ControlTemplate>
+
+    <!-- Editable TextBox without valid/invalid states -->
+    <ControlTemplate x:Key="EditableTextBox" TargetType="TextBox">
+        <Border Name="Border"
+                CornerRadius="2"
+                Height="{TemplateBinding Height}"
+                Width="{TemplateBinding Width}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                Background="{TemplateBinding Background}"
+                Padding="{TemplateBinding Padding}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="Disabled"/>
+                    <VisualState x:Name="ReadOnly"/>
+                    <VisualState x:Name="MouseOver"/>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused">
+                        <Storyboard>
+                            <ColorAnimation Duration="0:0:0.3" To="{StaticResource OverlayDarkColor}"
+                                            Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.3" To="{StaticResource BaseColor}"
+                                            Storyboard.TargetProperty="(TextBox.Foreground).(SolidColorBrush.Color)" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Unfocused">
+                        <Storyboard>
+                            <ColorAnimation Duration="0:0:0.3" To="Transparent"
+                                            Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.3" To="{StaticResource DarkTextColor}"
+                                            Storyboard.TargetProperty="(TextBox.Foreground).(SolidColorBrush.Color)" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="ValidationStates">
+                    <VisualState x:Name="Valid"/>
+                    <VisualState x:Name="InvalidFocused"/>
+                    <VisualState x:Name="InvalidUnfocused"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <ScrollViewer Margin="0"
+                        x:Name="PART_ContentHost" />
+        </Border>
+    </ControlTemplate>
+    
 </ResourceDictionary>

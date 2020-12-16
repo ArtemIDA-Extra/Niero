@@ -4,6 +4,55 @@
 
     <!-- Templates -->
 
+    <ControlTemplate TargetType="Button" x:Key="CalssicButtonTemplate">
+        <Border x:Name="Border"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                Background="{TemplateBinding Background}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Height="{TemplateBinding Height}"
+                Width="{TemplateBinding Width}">
+            <Border.Effect>
+                <DropShadowEffect x:Name="ShadowEffect" BlurRadius="0" Opacity="1" Direction="315" ShadowDepth="5" Color="{StaticResource ShadowOnLight}"/>
+            </Border.Effect>
+
+            <ContentControl x:Name="contentControl"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                <TextBlock Text="{TemplateBinding Content}"
+                           Foreground="{TemplateBinding Foreground}"
+                           TextAlignment="Center"
+                           TextWrapping="WrapWithOverflow"/>
+            </ContentControl>
+
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="7"
+                                             Storyboard.TargetName="ShadowEffect"
+                                             Storyboard.TargetProperty="(DropShadowEffect.ShadowDepth)" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="Normal">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="5"
+                                             Storyboard.TargetName="ShadowEffect"
+                                             Storyboard.TargetProperty="(DropShadowEffect.ShadowDepth)" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="Pressed">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.2" To="3"
+                                             Storyboard.TargetName="ShadowEffect"
+                                             Storyboard.TargetProperty="(DropShadowEffect.ShadowDepth)" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Border>
+    </ControlTemplate>
+
     <ControlTemplate TargetType="Button" x:Key="DefaultTextButtonTemplate">
         <Border x:Name="btn_border"
                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -183,7 +232,7 @@
                     </PathGeometry>
                 </Path.Data>
                 <Path.Effect>
-                    <DropShadowEffect x:Name="ShadowEffect" BlurRadius="0" Opacity="1" Direction="315" ShadowDepth="5" Color="{StaticResource ShadowOnLight}"></DropShadowEffect>
+                    <DropShadowEffect x:Name="ShadowEffect" BlurRadius="0" Opacity="1" Direction="315" ShadowDepth="5" Color="{StaticResource ShadowOnLight}"/>
                 </Path.Effect>
             </Path>
             <VisualStateManager.VisualStateGroups>

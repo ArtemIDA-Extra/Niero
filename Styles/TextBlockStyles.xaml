@@ -46,5 +46,18 @@
             <Setter Property="TextWrapping" Value="NoWrap"/>
         </Style.Setters>
     </Style>
-    
+
+    <Style x:Key="SmallTextBlock" TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+        </Style.Setters>
+    </Style>
+
 </ResourceDictionary>

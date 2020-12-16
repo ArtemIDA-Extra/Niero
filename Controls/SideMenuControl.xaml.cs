@@ -5,14 +5,10 @@ using System.Windows.Media.Animation;
 
 namespace Niero.Controls
 {
-    /// <summary>
-    /// Логика взаимодействия для SideMenuControl.xaml
-    /// </summary>
     public partial class SideMenuControl : UserControl
     {
         // Required elements from ControlTemplate
         private Button homeButton;
-
         private Border iconGridMask, backBorder;
 
         //Animations parts

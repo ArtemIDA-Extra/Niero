@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -27,7 +28,7 @@ namespace Niero.ViewModels
             NetworkInterfaceType.Ethernet,
             NetworkInterfaceType.Wireless80211
         };
-        NetInterfaceDataHub BasicNetInterfaceDataHub;
+        NetworkDataHub BasicNetInterfaceDataHub;
         //--------------------
 
         Window loadingWindow, mainWindow;
@@ -67,6 +68,8 @@ namespace Niero.ViewModels
             private set;
         } = 24;
 
+        private List<Page> Pages;
+
         //CONSTRUCTOR!!!
         public MainWindowVM(Window window)
         {
@@ -84,7 +87,7 @@ namespace Niero.ViewModels
             loadingWindow.Closed += LoadingWindow_Closed;
 
             //Models init
-            BasicNetInterfaceDataHub = new NetInterfaceDataHub(BasicInterfaceTypes.ToArray());
+            BasicNetInterfaceDataHub = new NetworkDataHub(BasicInterfaceTypes.ToArray());
 
             //Searching elements
             mainWindow.ApplyTemplate();
@@ -112,6 +115,15 @@ namespace Niero.ViewModels
             //Commands time!
             CommandsInit();
 
+            //PAGES LIST!!!-------------------------------------
+            Pages = new List<Page>()
+            {
+                new BaseInfoPage(BasicNetInterfaceDataHub),
+                new NetScanningMainPage(BasicNetInterfaceDataHub),
+                new DefaultPage()
+            };
+            //--------------------------------------------------
+
             //PagesViewer init
             DoubleAnimation OpenAnim = new DoubleAnimation(1, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
 
@@ -133,6 +145,8 @@ namespace Niero.ViewModels
 
         private void WelcomePage_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            SoundPlayer SP = new SoundPlayer("EmbeddedSounds/MainEnterance.wav");
+            SP.Play();
             sideMenu.Hide = false;
             RemoveLastPageInHistory = true;
             SwapPageTo(new DefaultPage());
@@ -255,11 +269,15 @@ namespace Niero.ViewModels
                 mainWindow.WindowState = WindowState.Minimized;
             }
         }
-        private async void closeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void closeCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            DoubleAnimation anim = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
-            mainWindow.BeginAnimation(Window.OpacityProperty, anim);
-            await Task.Delay(750);
+            DoubleAnimation CloseWindowAnimation = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
+            CloseWindowAnimation.Completed += CloseWindowAnimation_Completed;
+            mainWindow.BeginAnimation(Window.OpacityProperty, CloseWindowAnimation);
+        }
+
+        private void CloseWindowAnimation_Completed(object sender, EventArgs e)
+        {
             mainWindow.Close();
         }
 
@@ -278,9 +296,28 @@ namespace Niero.ViewModels
         {
             switch ((sender as Button).Content.ToString())
             {
-                case "Network Info": SwapPageTo(new NetworkInfoPage(BasicNetInterfaceDataHub)); WelcomePageON = false; break;
-                case "Network Scan": SwapPageTo(new NetScanningMainPage(BasicNetInterfaceDataHub)); WelcomePageON = false; break;
-                case "Default(Test)": SwapPageTo(new DefaultPage()); WelcomePageON = false; break;
+                case "Info":
+                    {
+                        if (Pages[0].KeepAlive == false) Pages[0] = new BaseInfoPage(BasicNetInterfaceDataHub);
+                        SwapPageTo(Pages[0]); 
+                        WelcomePageON = false; 
+                        break;
+                    }
+                case "Network Scan":
+                    {
+                        if (Pages[1].KeepAlive == false) Pages[1] = new NetScanningMainPage(BasicNetInterfaceDataHub);
+                        SwapPageTo(Pages[1]);
+                        WelcomePageON = false; 
+                        break;
+                    }
+
+                case "Default(Test)":
+                    {
+                        if (Pages[2].KeepAlive == false) Pages[2] = new DefaultPage();
+                        SwapPageTo(Pages[2]);
+                        WelcomePageON = false; 
+                        break;
+                    }
             }
         }
         private void SwapPageTo(Page page)

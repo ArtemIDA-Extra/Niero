@@ -41,6 +41,19 @@
     <None Remove="DesignDictionaries\Cursors\Vertical Resize.ani" />
     <None Remove="DesignDictionaries\Cursors\Working in Background.ani" />
     <None Remove="DesignDictionaries\Fonts\RodinFont.ttf" />
+    <None Remove="EmbeddedSounds\BackspacePress.wav" />
+    <None Remove="EmbeddedSounds\CloseAction.wav" />
+    <None Remove="EmbeddedSounds\EnterAction.wav" />
+    <None Remove="EmbeddedSounds\ErrorShort.wav" />
+    <None Remove="EmbeddedSounds\Hover.wav" />
+    <None Remove="EmbeddedSounds\KeyPress.wav" />
+    <None Remove="EmbeddedSounds\LongClick.wav" />
+    <None Remove="EmbeddedSounds\MainEnterance.wav" />
+    <None Remove="EmbeddedSounds\MenuOpen.wav" />
+    <None Remove="EmbeddedSounds\Selected.wav" />
+    <None Remove="EmbeddedSounds\ShortClick.wav" />
+    <None Remove="EmbeddedSounds\StartEditing.wav" />
+    <None Remove="EmbeddedSounds\Warning.wav" />
     <None Remove="Gifs\LoadingScreenFullHD.mp4" />
     <None Remove="Gifs\Main.gif" />
     <None Remove="Gifs\NierRobot.gif" />
@@ -48,19 +61,38 @@
     <None Remove="DesignDictionaries\Fonts\MagicFont.ttf" />
     <None Remove="DesignDictionaries\Fonts\NierAutomataFont.ttf" />
     <None Remove="Images\MainBackground_16x9.png" />
+    <None Remove="Sounds\BackspacePress.wav" />
+    <None Remove="Sounds\CloseAction.wav" />
     <None Remove="Sounds\EnterAction.wav" />
+    <None Remove="Sounds\ErrorShort.wav" />
+    <None Remove="Sounds\Hover.wav" />
+    <None Remove="Sounds\KeyPress.wav" />
+    <None Remove="Sounds\LongClick.wav" />
+    <None Remove="Sounds\MainEnterance.wav" />
+    <None Remove="Sounds\MenuOpen.wav" />
+    <None Remove="Sounds\Selected.wav" />
+    <None Remove="Sounds\ShortClick.wav" />
+    <None Remove="Sounds\StartEditing.wav" />
+    <None Remove="Sounds\Warning.wav" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="WpfAnimatedGif" Version="2.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup>    
     <Resource Include="DesignDictionaries\Fonts\RodinFont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Gifs\Main.gif" />
-    <Resource Include="Gifs\NierRobot.gif" />
+    <Resource Include="Gifs\Main.gif">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Gifs\NierRobot.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\BackspacePress.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="DesignDictionaries\Fonts\FontAwesome.otf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -70,11 +102,81 @@
     <Resource Include="DesignDictionaries\Fonts\NierAutomataFont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <EmbeddedResource Include="EmbeddedSounds\BackspacePress.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\CloseAction.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\ErrorShort.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\Hover.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\KeyPress.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\LongClick.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\MainEnterance.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\MenuOpen.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\Selected.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\ShortClick.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\StartEditing.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmbeddedSounds\Warning.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gifs\LoadingScreenFullHD.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Resource Include="Images\MainBackground_16x9.png" />
-    <Resource Include="Sounds\EnterAction.wav" />
+    <Resource Include="Images\MainBackground_16x9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\CloseAction.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\ErrorShort.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\Hover.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\KeyPress.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\LongClick.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\MainEnterance.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\MenuOpen.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\Selected.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\ShortClick.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\StartEditing.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Sounds\Warning.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <EmbeddedResource Include="DesignDictionaries\Cursors\Alternate Select.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Busy.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Diagonal Resize 1.ani" />
@@ -93,7 +195,7 @@
     <EmbeddedResource Include="DesignDictionaries\Cursors\Vertical Resize.ani" />
     <EmbeddedResource Include="DesignDictionaries\Cursors\Working in Background.ani" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Reference Include="NieroNetLib">
       <HintPath>NieroNetLib.dll</HintPath>

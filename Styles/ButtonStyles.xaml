@@ -4,6 +4,65 @@
     
     <!-- Styles -->
 
+    <Style x:Key="ClassicButton" TargetType="Button">
+        <Style.Setters>
+            <Setter Property="Template" Value="{DynamicResource CalssicButtonTemplate}"/>
+            <Setter Property="Background" Value="{StaticResource OverflowBrush}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource BaseBrush}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\Hover.wav"/>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="1.05" Duration="0:0:0.3"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="1.05" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="1.0" Duration="0:0:0.3"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="1.0" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Click">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\ShortClick.wav"/>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="0.97" Duration="0:0:0.3"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="0.97" Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style x:Key="DefaultTextSidebarButton" TargetType="{x:Type Button}">
         <Style.Setters>
             <Setter Property="Template" Value="{DynamicResource DefaultTextButtonTemplate}"/>
@@ -15,8 +74,13 @@
         <Style.Triggers>
             <EventTrigger RoutedEvent="MouseEnter">
                 <EventTrigger.Actions>
-                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                    <SoundPlayerAction Source="Sounds\Hover.wav"/>
                 </EventTrigger.Actions>                
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Click">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\LongClick.wav"/>
+                </EventTrigger.Actions>
             </EventTrigger>
         </Style.Triggers>
     </Style>
@@ -43,7 +107,12 @@
         <Style.Triggers>
             <EventTrigger RoutedEvent="MouseEnter">
                 <EventTrigger.Actions>
-                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                    <SoundPlayerAction Source="Sounds\Hover.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Click">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\CloseAction.wav"/>
                 </EventTrigger.Actions>
             </EventTrigger>
         </Style.Triggers>
@@ -63,7 +132,12 @@
         <Style.Triggers>
             <EventTrigger RoutedEvent="MouseEnter">
                 <EventTrigger.Actions>
-                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                    <SoundPlayerAction Source="Sounds\Hover.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Click">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\ShortClick.wav"/>
                 </EventTrigger.Actions>
             </EventTrigger>
         </Style.Triggers>
@@ -79,7 +153,12 @@
         <Style.Triggers>
             <EventTrigger RoutedEvent="MouseEnter">
                 <EventTrigger.Actions>
-                    <SoundPlayerAction Source="Sounds\EnterAction.wav"/>
+                    <SoundPlayerAction Source="Sounds\Hover.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Click">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\ShortClick.wav"/>
                 </EventTrigger.Actions>
             </EventTrigger>
         </Style.Triggers>
@@ -89,5 +168,5 @@
     <RotateTransform x:Key="RightTriangle" CenterX="15" CenterY="12.5" Angle="90"/>
     <RotateTransform x:Key="DownTriangle" CenterX="15" CenterY="12.5" Angle="180"/>
     <RotateTransform x:Key="LeftTriangle" CenterX="15" CenterY="12.5" Angle="270"/>
-    
+
 </ResourceDictionary>

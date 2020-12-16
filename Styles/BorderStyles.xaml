@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Niero">
+
+    <!-- Styles -->
+
+    <Style x:Key="ClassicBorder" TargetType="Border">
+        <Style.Setters>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Background" Value="{StaticResource OverlayLightBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="Effect" Value="{StaticResource SurfaceBlockShadow}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="MovableBorder" TargetType="Border">
+        <Style.Setters>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Opacity" Value="0"/>
+            <Setter Property="Effect" Value="{StaticResource PressedSurfaceBlockShadow}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="MainCanvasBorder" TargetType="Border">
+        <Style.Setters>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BaseBrush}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style.Setters>
+    </Style>
+
+</ResourceDictionary>

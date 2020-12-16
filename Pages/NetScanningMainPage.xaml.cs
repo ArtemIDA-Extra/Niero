@@ -10,10 +10,12 @@ namespace Niero.Pages
 {
     public partial class NetScanningMainPage : Page
     {
-        public NetScanningMainPage(NetInterfaceDataHub dataHub)
+        public NetScanningMainPage(NetworkDataHub dataHub)
         {
             InitializeComponent();
-            DataContext = new NetScanningVM(this, dataHub);
+
+            this.DataContext = new NetScanningVM(this, dataHub);
+
             this.Loaded += NetScanningMainPage_Loaded;
         }
 

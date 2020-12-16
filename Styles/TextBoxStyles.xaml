@@ -1,0 +1,81 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Niero">
+    
+    <!-- Styles -->
+
+    <Style x:Key="MoveTextBox" TargetType="TextBox">
+        <Style.Setters>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Template" Value="{DynamicResource TextBoxForMoveBorder}"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="EditableTextBox_White" TargetType="TextBox">
+        <Style.Setters>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BaseBrush}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+            <Setter Property="IsReadOnly" Value="False"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="Template" Value="{DynamicResource EditableTextBox}"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\Hover.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="KeyDown">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\KeyPress.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="GotFocus">
+                <EventTrigger.Actions>
+                    <SoundPlayerAction Source="Sounds\StartEditing.wav"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="TextBox" x:Key="SmallTextBox_Transparent">
+        <Style.Setters>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="IsReadOnlyCaretVisible" Value="False" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+        </Style.Setters>
+    </Style>
+
+</ResourceDictionary>
