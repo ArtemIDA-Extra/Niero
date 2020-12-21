@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Styles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="Styles/ComboBoxStyles.xaml"/>
                 <ResourceDictionary Source="Styles/DataGridStyles.xaml"/>
+                <ResourceDictionary Source="Styles/GroupBoxStyles.xaml"/>
                 <ResourceDictionary Source="Styles/OtherStyles.xaml"/>
                 <ResourceDictionary Source="Styles/ProgressBarStyles.xaml"/>
                 <ResourceDictionary Source="Styles/TextBlockStyles.xaml"/>

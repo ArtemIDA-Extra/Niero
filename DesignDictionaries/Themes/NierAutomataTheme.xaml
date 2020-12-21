@@ -36,6 +36,9 @@
     <Color x:Key="RedColor">#ce664c</Color>
     <SolidColorBrush x:Key="RedBrush" Color="{DynamicResource RedColor}"/>
 
+    <Color x:Key="GreenColor">#487748</Color>
+    <SolidColorBrush x:Key="GreenBrush" Color="{DynamicResource GreenColor}"/>
+
     <Color x:Key="YellowColor">#e7deb0</Color>
     <SolidColorBrush x:Key="YellowBrush" Color="{DynamicResource YellowColor}"/>
 
@@ -75,6 +78,12 @@
 
     <Storyboard x:Key="ForegroundColorToBlackST">
         <ColorAnimation  Duration="0:0:0.3" To="Black"
+                         Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+    </Storyboard>
+
+    <Storyboard x:Key="ForegroundColorToTransparentFlashST">
+        <ColorAnimation  Duration="0:0:0.3" To="Transparent"
+                         AutoReverse="True"
                          Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
     </Storyboard>
 

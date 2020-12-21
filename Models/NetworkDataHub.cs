@@ -56,11 +56,6 @@ namespace Niero.Models
             //Post-initialization fields filling
             GlobalFieldsInit();
 
-            //BackgroundWorker-s init
-            BackScanWorker = new BackgroundWorker();
-            BackScanWorker.WorkerReportsProgress = true;
-            BackScanWorker.WorkerSupportsCancellation = true;
-
             //Timer setting
             SpeedUpdateTimer.Elapsed += GlobalInfoUpdate;
             SpeedUpdateTimer.Enabled = true;
@@ -96,7 +91,7 @@ namespace Niero.Models
                 task.Start();
             }
 
-            Task.WaitAll(UpdateTasks);
+            //Task.WaitAll(UpdateTasks);
         }
 
         //Model functions
@@ -108,7 +103,23 @@ namespace Niero.Models
         {
             if(ActiveScan.ScanStatus == NetScanStatus.Ready)
             {
+                //BackgroundWorker-s init
+                BackScanWorker = new BackgroundWorker();
+                BackScanWorker.WorkerReportsProgress = true;
+                BackScanWorker.WorkerSupportsCancellation = true;
                 BackScanWorker.DoWork += ActiveScan.StartScanningOnBackground;
+                BackScanWorker.RunWorkerAsync();
+            }
+        }
+        public void TryStartFastActiveScan()
+        {
+            if (ActiveScan.ScanStatus == NetScanStatus.Ready)
+            {
+                //BackgroundWorker-s init
+                BackScanWorker = new BackgroundWorker();
+                BackScanWorker.WorkerReportsProgress = true;
+                BackScanWorker.WorkerSupportsCancellation = true;
+                BackScanWorker.DoWork += ActiveScan.StartTurboScanningOnBackground;
                 BackScanWorker.RunWorkerAsync();
             }
         }

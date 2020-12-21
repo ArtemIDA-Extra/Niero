@@ -29,12 +29,13 @@ namespace Niero.ViewModels
             NetworkInterfaceType.Wireless80211
         };
         NetworkDataHub BasicNetInterfaceDataHub;
+        SystemDataHub BasicSystemDataHub;
         //--------------------
 
         Window loadingWindow, mainWindow;
 
         Grid titleLine;
-        Button maxSizeButton, minSizeButton, closeWindowButton, 
+        Button maxSizeButton, minSizeButton, closeWindowButton,
                nextPageButton, prevPageButton, homeButton;
         Frame pagesViewer;
         SideMenuControl sideMenu;
@@ -68,7 +69,7 @@ namespace Niero.ViewModels
             private set;
         } = 24;
 
-        private List<Page> Pages;
+        private Page[] Pages;
 
         //CONSTRUCTOR!!!
         public MainWindowVM(Window window)
@@ -87,7 +88,11 @@ namespace Niero.ViewModels
             loadingWindow.Closed += LoadingWindow_Closed;
 
             //Models init
-            BasicNetInterfaceDataHub = new NetworkDataHub(BasicInterfaceTypes.ToArray());
+            Task.Run(() =>
+            {
+                BasicNetInterfaceDataHub = new NetworkDataHub(BasicInterfaceTypes.ToArray());
+                BasicSystemDataHub = new SystemDataHub();
+            });
 
             //Searching elements
             mainWindow.ApplyTemplate();
@@ -115,14 +120,8 @@ namespace Niero.ViewModels
             //Commands time!
             CommandsInit();
 
-            //PAGES LIST!!!-------------------------------------
-            Pages = new List<Page>()
-            {
-                new BaseInfoPage(BasicNetInterfaceDataHub),
-                new NetScanningMainPage(BasicNetInterfaceDataHub),
-                new DefaultPage()
-            };
-            //--------------------------------------------------
+            //Pages array init
+            Pages = new Page[3];
 
             //PagesViewer init
             DoubleAnimation OpenAnim = new DoubleAnimation(1, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
@@ -149,7 +148,7 @@ namespace Niero.ViewModels
             SP.Play();
             sideMenu.Hide = false;
             RemoveLastPageInHistory = true;
-            SwapPageTo(new DefaultPage());
+            SwapPageTo(new BaseInfoPage(BasicNetInterfaceDataHub, BasicSystemDataHub));
             ColorAnimation titleRecolorAnim = new ColorAnimation((Color)mainWindow.TryFindResource("SurfaceColor"), new Duration(new TimeSpan(0, 0, 0, 0, 750)));
             DoubleAnimation titleResizeAnim = new DoubleAnimation(25, new Duration(new TimeSpan(0, 0, 0, 0, 750)));
             (titleLine.Background as SolidColorBrush).BeginAnimation(SolidColorBrush.ColorProperty, titleRecolorAnim);
@@ -298,22 +297,22 @@ namespace Niero.ViewModels
             {
                 case "Info":
                     {
-                        if (Pages[0].KeepAlive == false) Pages[0] = new BaseInfoPage(BasicNetInterfaceDataHub);
+                        if (Pages[0] == null || Pages[0].KeepAlive == false) Pages[0] = new BaseInfoPage(BasicNetInterfaceDataHub, BasicSystemDataHub);
                         SwapPageTo(Pages[0]); 
                         WelcomePageON = false; 
                         break;
                     }
                 case "Network Scan":
                     {
-                        if (Pages[1].KeepAlive == false) Pages[1] = new NetScanningMainPage(BasicNetInterfaceDataHub);
+                        if (Pages[1] == null || Pages[1].KeepAlive == false) Pages[1] = new NetScanningMainPage(BasicNetInterfaceDataHub);
                         SwapPageTo(Pages[1]);
                         WelcomePageON = false; 
                         break;
                     }
 
-                case "Default(Test)":
+                case "Programm Info":
                     {
-                        if (Pages[2].KeepAlive == false) Pages[2] = new DefaultPage();
+                        if (Pages[2] == null || Pages[2].KeepAlive == false) Pages[2] = new DefaultPage();
                         SwapPageTo(Pages[2]);
                         WelcomePageON = false; 
                         break;
@@ -366,7 +365,7 @@ namespace Niero.ViewModels
         }
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(3200);
+            await Task.Delay(4800);
             loadingWindow.Close();
         }
         private void MainWindow_MouseLeave(object sender, MouseEventArgs e)

@@ -4,6 +4,26 @@
     
     <!-- Styles -->
 
+    <Style x:Key="BadChoiceToggleButton" TargetType="ToggleButton">
+        <Style.Setters>
+            <Setter Property="Template" Value="{DynamicResource BadChoiceToggleButtonTemplate}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="Background" Value="{StaticResource OverlayLightBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource GreenBrush}"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="Content" Value="Off">
+                <Setter Property="Foreground" Value="{StaticResource GreenBrush}"/>
+            </Trigger>
+            <Trigger Property="Content" Value="On">
+                <Setter Property="Foreground" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style x:Key="ClassicButton" TargetType="Button">
         <Style.Setters>
             <Setter Property="Template" Value="{DynamicResource CalssicButtonTemplate}"/>

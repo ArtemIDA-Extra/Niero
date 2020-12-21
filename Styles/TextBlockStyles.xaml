@@ -60,4 +60,64 @@
         </Style.Setters>
     </Style>
 
+    <Style x:Key="BasicCopyTextBlock" TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="BreakCopyTextBlock" TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontFamily" Value="{StaticResource Rodin}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkTextBrush}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="{StaticResource BaseColor}" Duration="0:0:0.3"
+                                            Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)"/>
+                            <ColorAnimation To="{StaticResource OverlayDarkColor}" Duration="0:0:0.3"
+                                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Transparent" Duration="0:0:0.3"
+                                            Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)"/>
+                            <ColorAnimation To="{StaticResource DarkTextColor}" Duration="0:0:0.3"
+                                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <EventTrigger RoutedEvent="MouseDown">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource BaseColor}" Duration="0:0:0.3"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        AutoReverse="True"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

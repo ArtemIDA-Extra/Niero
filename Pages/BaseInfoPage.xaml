@@ -4,18 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Niero.Pages"
+      xmlns:controls="clr-namespace:Niero.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NetworkInfoPage"
       Opacity="0">
 
-    <Page.Resources>
-        <TranslateTransform x:Key="BasicInfoPos" X="0" Y="0"/>
-        <TranslateTransform x:Key="WAdaptersInfoPos" X="260" Y="0"/>
-        <TranslateTransform x:Key="DAdaptersInfoPos" X="260" Y="300"/>
-    </Page.Resources>
-
-    <Grid Margin="40,0,0,0">
+    <Grid Margin="40,0,0,100">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
@@ -24,222 +19,69 @@
                    Style="{StaticResource TitleTextBlock}"
                    Text="Network Information">
         </TextBlock>
-        <Border x:Name="MainBorder" 
-                CornerRadius="10"
-                Grid.Row="1"
-                Style="{StaticResource MainCanvasBorder}">
-            <Border.BorderBrush>
-                <SolidColorBrush x:Name="MainBorderBrush" Color="{StaticResource BaseColor}"/>
-            </Border.BorderBrush>
-            <Canvas x:Name="MainCanvas">
-                <!-- Basic info -->
-                <Border x:Name="DeviceInfo"
-                        RenderTransform="{StaticResource BasicInfoPos}"
-                        Style="{StaticResource MovableBorder}">
-                    <Grid>
-                        <Grid HorizontalAlignment="Left"
-                              Width="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="3"/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="3"/>
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="1">
-                                <Border.Background>
-                                    <SolidColorBrush Color="Transparent"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="2">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="3">
-                                <Border.Background>
-                                    <SolidColorBrush Color="Transparent"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="4">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                        </Grid>
-                        <Grid Style="{StaticResource ElementsGridPart}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="3*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Device name:"
-                           Grid.Row="0"
-                           Grid.Column="0"
-                           Style="{StaticResource BasicTextBlock}"/>
-                            <TextBox x:Name="DeviceNameOutput"
-                           Grid.Row="0"
-                           Grid.Column="1"
-                           Style="{StaticResource MoveTextBox}"/>
-                            <TextBlock Text="Active local IPv4:"
-                           Grid.Row="1"
-                           Grid.Column="0"
-                           Style="{StaticResource BasicTextBlock}"
-                           VerticalAlignment="Top"/>
-                            <StackPanel x:Name="IPv4Output"
-                           Grid.Row="1"
-                           Grid.Column="1">
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
-                </Border>
-                <!-- Working Adapters Info -->
-                <Border x:Name="WorkingAdaptersInfo"
-                        RenderTransform="{StaticResource WAdaptersInfoPos}"
-                        Style="{StaticResource MovableBorder}">
-                    <Grid>
-                        <Grid HorizontalAlignment="Left"
-                              Width="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="3"/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="3"/>
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="1">
-                                <Border.Background>
-                                    <SolidColorBrush Color="Transparent"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="2">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="3">
-                                <Border.Background>
-                                    <SolidColorBrush Color="Transparent"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="4">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                        </Grid>
-                        <Grid Style="{StaticResource ElementsGridPart}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Enabled Adapters Info"
-                                       Grid.Row="0"
-                                       Style="{StaticResource BasicTextBlock}">
-                            </TextBlock>
-                            <!-- DataGrid -->
-                            <DataGrid x:Name="WorkingAdaptersDG"
-                                      Grid.Row="1"
-                                      Style="{StaticResource BorderDataGrid}">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Adapters Names" Binding="{Binding AdapterName}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="Ip Adresses" Binding="{Binding IPAddress}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="Adapter Type" Binding="{Binding AdapterType}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="MAC Addresses" Binding="{Binding MacAddress}" 
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="Operational Status" Binding="{Binding OperationalStatus}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                    </Grid>
-                </Border>
-                <!-- Disabled Adapters Info -->
-                <Border x:Name="DisabledAdaptersInfo"
-                        RenderTransform="{StaticResource DAdaptersInfoPos}"
-                        Style="{StaticResource MovableBorder}">
-                    <Grid>
-                        <Grid HorizontalAlignment="Left"
-                              Width="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="3"/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="3"/>
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="1">
-                                <Border.Background>
-                                    <SolidColorBrush Color="Transparent"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="2">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="3">
-                                <Border.Background>
-                                    <SolidColorBrush Color="Transparent"/>
-                                </Border.Background>
-                            </Border>
-                            <Border Grid.Row="4">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource OverlayDarkColor}"/>
-                                </Border.Background>
-                            </Border>
-                        </Grid>
-                        <Grid Style="{StaticResource ElementsGridPart}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Disabled Adapters Info"
-                                       Grid.Row="0"
-                                       Style="{StaticResource BasicTextBlock}">
-                            </TextBlock>
-                            <!-- DataGrid -->
-                            <DataGrid x:Name="DisabledAdaptersDG"
-                                      Grid.Row="1"
-                                      Style="{StaticResource BorderDataGrid}">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Adapters Names" Binding="{Binding AdapterName}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="Ip Adresses" Binding="{Binding IPAddress}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="Adapter Type" Binding="{Binding AdapterType}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="MAC Addresses" Binding="{Binding MacAddress}" 
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                    <DataGridTextColumn Header="Operational Status" Binding="{Binding OperationalStatus}"
-                                                        FontFamily="{StaticResource Rodin}" FontSize="14"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                    </Grid>
-                </Border>
-            </Canvas>
-        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <controls:ShortNetInfoControl x:Name="ShortNetInfo"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                <controls:WorkingAdaptersInfoControl x:Name="WorkingAdaptersInfo"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Grid.Row="1" Grid.Column="0"/>
+                <controls:DisabledAdaptersInfoControl x:Name="DisabledAdaptersInfo"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+            <Grid Grid.Row="1" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <controls:OtherInfoControl x:Name="OtherInfo"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Grid.Row="0" Grid.Column="0"/>
+                <controls:MatherboardInfoControl x:Name="MatherboardInfo"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                                 Grid.Row="0" Grid.Column="1"/>
+                <controls:RAMInfoControl x:Name="RAMInfo"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Grid.Row="0" Grid.Column="2"/>
+                <controls:BIOSInfoControl x:Name="BIOSInfo"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Grid.Row="1" Grid.Column="0"/>
+                <controls:OSInfoControl x:Name="OSInfo"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Grid.Row="1" Grid.Column="1"/>
+                <controls:CPUInfoControl x:Name="CPUInfo"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Grid.Row="1" Grid.Column="2"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

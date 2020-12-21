@@ -4,6 +4,52 @@
 
     <!-- Templates -->
 
+    <ControlTemplate x:Key="BadChoiceToggleButtonTemplate"
+                 TargetType="{x:Type ToggleButton}">
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver"/>
+                    <VisualState x:Name="Pressed" />
+                    <VisualState x:Name="Disabled"/>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="CheckStates">
+                    <VisualState x:Name="Checked">
+                        <Storyboard>
+                            <ColorAnimation To="Red" Duration="0:0:0.5"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Storyboard.TargetName="BackBorder"/>
+                            <ColorAnimation To="Red" Duration="0:0:0.5"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Storyboard.TargetName="BackBorder"
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Unchecked">
+                        <Storyboard>
+                            <ColorAnimation To="{StaticResource GreenColor}" Duration="0:0:0.5"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Storyboard.TargetName="BackBorder"/>
+                            <ColorAnimation To="{StaticResource OverlayLightColor}" Duration="0:0:0.5"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Storyboard.TargetName="BackBorder"/>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Indeterminate" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="BackBorder" Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter Content="{TemplateBinding Content}" 
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
     <ControlTemplate TargetType="Button" x:Key="CalssicButtonTemplate">
         <Border x:Name="Border"
                 BorderBrush="{TemplateBinding BorderBrush}"

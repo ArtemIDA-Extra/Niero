@@ -5,19 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Niero.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <Border x:Name="ScanInitSettings" Grid.Row="1"
                 Style="{StaticResource ClassicBorder}"
                 UseLayoutRounding="True"
-                MaxWidth="300"
-                MinWidth="200"
-                MaxHeight="300"
+                MaxWidth="320"
+                MinWidth="220"
+                MaxHeight="380"
                 Margin="0,70,0,70"
                 HorizontalAlignment="Center">
             <Grid x:Name="MainGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="40"/>
@@ -48,6 +50,12 @@
                           Margin="15,0,15,0"
                           SelectedIndex="0"
                           ItemsSource="{Binding CurrentNetMasks}"/>
+                <TextBox x:Name="NetMaskTB" Grid.Row="4"
+                         Visibility="Hidden"
+                         Opacity="0"
+                         Style="{StaticResource EditableTextBox_White}"
+                         Margin="15,0,15,0"
+                         MaxLength="15"/>
                 <TextBlock Text="Timeout" Grid.Row="5"
                            Style="{StaticResource BasicTextBlock}"
                            Margin="0,20,0,0"/>
@@ -57,7 +65,15 @@
                          MaxLength="6"
                          Margin="15,0,15,0">
                 </TextBox>
-                <Button x:Name="RunButton" Grid.Row="7"
+                <TextBlock Text="Alternative Mode" Grid.Row="7"
+                           Style="{StaticResource BasicTextBlock}"
+                           Margin="0,20,0,0"/>
+                <ToggleButton x:Name="ModeButton" Grid.Row="8"
+                              Style="{StaticResource BadChoiceToggleButton}"
+                              ClickMode="Release"
+                              Content="Off"
+                              Margin="15,0,15,0"/> 
+                <Button x:Name="RunButton" Grid.Row="9"
                         Style="{StaticResource ClassicButton}"
                         VerticalAlignment="Bottom"
                         Content="Ok"

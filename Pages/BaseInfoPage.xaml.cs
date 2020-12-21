@@ -9,10 +9,10 @@ namespace Niero.Pages
 {
     public partial class BaseInfoPage : Page
     {
-        public BaseInfoPage(NetworkDataHub dataHub)
+        public BaseInfoPage(NetworkDataHub NetDataHub, SystemDataHub SysDataHub)
         {
             InitializeComponent();
-            DataContext = new BaseInfoVM(this, dataHub);
+            DataContext = new BaseInfoVM(this, NetDataHub, SysDataHub);
             this.Loaded += NetworkInfoPage_Loaded;
         }
 

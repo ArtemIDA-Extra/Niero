@@ -65,13 +65,6 @@
                 </Setter.Value>
             </Setter>
         </Style.Setters>
-        <Style.Triggers>
-            <EventTrigger RoutedEvent="MouseEnter">
-                <EventTrigger.Actions>
-                    <SoundPlayerAction Source="Sounds\Selected.wav"/> 
-                </EventTrigger.Actions>
-            </EventTrigger>
-        </Style.Triggers>
     </Style>
 
     <Style x:Key="BorderDataGrid" TargetType="DataGrid">

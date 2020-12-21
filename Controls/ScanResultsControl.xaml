@@ -5,20 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Niero.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="800">
+             d:DesignHeight="520" d:DesignWidth="800">
     <Grid>
         <Border x:Name="ScanResults"
+                RenderTransformOrigin="0,0"
+                Panel.ZIndex="1"
                 Style="{StaticResource ClassicBorder}"
                 UseLayoutRounding="True"
                 MinWidth="300"
-                MinHeight="320"
-                Height="340"
+                MinHeight="360"
+                Height="360"
                 Margin="0,70,0,70"
                 HorizontalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
-                    <RowDefinition Height="280"/>
+                    <RowDefinition Height="300"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0"
@@ -30,11 +32,11 @@
                 <Grid x:Name="MainGrid" Grid.Row="1"
                       Margin="20,20,20,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.25*"/>
+                        <RowDefinition Height="0.3*"/>
                         <RowDefinition Height="0.5*"/>
-                        <RowDefinition Height="0.27*"/>
+                        <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
-                    <GroupBox Header="Status info"
+                    <GroupBox Header="Status info" Style="{StaticResource NieroGroupBox}"
                           Grid.Row="0">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -48,16 +50,18 @@
                             <TextBlock Text="Scan Status" Grid.Row="0" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                        VerticalAlignment="Bottom"/>
-                            <TextBox Grid.Row="1" Grid.Column="0"
-                                     Text="{Binding Status_str, Mode=OneWay}"
-                                     Style="{StaticResource SmallTextBox_Transparent}"
-                                     VerticalAlignment="Top"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Status_str, Mode=OneWay}"
+                                       Style="{StaticResource BasicCopyTextBlock}"
+                                       MouseDown="CopyMouseDown_e"
+                                       VerticalAlignment="Top"/>
                             <TextBlock Text="Trash Status" Grid.Row="0" Grid.Column="1"
                                        Style="{StaticResource BasicTextBlock}"
                                        VerticalAlignment="Bottom"/>
-                            <TextBox Grid.Row="1" Grid.Column="1"
+                            <TextBlock Grid.Row="1" Grid.Column="1"
                                      Text="{Binding ScanTrashStatus_str, Mode=OneWay}"
-                                     Style="{StaticResource SmallTextBox_Transparent}"
+                                     Style="{StaticResource BasicCopyTextBlock}"
+                                     MouseDown="CopyMouseDown_e"
                                      VerticalAlignment="Top"/>
                         </Grid>
                     </GroupBox>
@@ -67,7 +71,8 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <GroupBox Header="Base info"
-                              Grid.Column="0">
+                                  Style="{StaticResource NieroGroupBox}"
+                                  Grid.Column="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -82,35 +87,40 @@
                                 <TextBlock Text="Mask: " Grid.Row="0" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="0" Grid.Column="1"
+                                <TextBlock Grid.Row="0" Grid.Column="1"
                                          Text="{Binding NetMask_str, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                                 <TextBlock Text="Gateway: " Grid.Row="1" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="1" Grid.Column="1"
+                                <TextBlock Grid.Row="1" Grid.Column="1"
                                          Text="{Binding Gateway_str, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                                 <TextBlock Text="Timeout: " Grid.Row="2" Grid.Column="0"
-                                       Style="{StaticResource BasicTextBlock}"
+                                           Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="2" Grid.Column="1"
+                                <TextBlock Grid.Row="2" Grid.Column="1"
                                          Text="{Binding Timeout, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                                 <TextBlock Text="Last Ip-r: " Grid.Row="3" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="3" Grid.Column="1"
-                                         Text="{Binding LastReplyIp_str, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                <TextBlock Grid.Row="3" Grid.Column="1"
+                                         Text="{Binding Alt_LastReplyIp_str, Mode=OneWay}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="Ping-s info"
-                              Grid.Column="1">
+                                  Style="{StaticResource NieroGroupBox}"
+                                  Grid.Column="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -125,36 +135,41 @@
                                 <TextBlock Text="Total ip: " Grid.Row="0" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="0" Grid.Column="1"
+                                <TextBlock Grid.Row="0" Grid.Column="1"
                                          Text="{Binding TotalIpsForScan, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                                 <TextBlock Text="Ping sent: " Grid.Row="1" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="1" Grid.Column="1"
+                                <TextBlock Grid.Row="1" Grid.Column="1"
                                          Text="{Binding SentPingsCount, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                                 <TextBlock Text="Completed: " Grid.Row="2" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="2" Grid.Column="1"
-                                         Text="{Binding CompletedPingsCount, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                <TextBlock Grid.Row="2" Grid.Column="1"
+                                         Text="{Binding Alt_CompletedPingsCount, Mode=OneWay}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                                 <TextBlock Text="Successful: " Grid.Row="3" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="3" Grid.Column="1"
-                                         Text="{Binding SuccessfulPingsCount, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                <TextBlock Grid.Row="3" Grid.Column="1"
+                                         Text="{Binding Alt_SuccessfulPingsCount, Mode=OneWay}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                             </Grid>
                         </GroupBox>
                     </Grid>
                     <GroupBox Header="Time info"
-                          Grid.Row="2">
+                              Style="{StaticResource NieroGroupBox}"
+                              Grid.Row="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -173,9 +188,10 @@
                                 <TextBlock Text="Elapsed: " Grid.Row="0" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                            HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="0" Grid.Column="3"
+                                <TextBlock Grid.Row="0" Grid.Column="3"
                                          Text="{Binding ElapsedTime_str, Mode=OneWay}"
-                                         Style="{StaticResource SmallTextBox_Transparent}"
+                                         Style="{StaticResource BasicCopyTextBlock}"
+                                         MouseDown="CopyMouseDown_e"
                                          HorizontalAlignment="Left"/>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="0">
@@ -186,9 +202,10 @@
                                 <TextBlock Text="Start: " Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                        HorizontalAlignment="Right"/>
-                                <TextBox Grid.Column="1"
+                                <TextBlock Grid.Column="1"
                                      Text="{Binding StartData_str, Mode=OneWay}"
-                                     Style="{StaticResource SmallTextBox_Transparent}"
+                                     Style="{StaticResource BasicCopyTextBlock}"
+                                     MouseDown="CopyMouseDown_e"
                                      HorizontalAlignment="Left"/>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="1">
@@ -199,9 +216,10 @@
                                 <TextBlock Text="Finish:" Grid.Column="0"
                                        Style="{StaticResource BasicTextBlock}"
                                        HorizontalAlignment="Right"/>
-                                <TextBox Grid.Column="1"
+                                <TextBlock Grid.Column="1"
                                      Text="{Binding FinishedData_str, Mode=OneWay}"
-                                     Style="{StaticResource SmallTextBox_Transparent}"
+                                     Style="{StaticResource BasicCopyTextBlock}"
+                                     MouseDown="CopyMouseDown_e"
                                      HorizontalAlignment="Left"/>
                             </Grid>
                         </Grid>
@@ -218,6 +236,43 @@
                             Margin="10,0,10,0"
                             Opacity="0"/>
                     <Button Content="View Ip List" x:Name="IpListButton" Grid.Column="1"
+                            Style="{StaticResource ClassicButton}"
+                            Opacity="0"
+                            Margin="10,0,10,0"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <Border x:Name="IpList"
+                Visibility="Hidden"
+                Opacity="0"
+                RenderTransformOrigin="0,0"
+                Panel.ZIndex="1"
+                Style="{StaticResource ClassicBorder}"
+                UseLayoutRounding="True"
+                MinWidth="340"
+                MaxWidth="300"
+                MinHeight="360"
+                Height="360"
+                Margin="0,70,0,70"
+                HorizontalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                
+                <Border Grid.Row="0"
+                        Background="{StaticResource OverlayDarkBrush}">
+                    <TextBlock Text="IP List"
+                               Style="{StaticResource TitleTextBlock}"
+                               Foreground="{StaticResource BaseBrush}"/>
+                </Border>
+                <WrapPanel x:Name="IpList_MainGrid" Grid.Row="1"
+                      Margin="20,20,20,0"/>
+                <Grid x:Name="IpList_ButtonsGrid" Grid.Row="2"
+                      Margin="20,10,20,10">
+                    <Button Content="Back" x:Name="BackButton" Grid.Column="1"
                             Style="{StaticResource ClassicButton}"
                             Opacity="0"
                             Margin="10,0,10,0"/>

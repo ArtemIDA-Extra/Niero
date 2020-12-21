@@ -38,7 +38,7 @@
                 <Button Style="{DynamicResource DefaultTextSidebarButton}" 
                         Content="Network Scan"/>
                 <Button Style="{DynamicResource DefaultTextSidebarButton}" 
-                        Content="Default(Test)"/>
+                        Content="Programm Info"/>
             </StackPanel>
         </controls:SideMenuControl>
         <Grid>

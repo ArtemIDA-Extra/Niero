@@ -6,27 +6,110 @@
       xmlns:local="clr-namespace:Niero.Pages"
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="961" d:DesignWidth="1664"
       Title="DefaultPage"
       Opacity="0">
 
-    <Grid Margin="40,0,40,0">
+    <Grid Margin="40,0,40,50">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="200"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="140"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Image Height="200" 
-               Width="200" 
-               Grid.Row="1"
+               Width="200"
+               Grid.Row="0"
                gif:ImageBehavior.AnimatedSource="../Gifs/NierRobot.gif">
         </Image>
-        <TextBlock Text="It's so empty and lonely here..."
-                   Grid.Row="2"
+        <TextBlock Grid.Row="1"
+                   Style="{StaticResource TitleTextBlock}">
+            About Program
+        </TextBlock>
+        <TextBlock Grid.Row="2"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontFamily="{StaticResource NierAutomata}"
-                   FontSize="20"/>
+                   TextAlignment="Center"
+                   FontSize="16"
+                   TextWrapping="WrapWithOverflow">
+                   This program is specially designed for monitoring and scanning local networks. <LineBreak />
+                   The same functionality implies the output of data about the user's PC.
+        </TextBlock>
+        <TextBlock Grid.Row="3"
+                   Style="{StaticResource TitleTextBlock}">
+           Development
+        </TextBlock>
+        <TextBlock Grid.Row="4"
+                   Style="{StaticResource TitleTextBlock}">
+           Budget
+        </TextBlock>
+        <TextBlock Grid.Row="5"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontFamily="{StaticResource NierAutomata}"
+                   TextAlignment="Center"
+                   FontSize="16"
+                   TextWrapping="WrapWithOverflow">
+                   Mouse (PC) - 1 pcs. <LineBreak />
+                   Compot (Babuskin) - 60 l. <LineBreak />
+                   Buterbrod with Cheese - 84 pcs. <LineBreak />
+                   Buterbrod with Kolbasa - 71 pcs. <LineBreak />
+                   All budget Kazahstan-a - 2 pcs. <LineBreak />
+                   Nervnie Kletki - // !Counting error! // <LineBreak />
+        </TextBlock>
+        <TextBlock Grid.Row="6"
+                   Style="{StaticResource TitleTextBlock}">
+           Time
+        </TextBlock>
+        <TextBlock Grid.Row="7"
+                   Width="600"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontFamily="{StaticResource NierAutomata}"
+                   TextAlignment="Center"
+                   FontSize="16"
+                   TextWrapping="WrapWithOverflow">
+                   First commit - 17 aug. 2020 Last commit - 21 dec. 2020 <LineBreak />
+                   Days : 128
+        </TextBlock>
+        <TextBlock Grid.Row="8"
+                   Style="{StaticResource TitleTextBlock}">
+           Thanks
+        </TextBlock>
+        <TextBlock Grid.Row="9"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontFamily="{StaticResource NierAutomata}"
+                   TextAlignment="Center"
+                   FontSize="16"
+                   TextWrapping="WrapWithOverflow">
+                   During the intense work on the project, my friends helped me not to lose heart. <LineBreak />
+                   Therefore, I thank all of them for their support. (PinkyPie, BabyLocker, Margoretochka ;)) <LineBreak />
+                   I also want to express my gratitude to my teacher, <LineBreak />
+                   who inspired me in my second year of study at a technical school to learn a new technology. <LineBreak />
+        </TextBlock>
+        <TextBlock Grid.Row="10"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontFamily="{StaticResource NierAutomata}"
+                   TextAlignment="Center"
+                   FontSize="16"
+                   TextWrapping="WrapWithOverflow">
+                   Worked on the code: Artem_IDA (aka Artem Yuhimenko)
+        </TextBlock>
+            <Image Source="../Images/White Contract (Nier).png" 
+                   Style="{StaticResource Sword}"
+               Height="120"
+               Width="800"
+               Grid.Row="11"/>
     </Grid>
 </Page>
